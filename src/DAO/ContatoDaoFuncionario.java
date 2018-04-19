@@ -18,7 +18,6 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 		this.connection = new ConnectionFac().getConnection();
 	}
 
-
 	public void adicionaFuncionario(DadoFunc dadoFunc) {
 
 		try {
@@ -30,12 +29,12 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 			ResultSet rs = verificaFunc.executeQuery();
 
 			if (rs.next()) {
-				JOptionPane.showMessageDialog(null, "Funcion·rio j· Cadastrado");
+				JOptionPane.showMessageDialog(null, "Funcion√°rio j√° Cadastrado");
 			}else {
 				//Comandos SQL para inserir em 3 tabelas
 				// tablea funcionario
 				String sql_adiciona_func= "Insert into funcionario"+
-						"(nome,sobrenome,rg,cpf) Values (?,?,?,?);";
+						"(nome,sobrenome,rg,cpf, cargo) Values (?,?,?,?,?);";
 				//table endereco_funcionario
 				String sql_adiciona_end_func= "INSERT INTO endereco_funcionario"+
 						"(cep,rua,cidade,estado,numero,bairro,complemento,fk_cpf_funcionario)"+
@@ -56,6 +55,7 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 					stmt.setString(2, dadoFunc.getSobrenome());
 					stmt.setString(3, dadoFunc.getRg());
 					stmt.setString(4, dadoFunc.getCpf());
+					stmt.setString(5, dadoFunc.getCargo());
 
 					//pegando os dados do sql_adiciona_endereco_funcionario
 					stmt1.setString(1, dadoFunc.getCep());
@@ -95,6 +95,32 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 			System.out.println("Erro ao verificar Funcionario: "+ e);
 		}
 
+	}
+	
+	
+	public void DeleteFuncionario(DadoFunc dadoFunc) {
+		
+		
+		String delete_sql = "DELETE FROM funcionario, endereco_funcionario, telefone_funcionario \r\n" + 
+				"    using funcionario \r\n" + 
+				"    inner join endereco_funcionario inner join telefone_funcionario\r\n" + 
+				"    where funcionario.cpf = endereco_funcionario.fk_cpf_funcionario \r\n" + 
+				"    and telefone_funcionario.fk_cpf_funcionario = endereco_funcionario.fk_cpf_funcionario\r\n" + 
+				"    and funcionario.cpf = ?;"; 
+		
+		try {
+			PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(delete_sql);
+			stmt.setString(1, dadoFunc.getCpf());
+			
+			stmt.executeUpdate();
+			stmt.close();
+			
+			JOptionPane.showMessageDialog(null, "Funcionario excluido com sucesso");
+			
+			
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Erro ao excluir Funcionario");
+		}
 	}
 
 }

@@ -1,6 +1,5 @@
 package VIEW;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -21,7 +20,6 @@ import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.event.ActionEvent;
-import java.awt.ScrollPane;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
@@ -86,7 +84,7 @@ public class Estoque extends JFrame {
 
 			}
 		});
-		btnPequisar.setBounds(580, 120, 89, 23);
+		btnPequisar.setBounds(580, 120, 111, 23);
 		contentPane.add(btnPequisar);
 
 		JButton btnNewButton = new JButton("");
@@ -115,11 +113,11 @@ public class Estoque extends JFrame {
 		btnVoltar.setBounds(633, 11, 36, 36);
 		contentPane.add(btnVoltar);
 
-		modelo.addColumn("CÛdigo Produto");
-		modelo.addColumn("DescriÁ„o");
+		modelo.addColumn("C√≥digo Produto");
+		modelo.addColumn("Descri√ß√£o");
 		modelo.addColumn("Marca");
 		modelo.addColumn("Estoque");
-		modelo.addColumn("Data Fabricac„o");
+		modelo.addColumn("Data Fabricac√£o");
 		modelo.addColumn("Data Validade");
 
 	}

@@ -1,6 +1,5 @@
 package VIEW;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -20,7 +19,6 @@ import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 
 public class Cadastro_Funcionario extends JFrame {
@@ -37,6 +35,7 @@ public class Cadastro_Funcionario extends JFrame {
 	private JTextField txtCidade;
 	private JTextField txtUf;
 	private JTextField txtBairro;
+	private JTextField txtCargo;
 
 	/**
 	 * Launch the application.
@@ -81,7 +80,11 @@ public class Cadastro_Funcionario extends JFrame {
 		}
 		
 		JButton btnCancelar = new JButton("LISTAR FUNCIONARIOS");
-		btnCancelar.setBounds(276, 347, 171, 23);
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnCancelar.setBounds(164, 347, 223, 23);
 		contentPane.add(btnCancelar);
 		
 		
@@ -191,6 +194,16 @@ public class Cadastro_Funcionario extends JFrame {
 		panel.add(txtDdd);
 		txtDdd.setColumns(10);
 		
+		JLabel lblCargo = new JLabel("CARGO");
+		lblCargo.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblCargo.setBounds(443, 120, 70, 15);
+		panel.add(lblCargo);
+		
+		txtCargo = new JTextField();
+		txtCargo.setBounds(439, 145, 114, 19);
+		panel.add(txtCargo);
+		txtCargo.setColumns(10);
+		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(new Color(128, 128, 128), 1, true));
 		panel_1.setBounds(16, 190, 603, 153);
@@ -281,6 +294,7 @@ public class Cadastro_Funcionario extends JFrame {
 					func.setSobrenome(txtSobrenome.getText().toUpperCase());
 					func.setRg(txtRg.getText());
 					func.setCpf(txtCpf.getText());
+					func.setCargo(txtCargo.getText());
 					func.setDdd(ddd);
 					func.setTel1(jfTelefone1.getText());
 					func.setTel2(jfTelefone2.getText());
@@ -305,7 +319,7 @@ public class Cadastro_Funcionario extends JFrame {
 				
 			}
 		});
-		btnSalvar.setBounds(457, 347, 158, 23);
+		btnSalvar.setBounds(416, 347, 199, 23);
 		contentPane.add(btnSalvar);
 		
 		

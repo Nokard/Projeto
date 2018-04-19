@@ -6,6 +6,7 @@ public class DadoFunc {
 	private String sobrenome;
 	private String rg;
 	private String cpf;
+	private String cargo;
 
 	private String cep;
 	private String cidade;
@@ -19,6 +20,14 @@ public class DadoFunc {
 	private String tel1;
 	private String tel2;
 	private String cel;
+	
+	
+	public String getCargo() {
+		return cargo;
+	}
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
+	}
 	public String getNome() {
 		return nome;
 	}

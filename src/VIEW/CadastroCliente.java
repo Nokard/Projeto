@@ -12,20 +12,11 @@ import DAO.ContatoDaoCliente;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JSpinner;
-import javax.swing.JTextArea;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.JFormattedTextField;
@@ -229,7 +220,7 @@ public class CadastroCliente extends JFrame {
 				
 				if(comboBox.getSelectedItem().toString().equals("Fisica")) {
 					
-					//Verificando se os campos estãp preenchidos
+					//Verificando se os campos estï¿½p preenchidos
 					if(txtNomeCli.getText().equals("") || txtSobrenome.getText().equals("") || txtCpfCnpj.getText().equals("") 
 							|| txtTelefone1.getText().equals("")) {
 						JOptionPane.showMessageDialog(null, "Nao pode conter Campos Vazios !");

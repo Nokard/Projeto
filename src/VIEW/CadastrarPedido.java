@@ -1,6 +1,5 @@
 package VIEW;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -14,12 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JTable;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JScrollPane;
-import javax.swing.SpringLayout;
 import java.awt.Color;
-import javax.swing.JDesktopPane;
 import javax.swing.border.LineBorder;
 
 public class CadastrarPedido extends JFrame {
