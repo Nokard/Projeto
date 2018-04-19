@@ -4,10 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
 import CONTROL.DadoFunc;
+import CONTROL.Produto;
 
 public class ContatoDaoFuncionario extends ConnectionFac{
 
@@ -122,5 +125,73 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 			JOptionPane.showMessageDialog(null, "Erro ao excluir Funcionario");
 		}
 	}
+		
+	
+	public List<DadoFunc> getFuncionarioDesc(String desc){
+		
+		String sql_func = "select a.nome, a.sobrenome, a.rg, a.cpf, a.cargo, \r\n" + 
+				"		 b.CEP,b.ESTADO, b.CIDADE , b.BAIRRO, b.NUMERO, b.RUA, b.complemento,\r\n" + 
+				"         c.ddd , c.tel1, c.tel2, c.cel\r\n" + 
+				"from adega.funcionario a \r\n" + 
+				"join endereco_funcionario b \r\n" + 
+				"on a.cpf = b.fk_cpf_funcionario \r\n" + 
+				"join adega.telefone_funcionario c \r\n" + 
+				"on a.cpf = c.fk_cpf_funcionario "
+				+ "WHERE a.nome = ? " ;
+		
+		try {
+			
+			List<DadoFunc> funcionario = new ArrayList<DadoFunc>();
+			
+			PreparedStatement stmt = (PreparedStatement) this.connection.prepareStatement(sql_func);
+			stmt.setString(1, "%"+desc+"%");
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			
+			while (rs.next()) {
+				
+			}
+			rs.close();
+			stmt.close();
+			return funcionario;
+		
+		} catch (SQLException e) {
+			throw new  RuntimeException(e);
+		}
+		
+		
+	}
+	/*public List<Produto> getProdutoForDesc(String desc){
 
+
+		try {
+			List<Produto> produtos = new ArrayList<Produto>();
+
+			PreparedStatement stmt = (PreparedStatement) this.connection.prepareStatement("SELECT * FROM produtos where descricao like ? ");
+			stmt.setString(1, "%"+desc+"%");		
+
+			ResultSet rs = stmt.executeQuery();
+
+			while(rs.next()) {
+
+				Produto produto = new Produto();
+				produto.setCd_produto(rs.getInt("cd_produto"));
+				produto.setDescricao(rs.getString("descricao"));
+				produto.setMarca(rs.getString("marca"));
+				produto.setQtdEstoque(rs.getInt("qtd_estoque"));
+				produto.setData_fabricacao(rs.getString("data_fabricacao"));
+				produto.setData_validade(rs.getString("data_validade"));
+
+				produtos.add(produto);
+			}
+			rs.close();
+			stmt.close();
+			return produtos;
+
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+ */
 }

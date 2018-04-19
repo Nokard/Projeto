@@ -10,6 +10,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.ScrollPane;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -37,6 +39,18 @@ public class Visualizar_Funcionario extends JFrame {
 	private JTextField txtTel2;
 	private JTextField txtCel;
 	private JTextField txtCargo;
+	private JTextField txtCep;
+	private JTextField txtCidade;
+	private JTextField txtUf;
+	private JTextField txtBairro;
+	private JLabel label_13;
+	private JLabel label_14;
+	private JLabel label_15;
+	private JTextField txtRua;
+	private JTextField txtNumero;
+	private JTextField txtComplemento;
+	
+	
 
 	/**
 	 * Launch the application.
@@ -57,6 +71,12 @@ public class Visualizar_Funcionario extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
+
+	private JPanel contentPane;
+	private JTable table;
+	DefaultTableModel modelo = new DefaultTableModel();
+	
 	public Visualizar_Funcionario() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 596, 693);
@@ -66,7 +86,7 @@ public class Visualizar_Funcionario extends JFrame {
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 406, 560, 237);
+		scrollPane.setBounds(10, 359, 560, 237);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -79,7 +99,7 @@ public class Visualizar_Funcionario extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(Color.GRAY));
-		panel.setBounds(10, 70, 560, 303);
+		panel.setBounds(10, 72, 560, 237);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -180,17 +200,72 @@ public class Visualizar_Funcionario extends JFrame {
 		
 		JLabel label_10 = new JLabel("CIDADE");
 		label_10.setFont(new Font("Arial", Font.PLAIN, 12));
-		label_10.setBounds(70, 118, 46, 14);
+		label_10.setBounds(59, 118, 46, 14);
 		panel.add(label_10);
 		
 		JLabel label_11 = new JLabel("UF");
 		label_11.setFont(new Font("Arial", Font.PLAIN, 12));
-		label_11.setBounds(147, 118, 28, 14);
+		label_11.setBounds(151, 113, 28, 14);
 		panel.add(label_11);
 		
 		JLabel label_12 = new JLabel("BAIRRO");
 		label_12.setFont(new Font("Arial", Font.PLAIN, 12));
-		label_12.setBounds(187, 118, 46, 14);
+		label_12.setBounds(201, 118, 46, 14);
 		panel.add(label_12);
+		
+		txtCep = new JTextField();
+		txtCep.setBounds(10, 138, 29, 20);
+		panel.add(txtCep);
+		txtCep.setColumns(10);
+		
+		txtCidade = new JTextField();
+		txtCidade.setBounds(57, 138, 86, 20);
+		panel.add(txtCidade);
+		txtCidade.setColumns(10);
+		
+		txtUf = new JTextField();
+		txtUf.setBounds(151, 138, 34, 20);
+		panel.add(txtUf);
+		txtUf.setColumns(10);
+		
+		txtBairro = new JTextField();
+		txtBairro.setBounds(195, 138, 86, 20);
+		panel.add(txtBairro);
+		txtBairro.setColumns(10);
+		
+		label_13 = new JLabel("RUA");
+		label_13.setFont(new Font("Arial", Font.PLAIN, 12));
+		label_13.setBounds(10, 169, 46, 14);
+		panel.add(label_13);
+		
+		label_14 = new JLabel("NO\u00BA");
+		label_14.setFont(new Font("Arial", Font.PLAIN, 12));
+		label_14.setBounds(106, 169, 46, 14);
+		panel.add(label_14);
+		
+		label_15 = new JLabel("COMPLEMENTO");
+		label_15.setFont(new Font("Arial", Font.PLAIN, 12));
+		label_15.setBounds(185, 169, 96, 14);
+		panel.add(label_15);
+		
+		txtRua = new JTextField();
+		txtRua.setBounds(10, 188, 86, 20);
+		panel.add(txtRua);
+		txtRua.setColumns(10);
+		
+		txtNumero = new JTextField();
+		txtNumero.setBounds(106, 188, 56, 20);
+		panel.add(txtNumero);
+		txtNumero.setColumns(10);
+		
+		txtComplemento = new JTextField();
+		txtComplemento.setBounds(185, 188, 159, 20);
+		panel.add(txtComplemento);
+		txtComplemento.setColumns(10);
+		
+		table = new JTable(modelo);
+		scrollPane.setViewportView(table);
+
+		
 	}
 }
