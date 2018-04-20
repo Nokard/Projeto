@@ -317,25 +317,25 @@ public class Visualizar_Funcionario extends JFrame {
 		ContatoDaoFuncionario daoFunc = new ContatoDaoFuncionario();
 		List<DadoFunc> func = daoFunc.getFuncionarioDesc(desc);
 		modelo.setNumRows(0);
-		for(DadoFunc Func : func) {
+		for(DadoFunc funcionario : func) {
 			modelo.addRow(
 					new Object[] {
-							Func.getNome(),
-							Func.getSobrenome(),
-							Func.getRg(),
-							Func.getCpf(),
-							Func.getCargo(),
-							Func.getDdd(),
-							Func.getTel1(),
-							Func.getTel2(),
-							Func.getCel(),
-							Func.getCep(),
-							Func.getEstado(),
-							Func.getCidade(),
-							Func.getBairro(),
-							Func.getNo(),
-							Func.getRua(),
-							Func.getComplemento()				
+							funcionario.getNome(),
+							funcionario.getSobrenome(),
+							funcionario.getRg(),
+							funcionario.getCpf(),
+							funcionario.getCargo(),
+							funcionario.getDdd(),
+							funcionario.getTel1(),
+							funcionario.getTel2(),
+							funcionario.getCel(),
+							funcionario.getCep(),
+							funcionario.getEstado(),
+							funcionario.getCidade(),
+							funcionario.getBairro(),
+							funcionario.getNo(),
+							funcionario.getRua(),
+							funcionario.getComplemento()				
 							
 					});
 		}
