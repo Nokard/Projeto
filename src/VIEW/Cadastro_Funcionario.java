@@ -82,6 +82,9 @@ public class Cadastro_Funcionario extends JFrame {
 		JButton btnCancelar = new JButton("LISTAR FUNCIONARIOS");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Visualizar_Funcionario visu_funcionario = new Visualizar_Funcionario();
+				visu_funcionario.setVisible(true);
+				dispose();
 			}
 		});
 		btnCancelar.setBounds(164, 347, 223, 23);
