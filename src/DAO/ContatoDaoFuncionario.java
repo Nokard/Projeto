@@ -129,15 +129,16 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 	
 	public List<DadoFunc> getFuncionarioDesc(String desc){
 		
-		String sql_func = "select a.nome, a.sobrenome, a.rg, a.cpf, a.cargo, \r\n" + 
-				"		 b.CEP,b.ESTADO, b.CIDADE , b.BAIRRO, b.NUMERO, b.RUA, b.complemento,\r\n" + 
-				"         c.ddd , c.tel1, c.tel2, c.cel\r\n" + 
-				"from adega.funcionario a \r\n" + 
-				"join endereco_funcionario b \r\n" + 
-				"on a.cpf = b.fk_cpf_funcionario \r\n" + 
-				"join adega.telefone_funcionario c \r\n" + 
-				"on a.cpf = c.fk_cpf_funcionario "
-				+ "WHERE a.nome = ? " ;
+		String sql_func = "\r\n" + 
+				"select a.nome, a.sobrenome, a.rg, a.cpf, a.cargo," + 
+				"c.ddd , c.tel1, c.tel2, c.cel," + 
+				"b.CEP,b.ESTADO, b.CIDADE , b.BAIRRO, b.NUMERO, b.RUA, b.complemento" + 
+				"from adega.funcionario a" + 
+				"join endereco_funcionario b" + 
+				"on a.cpf = b.fk_cpf_funcionario" + 
+				"join adega.telefone_funcionario c" + 
+				"on a.cpf = c.fk_cpf_funcionario" + 
+				"WHERE a.nome = ?;" ;
 		
 		try {
 			
@@ -150,6 +151,24 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 			
 			
 			while (rs.next()) {
+				DadoFunc func = new DadoFunc();
+				func.setNome(rs.getString("nome"));
+				func.setSobrenome(rs.getString("sobrenome"));
+				func.setRg(rs.getString("rg"));
+				func.setCargo(rs.getString("cargo"));
+				func.setDdd(rs.getInt("ddd"));
+				func.setTel1(rs.getString("tel1"));
+				func.setTel2(rs.getString("tel2"));
+				func.setCel(rs.getString("cel"));
+				func.setCep(rs.getString("CEP"));
+				func.setEstado(rs.getString("estado"));
+				func.setCidade(rs.getString("CIDADE"));
+				func.setBairro(rs.getString("BAIRRO"));
+				func.setNo(rs.getString("NUMERO"));
+				func.setRua(rs.getString("RUA"));
+				func.setComplemento(rs.getString("complemento"));
+				
+				funcionario.add(func);
 				
 			}
 			rs.close();

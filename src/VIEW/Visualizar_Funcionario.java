@@ -9,13 +9,19 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.ScrollPane;
+import java.util.List;
+
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+
+import CONTROL.DadoFunc;
+import DAO.ContatoDaoFuncionario;
 
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.JButton;
 
 public class Visualizar_Funcionario extends JFrame {
 
@@ -72,10 +78,8 @@ public class Visualizar_Funcionario extends JFrame {
 	 * Create the frame.
 	 */
 	
-
-	private JPanel contentPane;
-	private JTable table;
 	DefaultTableModel modelo = new DefaultTableModel();
+	private JTextField textField_1;
 	
 	public Visualizar_Funcionario() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -265,7 +269,76 @@ public class Visualizar_Funcionario extends JFrame {
 		
 		table = new JTable(modelo);
 		scrollPane.setViewportView(table);
-
+		
+		JButton btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar.setBounds(440, 321, 117, 25);
+		contentPane.add(btnPesquisar);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(253, 358, 114, 19);
+		contentPane.add(textField_1);
+		textField_1.setColumns(10);
+		
+		modelo.addColumn("Nome");
+		modelo.addColumn("Sobrenome");
+		modelo.addColumn("RG");
+		modelo.addColumn("CPF");
+		modelo.addColumn("Cargo");
+		modelo.addColumn("DDD");
+		modelo.addColumn("Tel1");
+		modelo.addColumn("Tel2");
+		modelo.addColumn("Cel");
+		modelo.addColumn("CEP");
+		modelo.addColumn("ESTADO");
+		modelo.addColumn("CIDADE");
+		modelo.addColumn("BAIRRO");
+		modelo.addColumn("NUMERO");
+		modelo.addColumn("RUA");
+		modelo.addColumn("COMPLEMENTO");
 		
 	}
+	
+	public void CarregaFuncionario(String desc) {
+		ContatoDaoFuncionario daoFunc = new ContatoDaoFuncionario();
+		List<DadoFunc> func = daoFunc.getFuncionarioDesc(desc);
+		modelo.setNumRows(0);
+		for(DadoFunc Func : func) {
+			modelo.addRow(
+					new Object[] {
+							Func.getNome(),
+							Func.getSobrenome(),
+							Func.getRg(),
+							Func.getCpf(),
+							Func.getCargo(),
+							Func.getDdd(),
+							Func.getTel1(),
+							Func.getTel2(),
+							Func.getCel(),
+							Func.getCep(),
+							Func.getEstado(),
+							Func.getCidade(),
+							Func.getBairro(),
+							Func.getNo(),
+							Func.getRua(),
+							Func.getComplemento()				
+							
+					});
+		}
+		
+	
+	
+	
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+

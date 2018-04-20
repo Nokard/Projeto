@@ -294,7 +294,7 @@ public class Cadastro_Funcionario extends JFrame {
 					func.setSobrenome(txtSobrenome.getText().toUpperCase());
 					func.setRg(txtRg.getText());
 					func.setCpf(txtCpf.getText());
-					func.setCargo(txtCargo.getText());
+					func.setCargo(txtCargo.getText().toUpperCase());
 					func.setDdd(ddd);
 					func.setTel1(jfTelefone1.getText());
 					func.setTel2(jfTelefone2.getText());
@@ -305,7 +305,7 @@ public class Cadastro_Funcionario extends JFrame {
 					func.setRua(txtRua.getText().toUpperCase());
 					func.setBairro(txtBairro.getText().toUpperCase());
 					func.setNo(txtNumero.getText());
-					func.setComplemento(txtComplemento.getText());
+					func.setComplemento(txtComplemento.getText().toUpperCase());
 					
 					ContatoDaoFuncionario daoFunc = new ContatoDaoFuncionario();
 					
