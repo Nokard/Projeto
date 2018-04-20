@@ -85,14 +85,14 @@ public class Visualizar_Funcionario extends JFrame {
 	
 	public Visualizar_Funcionario() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 596, 693);
+		setBounds(100, 100, 713, 693);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 382, 560, 237);
+		scrollPane.setBounds(10, 382, 677, 237);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -105,7 +105,7 @@ public class Visualizar_Funcionario extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(Color.GRAY));
-		panel.setBounds(10, 72, 560, 237);
+		panel.setBounds(79, 72, 560, 237);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		

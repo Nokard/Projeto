@@ -132,12 +132,12 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 		String sql_func = "\r\n" + 
 				"select a.nome, a.sobrenome, a.rg, a.cpf, a.cargo," + 
 				"c.ddd , c.tel1, c.tel2, c.cel," + 
-				"b.CEP,b.ESTADO, b.CIDADE , b.BAIRRO, b.NUMERO, b.RUA, b.complemento" + 
-				"from adega.funcionario a" + 
-				"join endereco_funcionario b" + 
-				"on a.cpf = b.fk_cpf_funcionario" + 
-				"join adega.telefone_funcionario c" + 
-				"on a.cpf = c.fk_cpf_funcionario" + 
+				"b.CEP,b.ESTADO, b.CIDADE , b.BAIRRO, b.NUMERO, b.RUA, b.complemento " + 
+				"from adega.funcionario a " + 
+				"join endereco_funcionario b " + 
+				"on a.cpf = b.fk_cpf_funcionario " + 
+				"join adega.telefone_funcionario c " + 
+				"on a.cpf = c.fk_cpf_funcionario " + 
 				"WHERE a.nome = ?;" ;
 		
 		try {
