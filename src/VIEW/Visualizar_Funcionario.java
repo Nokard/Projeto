@@ -23,7 +23,9 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 public class Visualizar_Funcionario extends JFrame {
 
@@ -87,6 +89,7 @@ public class Visualizar_Funcionario extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 693);
 		contentPane = new JPanel();
+		this.setLocationRelativeTo(null);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -99,13 +102,13 @@ public class Visualizar_Funcionario extends JFrame {
 		scrollPane.setViewportView(table);
 		
 		JLabel lblFuncionarios = new JLabel("Funcionarios");
-		lblFuncionarios.setBounds(208, 11, 112, 36);
+		lblFuncionarios.setBounds(362, 12, 112, 36);
 		contentPane.add(lblFuncionarios);
 		lblFuncionarios.setFont(new Font("Arial", Font.BOLD, 16));
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(Color.GRAY));
-		panel.setBounds(79, 72, 560, 237);
+		panel.setBounds(173, 69, 560, 237);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -291,8 +294,22 @@ public class Visualizar_Funcionario extends JFrame {
 		
 		JLabel lblNomeDoFuncionario = new JLabel("Nome Do Funcionario");
 		lblNomeDoFuncionario.setFont(new Font("Arial", Font.PLAIN, 12));
-		lblNomeDoFuncionario.setBounds(603, 320, 130, 25);
+		lblNomeDoFuncionario.setBounds(603, 320, 151, 25);
 		contentPane.add(lblNomeDoFuncionario);
+		
+		JButton btnVoltar = new JButton("");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Cadastro_Funcionario cadastro_func = new Cadastro_Funcionario();
+				cadastro_func.setVisible(true);
+				dispose();
+				
+			}
+		});
+		btnVoltar.setIcon(new ImageIcon(Visualizar_Funcionario.class.getResource("/imgs/Back.png")));
+		btnVoltar.setBounds(833, 32, 41, 36);
+		contentPane.add(btnVoltar);
 		
 		modelo.addColumn("Nome");
 		modelo.addColumn("Sobrenome");
@@ -314,34 +331,39 @@ public class Visualizar_Funcionario extends JFrame {
 	}
 	
 	public void CarregaFuncionario(String desc) {
-		ContatoDaoFuncionario daoFunc = new ContatoDaoFuncionario();
-		List<DadoFunc> func = daoFunc.getFuncionarioDesc(desc);
-		modelo.setNumRows(0);
-		for(DadoFunc funcionario : func) {
-			modelo.addRow(
-					new Object[] {
-							funcionario.getNome(),
-							funcionario.getSobrenome(),
-							funcionario.getRg(),
-							funcionario.getCpf(),
-							funcionario.getCargo(),
-							funcionario.getDdd(),
-							funcionario.getTel1(),
-							funcionario.getTel2(),
-							funcionario.getCel(),
-							funcionario.getCep(),
-							funcionario.getEstado(),
-							funcionario.getCidade(),
-							funcionario.getBairro(),
-							funcionario.getNo(),
-							funcionario.getRua(),
-							funcionario.getComplemento()				
-							
-					});
-		}
 		
-	
-	
+		try {
+
+			ContatoDaoFuncionario daoFunc = new ContatoDaoFuncionario();
+			List<DadoFunc> func = daoFunc.getFuncionarioDesc(desc);
+			modelo.setNumRows(0);
+			for(DadoFunc funcionario : func) {
+				modelo.addRow(
+						new Object[] {
+								funcionario.getNome(),funcionario.getSobrenome(),
+								funcionario.getRg(),
+								funcionario.getCpf(),
+								funcionario.getCargo(),
+								funcionario.getDdd(),
+								funcionario.getTel1(),
+								funcionario.getTel2(),
+								funcionario.getCel(),
+								funcionario.getCep(),
+								funcionario.getEstado(),
+								funcionario.getCidade(),
+								funcionario.getBairro(),
+								funcionario.getNo(),
+								funcionario.getRua(),
+								funcionario.getComplemento()				
+								
+						});
+			}
+			
+		
+
+		} catch (Exception e) {
+			System.out.println("Erro Visualizar_Funcionario: "+ e);
+		}	
 	
 	}
 }

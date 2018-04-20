@@ -129,29 +129,30 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 	
 	public List<DadoFunc> getFuncionarioDesc(String desc){
 		
-		String sql_func = "\r\n" + 
-				"select a.nome, a.sobrenome, a.rg, a.cpf, a.cargo," + 
-				"c.ddd , c.tel1, c.tel2, c.cel," + 
-				"b.CEP,b.ESTADO, b.CIDADE , b.BAIRRO, b.NUMERO, b.RUA, b.complemento " + 
-				"from adega.funcionario a " + 
-				"join endereco_funcionario b " + 
-				"on a.cpf = b.fk_cpf_funcionario " + 
-				"join adega.telefone_funcionario c " + 
-				"on a.cpf = c.fk_cpf_funcionario " + 
-				"WHERE a.nome = ?;" ;
 		
 		try {
 			
-			List<DadoFunc> funcionario = new ArrayList<DadoFunc>();
+			List<DadoFunc> funcionarios = new ArrayList<DadoFunc>();
 			
-			PreparedStatement stmt = (PreparedStatement) this.connection.prepareStatement(sql_func);
+			PreparedStatement stmt = (PreparedStatement) this.connection.prepareStatement("select a.nome, a.sobrenome, a.rg, a.cpf, a.cargo," + 
+					"c.ddd , c.tel1, c.tel2, c.cel," + 
+					"b.CEP,b.ESTADO, b.CIDADE , b.BAIRRO, b.NUMERO, b.RUA, b.complemento " + 
+					"from adega.funcionario a " + 
+					"join endereco_funcionario b " + 
+					"on a.cpf = b.fk_cpf_funcionario " + 
+					"join adega.telefone_funcionario c " + 
+					"on a.cpf = c.fk_cpf_funcionario " + 
+					"WHERE a.nome like ?;");
+			
 			stmt.setString(1, "%"+desc+"%");
 			
 			ResultSet rs = stmt.executeQuery();
 			
 			
 			while (rs.next()) {
+				
 				DadoFunc func = new DadoFunc();
+				
 				func.setNome(rs.getString("nome"));
 				func.setSobrenome(rs.getString("sobrenome"));
 				func.setRg(rs.getString("rg"));
@@ -168,12 +169,12 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 				func.setRua(rs.getString("RUA"));
 				func.setComplemento(rs.getString("complemento"));
 				
-				funcionario.add(func);
+				funcionarios.add(func);
 				
 			}
 			rs.close();
 			stmt.close();
-			return funcionario;
+			return funcionarios;
 		
 		} catch (SQLException e) {
 			throw new  RuntimeException(e);
