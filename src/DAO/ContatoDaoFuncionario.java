@@ -156,6 +156,7 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 				func.setNome(rs.getString("nome"));
 				func.setSobrenome(rs.getString("sobrenome"));
 				func.setRg(rs.getString("rg"));
+				func.setCpf(rs.getString("cpf"));
 				func.setCargo(rs.getString("cargo"));
 				func.setDdd(rs.getInt("ddd"));
 				func.setTel1(rs.getString("tel1"));

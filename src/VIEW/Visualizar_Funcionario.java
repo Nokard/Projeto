@@ -320,13 +320,13 @@ public class Visualizar_Funcionario extends JFrame {
 		modelo.addColumn("Tel1");
 		modelo.addColumn("Tel2");
 		modelo.addColumn("Cel");
-		modelo.addColumn("CEP");
-		modelo.addColumn("ESTADO");
-		modelo.addColumn("CIDADE");
-		modelo.addColumn("BAIRRO");
-		modelo.addColumn("NUMERO");
-		modelo.addColumn("RUA");
-		modelo.addColumn("COMPLEMENTO");
+//		modelo.addColumn("CEP");
+//		modelo.addColumn("ESTADO");
+//		modelo.addColumn("CIDADE");
+//		modelo.addColumn("BAIRRO");
+//		modelo.addColumn("NUMERO");
+//		modelo.addColumn("RUA");
+//		modelo.addColumn("COMPLEMENTO");
 		
 	}
 	
