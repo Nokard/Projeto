@@ -22,6 +22,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Visualizar_Funcionario extends JFrame {
 
@@ -79,7 +81,7 @@ public class Visualizar_Funcionario extends JFrame {
 	 */
 	
 	DefaultTableModel modelo = new DefaultTableModel();
-	private JTextField textField_1;
+	private JTextField txtPesquisa;
 	
 	public Visualizar_Funcionario() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -90,7 +92,7 @@ public class Visualizar_Funcionario extends JFrame {
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 359, 560, 237);
+		scrollPane.setBounds(10, 382, 560, 237);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -271,13 +273,26 @@ public class Visualizar_Funcionario extends JFrame {
 		scrollPane.setViewportView(table);
 		
 		JButton btnPesquisar = new JButton("Pesquisar");
-		btnPesquisar.setBounds(440, 321, 117, 25);
+		btnPesquisar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				 CarregaFuncionario(txtPesquisa.getText());
+				
+				
+			}
+		});
+		btnPesquisar.setBounds(453, 346, 117, 25);
 		contentPane.add(btnPesquisar);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(253, 358, 114, 19);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		txtPesquisa = new JTextField();
+		txtPesquisa.setBounds(287, 346, 130, 25);
+		contentPane.add(txtPesquisa);
+		txtPesquisa.setColumns(10);
+		
+		JLabel lblNomeDoFuncionario = new JLabel("Nome Do Funcionario");
+		lblNomeDoFuncionario.setFont(new Font("Arial", Font.PLAIN, 12));
+		lblNomeDoFuncionario.setBounds(287, 320, 130, 25);
+		contentPane.add(lblNomeDoFuncionario);
 		
 		modelo.addColumn("Nome");
 		modelo.addColumn("Sobrenome");
