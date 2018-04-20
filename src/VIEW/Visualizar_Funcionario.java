@@ -85,14 +85,14 @@ public class Visualizar_Funcionario extends JFrame {
 	
 	public Visualizar_Funcionario() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 713, 693);
+		setBounds(100, 100, 900, 693);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 382, 677, 237);
+		scrollPane.setBounds(10, 382, 864, 237);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -281,17 +281,17 @@ public class Visualizar_Funcionario extends JFrame {
 				
 			}
 		});
-		btnPesquisar.setBounds(453, 346, 117, 25);
+		btnPesquisar.setBounds(743, 346, 117, 25);
 		contentPane.add(btnPesquisar);
 		
 		txtPesquisa = new JTextField();
-		txtPesquisa.setBounds(287, 346, 130, 25);
+		txtPesquisa.setBounds(603, 346, 130, 25);
 		contentPane.add(txtPesquisa);
 		txtPesquisa.setColumns(10);
 		
 		JLabel lblNomeDoFuncionario = new JLabel("Nome Do Funcionario");
 		lblNomeDoFuncionario.setFont(new Font("Arial", Font.PLAIN, 12));
-		lblNomeDoFuncionario.setBounds(287, 320, 130, 25);
+		lblNomeDoFuncionario.setBounds(603, 320, 130, 25);
 		contentPane.add(lblNomeDoFuncionario);
 		
 		modelo.addColumn("Nome");
