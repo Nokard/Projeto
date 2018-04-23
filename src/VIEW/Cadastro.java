@@ -65,6 +65,9 @@ public class Cadastro extends JFrame {
 		btnFornecedor.setFont(new Font("Arial", Font.PLAIN, 12));
 		btnFornecedor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Fornecedor fornecedor = new Fornecedor();
+				fornecedor.setVisible(true);
+				dispose();
 			}
 		});
 		btnFornecedor.setIcon(new ImageIcon(Cadastro.class.getResource("/imgs/fornecedor.png")));

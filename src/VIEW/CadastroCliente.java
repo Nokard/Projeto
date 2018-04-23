@@ -41,7 +41,6 @@ public class CadastroCliente extends JFrame {
 	private JLabel lblTelefone;
 	private JLabel lblTelefone_1;
 	private JLabel lblCelular;
-	private JButton btnCancelar;
 	private JButton btnSalvarCliente;
 	private JLabel lblSobrenome;
 	private JTextField txtSobrenome;
@@ -101,10 +100,6 @@ public class CadastroCliente extends JFrame {
 		}
 
 		;
-
-		btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(386, 371, 89, 23);
-		contentPane.add(btnCancelar);
 
 
 		
@@ -200,7 +195,8 @@ public class CadastroCliente extends JFrame {
 		panel.add(txtCel);
 
 		lblCelular = new JLabel("Celular: ");
-		lblCelular.setBounds(322, 151, 46, 14);
+		lblCelular.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblCelular.setBounds(322, 151, 69, 14);
 		panel.add(lblCelular);
 		
 		JLabel lblId = new JLabel("DDD");
@@ -212,7 +208,7 @@ public class CadastroCliente extends JFrame {
 		jfDdd.setBounds(19, 177, 36, 20);
 		panel.add(jfDdd);
 		
-		btnSalvarCliente = new JButton("Salvar Cliente");
+		btnSalvarCliente = new JButton("Cadastrar");
 		btnSalvarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -377,7 +373,7 @@ public class CadastroCliente extends JFrame {
 				}
 			}
 		});
-		btnListarClientes.setBounds(222, 371, 154, 23);
+		btnListarClientes.setBounds(322, 371, 154, 23);
 		contentPane.add(btnListarClientes);
 		comboBox.addItem("Fisica");
 		comboBox.addItem("Juridica");
