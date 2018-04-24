@@ -26,6 +26,8 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Visualizar_Funcionario extends JFrame {
 
@@ -37,8 +39,8 @@ public class Visualizar_Funcionario extends JFrame {
 	private JLabel label_3;
 	private JTextField txtNome;
 	private JTextField txtSobrenome;
+	private JTextField txtCpf;
 	private JTextField txtRg;
-	private JTextField textField;
 	private JLabel label_4;
 	private JLabel label_5;
 	private JLabel label_6;
@@ -87,7 +89,7 @@ public class Visualizar_Funcionario extends JFrame {
 	
 	public Visualizar_Funcionario() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 900, 693);
+		setBounds(100, 100, 929, 541);
 		contentPane = new JPanel();
 		this.setLocationRelativeTo(null);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -95,20 +97,17 @@ public class Visualizar_Funcionario extends JFrame {
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 382, 864, 237);
+		scrollPane.setBounds(10, 332, 907, 170);
 		contentPane.add(scrollPane);
 		
-		table = new JTable();
-		scrollPane.setViewportView(table);
-		
 		JLabel lblFuncionarios = new JLabel("Funcionarios");
-		lblFuncionarios.setBounds(362, 12, 112, 36);
+		lblFuncionarios.setBounds(359, 0, 135, 36);
 		contentPane.add(lblFuncionarios);
 		lblFuncionarios.setFont(new Font("Arial", Font.BOLD, 16));
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(Color.GRAY));
-		panel.setBounds(173, 69, 560, 237);
+		panel.setBounds(58, 48, 771, 187);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -142,15 +141,15 @@ public class Visualizar_Funcionario extends JFrame {
 		panel.add(txtSobrenome);
 		txtSobrenome.setColumns(10);
 		
+		txtCpf = new JTextField();
+		txtCpf.setBounds(266, 36, 111, 20);
+		panel.add(txtCpf);
+		txtCpf.setColumns(10);
+		
 		txtRg = new JTextField();
-		txtRg.setBounds(266, 36, 111, 20);
+		txtRg.setBounds(405, 36, 105, 20);
 		panel.add(txtRg);
 		txtRg.setColumns(10);
-		
-		textField = new JTextField();
-		textField.setBounds(405, 36, 105, 20);
-		panel.add(textField);
-		textField.setColumns(10);
 		
 		label_4 = new JLabel("TELEFONE1");
 		label_4.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -174,7 +173,7 @@ public class Visualizar_Funcionario extends JFrame {
 		
 		label_8 = new JLabel("CARGO");
 		label_8.setFont(new Font("Dialog", Font.PLAIN, 12));
-		label_8.setBounds(405, 67, 93, 15);
+		label_8.setBounds(536, 11, 93, 15);
 		panel.add(label_8);
 		
 		txtDdd = new JTextField();
@@ -198,7 +197,7 @@ public class Visualizar_Funcionario extends JFrame {
 		txtCel.setColumns(10);
 		
 		txtCargo = new JTextField();
-		txtCargo.setBounds(405, 87, 86, 20);
+		txtCargo.setBounds(536, 36, 86, 20);
 		panel.add(txtCargo);
 		txtCargo.setColumns(10);
 		
@@ -214,7 +213,7 @@ public class Visualizar_Funcionario extends JFrame {
 		
 		JLabel label_11 = new JLabel("UF");
 		label_11.setFont(new Font("Arial", Font.PLAIN, 12));
-		label_11.setBounds(151, 113, 28, 14);
+		label_11.setBounds(151, 119, 28, 14);
 		panel.add(label_11);
 		
 		JLabel label_12 = new JLabel("BAIRRO");
@@ -244,35 +243,56 @@ public class Visualizar_Funcionario extends JFrame {
 		
 		label_13 = new JLabel("RUA");
 		label_13.setFont(new Font("Arial", Font.PLAIN, 12));
-		label_13.setBounds(10, 169, 46, 14);
+		label_13.setBounds(288, 119, 46, 14);
 		panel.add(label_13);
 		
 		label_14 = new JLabel("NO\u00BA");
 		label_14.setFont(new Font("Arial", Font.PLAIN, 12));
-		label_14.setBounds(106, 169, 46, 14);
+		label_14.setBounds(391, 118, 46, 14);
 		panel.add(label_14);
 		
 		label_15 = new JLabel("COMPLEMENTO");
 		label_15.setFont(new Font("Arial", Font.PLAIN, 12));
-		label_15.setBounds(185, 169, 96, 14);
+		label_15.setBounds(470, 118, 96, 14);
 		panel.add(label_15);
 		
 		txtRua = new JTextField();
-		txtRua.setBounds(10, 188, 86, 20);
+		txtRua.setBounds(293, 138, 86, 20);
 		panel.add(txtRua);
 		txtRua.setColumns(10);
 		
 		txtNumero = new JTextField();
-		txtNumero.setBounds(106, 188, 56, 20);
+		txtNumero.setBounds(391, 138, 56, 20);
 		panel.add(txtNumero);
 		txtNumero.setColumns(10);
 		
 		txtComplemento = new JTextField();
-		txtComplemento.setBounds(185, 188, 159, 20);
+		txtComplemento.setBounds(470, 138, 159, 20);
 		panel.add(txtComplemento);
 		txtComplemento.setColumns(10);
 		
 		table = new JTable(modelo);
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				int indice = table.getSelectedRow();
+				
+				txtNome.setText(table.getValueAt(indice, 0).toString());
+				txtSobrenome.setText( table.getValueAt(indice, 1).toString());
+				txtCpf.setText( table.getValueAt(indice, 2).toString());
+				txtRg.setText( table.getValueAt(indice, 3).toString());
+				txtCargo.setText( table.getValueAt(indice, 4).toString());
+				txtDdd.setText(table.getValueAt(indice, 5).toString());
+				txtTel1.setText(table.getValueAt(indice, 6).toString());
+				txtTel2.setText( table.getValueAt(indice, 7).toString());
+				txtCel.setText( table.getValueAt(indice, 8).toString());
+				
+				
+				
+				
+			}
+		});
 		scrollPane.setViewportView(table);
 		
 		JButton btnPesquisar = new JButton("Pesquisar");
@@ -284,17 +304,17 @@ public class Visualizar_Funcionario extends JFrame {
 				
 			}
 		});
-		btnPesquisar.setBounds(743, 346, 117, 25);
+		btnPesquisar.setBounds(745, 295, 117, 25);
 		contentPane.add(btnPesquisar);
 		
 		txtPesquisa = new JTextField();
-		txtPesquisa.setBounds(603, 346, 130, 25);
+		txtPesquisa.setBounds(603, 295, 130, 25);
 		contentPane.add(txtPesquisa);
 		txtPesquisa.setColumns(10);
 		
 		JLabel lblNomeDoFuncionario = new JLabel("Nome Do Funcionario");
 		lblNomeDoFuncionario.setFont(new Font("Arial", Font.PLAIN, 12));
-		lblNomeDoFuncionario.setBounds(603, 320, 151, 25);
+		lblNomeDoFuncionario.setBounds(603, 270, 151, 25);
 		contentPane.add(lblNomeDoFuncionario);
 		
 		JButton btnVoltar = new JButton("");

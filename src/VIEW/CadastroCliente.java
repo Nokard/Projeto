@@ -141,7 +141,7 @@ public class CadastroCliente extends JFrame {
 		panel.add(comboBox);
 
 		JLabel lblNomeCliente = new JLabel("Nome Cliente");
-		lblNomeCliente.setBounds(122, 95, 76, 14);
+		lblNomeCliente.setBounds(122, 95, 102, 14);
 		panel.add(lblNomeCliente);
 		lblNomeCliente.setFont(new Font("Arial", Font.PLAIN, 12));
 
@@ -364,7 +364,7 @@ public class CadastroCliente extends JFrame {
 			
 				if(comboBox.getSelectedItem().toString().equals("Fisica")) {
 				
-				Visualizar_Clientes visu_clientes = new Visualizar_Clientes();
+				Visualizar_Clientes_Pf visu_clientes = new Visualizar_Clientes_Pf();
 				visu_clientes.setVisible(true);
 				dispose();
 				
