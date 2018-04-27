@@ -129,7 +129,7 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 	
 	//Atualizando Funcionarios
 	public void UpdateFunc() {
-		
+		;
 	}
 
 
