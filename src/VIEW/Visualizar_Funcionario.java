@@ -19,9 +19,13 @@ import DAO.ContatoDaoFuncionario;
 
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
@@ -61,8 +65,8 @@ public class Visualizar_Funcionario extends JFrame {
 	private JTextField txtRua;
 	private JTextField txtNumero;
 	private JTextField txtComplemento;
-	
-	
+
+
 
 	/**
 	 * Launch the application.
@@ -83,254 +87,267 @@ public class Visualizar_Funcionario extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	
+
 	DefaultTableModel modelo = new DefaultTableModel();
 	private JTextField txtPesquisa;
-	
+
 	public Visualizar_Funcionario() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 929, 541);
+		setBounds(100, 100, 1029, 541);
 		contentPane = new JPanel();
 		this.setLocationRelativeTo(null);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 332, 907, 170);
+		scrollPane.setBounds(10, 332, 995, 170);
 		contentPane.add(scrollPane);
-		
+
 		JLabel lblFuncionarios = new JLabel("Funcionarios");
 		lblFuncionarios.setBounds(359, 0, 135, 36);
 		contentPane.add(lblFuncionarios);
 		lblFuncionarios.setFont(new Font("Arial", Font.BOLD, 16));
-		
+
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(Color.GRAY));
-		panel.setBounds(58, 48, 771, 187);
+		panel.setBounds(71, 48, 771, 187);
 		contentPane.add(panel);
 		panel.setLayout(null);
-		
+
 		label = new JLabel("CPF");
 		label.setFont(new Font("Arial", Font.PLAIN, 12));
 		label.setBounds(266, 11, 46, 14);
 		panel.add(label);
-		
+
 		label_1 = new JLabel("RG");
 		label_1.setFont(new Font("Arial", Font.PLAIN, 12));
 		label_1.setBounds(405, 11, 70, 14);
 		panel.add(label_1);
-		
+
 		label_2 = new JLabel("SOBRENOME");
 		label_2.setFont(new Font("Arial", Font.PLAIN, 12));
 		label_2.setBounds(126, 11, 91, 14);
 		panel.add(label_2);
-		
+
 		label_3 = new JLabel("NOME");
 		label_3.setFont(new Font("Arial", Font.PLAIN, 12));
 		label_3.setBounds(10, 11, 46, 14);
 		panel.add(label_3);
-		
+
 		txtNome = new JTextField();
 		txtNome.setBounds(10, 36, 106, 20);
 		panel.add(txtNome);
 		txtNome.setColumns(10);
-		
+
 		txtSobrenome = new JTextField();
 		txtSobrenome.setBounds(126, 36, 111, 20);
 		panel.add(txtSobrenome);
 		txtSobrenome.setColumns(10);
-		
+
+
 		txtCpf = new JTextField();
 		txtCpf.setBounds(266, 36, 111, 20);
 		panel.add(txtCpf);
 		txtCpf.setColumns(10);
-		
+
 		txtRg = new JTextField();
 		txtRg.setBounds(405, 36, 105, 20);
 		panel.add(txtRg);
 		txtRg.setColumns(10);
-		
+
 		label_4 = new JLabel("TELEFONE1");
 		label_4.setFont(new Font("Arial", Font.PLAIN, 12));
 		label_4.setBounds(49, 67, 70, 15);
 		panel.add(label_4);
-		
+
 		label_5 = new JLabel("TELEFONE2");
 		label_5.setFont(new Font("Arial", Font.PLAIN, 12));
 		label_5.setBounds(167, 67, 93, 15);
 		panel.add(label_5);
-		
+
 		label_6 = new JLabel("CELULAR");
 		label_6.setFont(new Font("Arial", Font.PLAIN, 12));
 		label_6.setBounds(288, 67, 56, 15);
 		panel.add(label_6);
-		
+
 		label_7 = new JLabel("DDD");
 		label_7.setFont(new Font("Arial", Font.PLAIN, 12));
 		label_7.setBounds(10, 67, 34, 15);
 		panel.add(label_7);
-		
+
 		label_8 = new JLabel("CARGO");
 		label_8.setFont(new Font("Dialog", Font.PLAIN, 12));
 		label_8.setBounds(536, 11, 93, 15);
 		panel.add(label_8);
-		
+
 		txtDdd = new JTextField();
 		txtDdd.setBounds(10, 87, 29, 20);
 		panel.add(txtDdd);
 		txtDdd.setColumns(10);
-		
+
 		txtTel1 = new JTextField();
 		txtTel1.setBounds(49, 87, 106, 20);
 		panel.add(txtTel1);
 		txtTel1.setColumns(10);
-		
+
 		txtTel2 = new JTextField();
 		txtTel2.setBounds(165, 87, 106, 20);
 		panel.add(txtTel2);
 		txtTel2.setColumns(10);
-		
+
 		txtCel = new JTextField();
 		txtCel.setBounds(291, 87, 86, 20);
 		panel.add(txtCel);
 		txtCel.setColumns(10);
-		
+
 		txtCargo = new JTextField();
 		txtCargo.setBounds(536, 36, 86, 20);
 		panel.add(txtCargo);
 		txtCargo.setColumns(10);
-		
+
 		JLabel label_9 = new JLabel("CEP");
 		label_9.setFont(new Font("Arial", Font.PLAIN, 12));
 		label_9.setBounds(10, 118, 46, 14);
 		panel.add(label_9);
-		
+
 		JLabel label_10 = new JLabel("CIDADE");
 		label_10.setFont(new Font("Arial", Font.PLAIN, 12));
-		label_10.setBounds(59, 118, 46, 14);
+		label_10.setBounds(114, 119, 46, 14);
 		panel.add(label_10);
-		
+
 		JLabel label_11 = new JLabel("UF");
 		label_11.setFont(new Font("Arial", Font.PLAIN, 12));
-		label_11.setBounds(151, 119, 28, 14);
+		label_11.setBounds(212, 119, 28, 14);
 		panel.add(label_11);
-		
+
 		JLabel label_12 = new JLabel("BAIRRO");
 		label_12.setFont(new Font("Arial", Font.PLAIN, 12));
-		label_12.setBounds(201, 118, 46, 14);
+		label_12.setBounds(266, 119, 46, 14);
 		panel.add(label_12);
-		
+
 		txtCep = new JTextField();
-		txtCep.setBounds(10, 138, 29, 20);
+		txtCep.setBounds(10, 138, 79, 20);
 		panel.add(txtCep);
 		txtCep.setColumns(10);
-		
+
 		txtCidade = new JTextField();
-		txtCidade.setBounds(57, 138, 86, 20);
+		txtCidade.setBounds(114, 138, 86, 20);
 		panel.add(txtCidade);
 		txtCidade.setColumns(10);
-		
+
 		txtUf = new JTextField();
-		txtUf.setBounds(151, 138, 34, 20);
+		txtUf.setBounds(212, 138, 34, 20);
 		panel.add(txtUf);
 		txtUf.setColumns(10);
-		
+
 		txtBairro = new JTextField();
-		txtBairro.setBounds(195, 138, 86, 20);
+		txtBairro.setBounds(258, 138, 86, 20);
 		panel.add(txtBairro);
 		txtBairro.setColumns(10);
-		
+
 		label_13 = new JLabel("RUA");
 		label_13.setFont(new Font("Arial", Font.PLAIN, 12));
-		label_13.setBounds(288, 119, 46, 14);
+		label_13.setBounds(357, 119, 46, 14);
 		panel.add(label_13);
-		
+
 		label_14 = new JLabel("NO\u00BA");
 		label_14.setFont(new Font("Arial", Font.PLAIN, 12));
-		label_14.setBounds(391, 118, 46, 14);
+		label_14.setBounds(454, 118, 46, 14);
 		panel.add(label_14);
-		
+
 		label_15 = new JLabel("COMPLEMENTO");
 		label_15.setFont(new Font("Arial", Font.PLAIN, 12));
-		label_15.setBounds(470, 118, 96, 14);
+		label_15.setBounds(536, 118, 96, 14);
 		panel.add(label_15);
-		
+
 		txtRua = new JTextField();
-		txtRua.setBounds(293, 138, 86, 20);
+		txtRua.setBounds(357, 138, 86, 20);
 		panel.add(txtRua);
 		txtRua.setColumns(10);
-		
+
 		txtNumero = new JTextField();
-		txtNumero.setBounds(391, 138, 56, 20);
+		txtNumero.setBounds(454, 138, 56, 20);
 		panel.add(txtNumero);
 		txtNumero.setColumns(10);
-		
+
 		txtComplemento = new JTextField();
-		txtComplemento.setBounds(470, 138, 159, 20);
+		txtComplemento.setBounds(536, 138, 159, 20);
 		panel.add(txtComplemento);
 		txtComplemento.setColumns(10);
-		
+
 		table = new JTable(modelo);
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
-				int indice = table.getSelectedRow();
-				
-				txtNome.setText(table.getValueAt(indice, 0).toString());
-				txtSobrenome.setText( table.getValueAt(indice, 1).toString());
-				txtCpf.setText( table.getValueAt(indice, 2).toString());
-				txtRg.setText( table.getValueAt(indice, 3).toString());
-				txtCargo.setText( table.getValueAt(indice, 4).toString());
-				txtDdd.setText(table.getValueAt(indice, 5).toString());
-				txtTel1.setText(table.getValueAt(indice, 6).toString());
-				txtTel2.setText( table.getValueAt(indice, 7).toString());
-				txtCel.setText( table.getValueAt(indice, 8).toString());
-				
-				
-				
-				
+				setTextField();	
 			}
 		});
 		scrollPane.setViewportView(table);
-		
+
 		JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				 CarregaFuncionario(txtPesquisa.getText());
-				
-				
+
+				CarregaFuncionario(txtPesquisa.getText());
+
+
 			}
 		});
-		btnPesquisar.setBounds(745, 295, 117, 25);
+		btnPesquisar.setBounds(888, 295, 117, 25);
 		contentPane.add(btnPesquisar);
-		
+
 		txtPesquisa = new JTextField();
-		txtPesquisa.setBounds(603, 295, 130, 25);
+		txtPesquisa.setBounds(746, 295, 130, 25);
 		contentPane.add(txtPesquisa);
 		txtPesquisa.setColumns(10);
-		
+
 		JLabel lblNomeDoFuncionario = new JLabel("Nome Do Funcionario");
 		lblNomeDoFuncionario.setFont(new Font("Arial", Font.PLAIN, 12));
-		lblNomeDoFuncionario.setBounds(603, 270, 151, 25);
+		lblNomeDoFuncionario.setBounds(742, 268, 151, 25);
 		contentPane.add(lblNomeDoFuncionario);
-		
+
 		JButton btnVoltar = new JButton("");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				Cadastro_Funcionario cadastro_func = new Cadastro_Funcionario();
 				cadastro_func.setVisible(true);
 				dispose();
-				
+
 			}
 		});
 		btnVoltar.setIcon(new ImageIcon(Visualizar_Funcionario.class.getResource("/imgs/Back.png")));
-		btnVoltar.setBounds(833, 32, 41, 36);
+		btnVoltar.setBounds(964, 12, 41, 36);
 		contentPane.add(btnVoltar);
-		
+
+		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				if(table.getSelectedRow() != -1) {
+					int yes = JOptionPane.showConfirmDialog(null, "Você realmente deseja DELETAR esse Funcionario ?","DELETE",JOptionPane.YES_NO_OPTION);	
+					if (yes == 0) {
+						DadoFunc func = new DadoFunc();
+						ContatoDaoFuncionario funcDao = new ContatoDaoFuncionario();
+
+						func.setCpf((String) table.getValueAt(table.getSelectedRow(),3));
+
+						funcDao.DeleteFuncionario(func);
+
+						//CHAMANDO METODO PARA LIMPAR TEXTFIEDLD
+						limparTextField();
+						
+					}
+
+				}else {
+					JOptionPane.showMessageDialog(null, "Selecione um registro para excluir");
+				}
+			}
+		});
+		btnExcluir.setBounds(598, 295, 117, 25);
+		contentPane.add(btnExcluir);
+
 		modelo.addColumn("Nome");
 		modelo.addColumn("Sobrenome");
 		modelo.addColumn("RG");
@@ -340,18 +357,42 @@ public class Visualizar_Funcionario extends JFrame {
 		modelo.addColumn("Tel1");
 		modelo.addColumn("Tel2");
 		modelo.addColumn("Cel");
-//		modelo.addColumn("CEP");
-//		modelo.addColumn("ESTADO");
-//		modelo.addColumn("CIDADE");
-//		modelo.addColumn("BAIRRO");
-//		modelo.addColumn("NUMERO");
-//		modelo.addColumn("RUA");
-//		modelo.addColumn("COMPLEMENTO");
-		
+		modelo.addColumn("CEP");
+		modelo.addColumn("ESTADO");
+		modelo.addColumn("CIDADE");
+		modelo.addColumn("BAIRRO");
+		modelo.addColumn("NUMERO");
+		modelo.addColumn("RUA");
+		modelo.addColumn("COMPLEMENTO");
+
 	}
-	
+
+	//Preenche o textField com os dados do JTABLE 
+	public void setTextField() {
+
+		int indice = table.getSelectedRow();
+
+		txtNome.setText(table.getValueAt(indice, 0).toString());
+		txtSobrenome.setText( table.getValueAt(indice, 1).toString());
+		txtCpf.setText( table.getValueAt(indice, 3).toString());
+		txtRg.setText( table.getValueAt(indice, 2).toString());
+		txtCargo.setText( table.getValueAt(indice, 4).toString());
+		txtDdd.setText(table.getValueAt(indice, 5).toString());
+		txtTel1.setText(table.getValueAt(indice, 6).toString());
+		txtTel2.setText( table.getValueAt(indice, 7).toString());
+		txtCel.setText( table.getValueAt(indice, 8).toString());
+		txtCep.setText(table.getValueAt(indice, 9).toString());
+		txtCidade.setText(table.getValueAt(indice, 10).toString());
+		txtUf.setText(table.getValueAt(indice, 11).toString());
+		txtBairro.setText(table.getValueAt(indice, 12).toString());
+		txtRua.setText(table.getValueAt(indice, 13).toString());
+		txtNumero.setText(table.getValueAt(indice, 14).toString());
+		txtComplemento.setText(table.getValueAt(indice, 15).toString());
+
+	}
+
 	public void CarregaFuncionario(String desc) {
-		
+
 		try {
 
 			ContatoDaoFuncionario daoFunc = new ContatoDaoFuncionario();
@@ -375,16 +416,35 @@ public class Visualizar_Funcionario extends JFrame {
 								funcionario.getNo(),
 								funcionario.getRua(),
 								funcionario.getComplemento()				
-								
+
 						});
 			}
-			
-		
 
 		} catch (Exception e) {
 			System.out.println("Erro Visualizar_Funcionario: "+ e);
 		}	
-	
+
+	}
+
+	//METODO PARA LIMPAR TEXTFIELD
+	public void limparTextField() {
+
+		txtNome.setText("");
+		txtSobrenome.setText("");
+		txtCpf.setText("");
+		txtRg.setText("");
+		txtCargo.setText("");
+		txtDdd.setText("");
+		txtTel1.setText("");
+		txtTel2.setText("");
+		txtCel.setText("");
+		txtCep.setText("");
+		txtCidade.setText("");
+		txtUf.setText("");
+		txtBairro.setText("");
+		txtRua.setText("");
+		txtNumero.setText("");
+		txtComplemento.setText("");		
 	}
 }
 

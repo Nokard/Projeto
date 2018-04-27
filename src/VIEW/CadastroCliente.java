@@ -369,7 +369,10 @@ public class CadastroCliente extends JFrame {
 				dispose();
 				
 				}else {
-					JOptionPane.showMessageDialog(null, "Estamos desenvolvendo ainda !!");
+					Visualizar_Clientes_Pj visu_clientes = new Visualizar_Clientes_Pj();
+					visu_clientes.setVisible(true);
+					dispose();
+					
 				}
 			}
 		});

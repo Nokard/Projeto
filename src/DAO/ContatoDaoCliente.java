@@ -27,7 +27,7 @@ public class ContatoDaoCliente extends ConnectionFac{
 
 			ResultSet rs = stmt0.executeQuery();
 			if (rs.next()) {
-				JOptionPane.showMessageDialog(null, "Usuario com esse cpf ' "+ dadopf.getCpf()+" ' já existe");
+				JOptionPane.showMessageDialog(null, "Usuario com esse cpf ' "+ dadopf.getCpf()+" ' jï¿½ existe");
 			}else {
 
 				String sql_cliente_pf = "INSERT INTO cliente_pf"+
@@ -98,7 +98,7 @@ public class ContatoDaoCliente extends ConnectionFac{
 			
 			ResultSet rs = stmt0.executeQuery();
 			if (rs.next()) {
-				JOptionPane.showMessageDialog(null, "Usuario com esse CNPJ ' "+ dadopj.getCnpj()+" ' já existe");
+				JOptionPane.showMessageDialog(null, "Usuario com esse CNPJ ' "+ dadopj.getCnpj()+" ' jÃ¡ existe");
 
 			}else {
 				String sql_cliente_pj = "INSERT INTO cliente_pj"

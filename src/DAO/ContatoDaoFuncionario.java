@@ -21,6 +21,7 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 		this.connection = new ConnectionFac().getConnection();
 	}
 
+	//ADICIONANDO FUNCIONARIOS
 	public void adicionaFuncionario(DadoFunc dadoFunc) {
 
 		try {
@@ -37,10 +38,10 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 				//Comandos SQL para inserir em 3 tabelas
 				// tablea funcionario
 				String sql_adiciona_func= "Insert into funcionario"+
-						"(nome,sobrenome,rg,cpf, cargo) Values (?,?,?,?,?);";
+						"(nome,sobrenome,rg,cpf,cargo) Values (?,?,?,?,?);";
 				//table endereco_funcionario
 				String sql_adiciona_end_func= "INSERT INTO endereco_funcionario"+
-						"(cep,rua,cidade,estado,numero,bairro,complemento,fk_cpf_funcionario)"+
+						"(cep,rua,cidade,estado,numero,bairro,complemento,fk_endereco_cpf_funcionario)"+
 						"VALUES(?,?,?,?,?,?,?,?);";
 				//table telefone_funcionario
 				String sql_adiciona_tel_func = "INSERT INTO telefone_funcionario"+
@@ -99,60 +100,65 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 		}
 
 	}
-	
-	
+
+	//ATUALIZANDO DADOS FUNCIONARIO
+	public void UpdateFuncionario(DadoFunc updateFunc) {
+		
+
+
+	}
+
+	//DELETANDO FUNCIONARIO COM CASCADE
 	public void DeleteFuncionario(DadoFunc dadoFunc) {
-		
-		
-		String delete_sql = "DELETE FROM funcionario, endereco_funcionario, telefone_funcionario \r\n" + 
-				"    using funcionario \r\n" + 
-				"    inner join endereco_funcionario inner join telefone_funcionario\r\n" + 
-				"    where funcionario.cpf = endereco_funcionario.fk_cpf_funcionario \r\n" + 
-				"    and telefone_funcionario.fk_cpf_funcionario = endereco_funcionario.fk_cpf_funcionario\r\n" + 
-				"    and funcionario.cpf = ?;"; 
-		
+
+		String delete_sql = "DELETE FROM adega.funcionario where cpf = ?";
+
 		try {
 			PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(delete_sql);
 			stmt.setString(1, dadoFunc.getCpf());
-			
+
 			stmt.executeUpdate();
-			stmt.close();
-			
+
 			JOptionPane.showMessageDialog(null, "Funcionario excluido com sucesso");
-			
-			
+
+
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, "Erro ao excluir Funcionario");
+			System.out.println("Erro ao excluir Funcionario" +e);
 		}
 	}
-		
 	
+	//Atualizando Funcionarios
+	public void UpdateFunc() {
+		
+	}
+
+
+	//LISTANDO FUNCIONARIOS
 	public List<DadoFunc> getFuncionarioDesc(String desc){
-		
-		
+
 		try {
-			
+
 			List<DadoFunc> funcionarios = new ArrayList<DadoFunc>();
-			
+
 			PreparedStatement stmt = (PreparedStatement) this.connection.prepareStatement("select a.nome, a.sobrenome, a.rg, a.cpf, a.cargo," + 
 					"c.ddd , c.tel1, c.tel2, c.cel," + 
 					"b.CEP,b.ESTADO, b.CIDADE , b.BAIRRO, b.NUMERO, b.RUA, b.complemento " + 
 					"from adega.funcionario a " + 
 					"join endereco_funcionario b " + 
-					"on a.cpf = b.fk_cpf_funcionario " + 
+					"on a.cpf = b.fk_endereco_cpf_funcionario " + 
 					"join adega.telefone_funcionario c " + 
 					"on a.cpf = c.fk_cpf_funcionario " + 
 					"WHERE a.nome like ?;");
-			
+
 			stmt.setString(1, "%"+desc+"%");
-			
+
 			ResultSet rs = stmt.executeQuery();
-			
-			
+
+
 			while (rs.next()) {
-				
+
 				DadoFunc func = new DadoFunc();
-				
+
 				func.setNome(rs.getString("nome"));
 				func.setSobrenome(rs.getString("sobrenome"));
 				func.setRg(rs.getString("rg"));
@@ -169,50 +175,84 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 				func.setNo(rs.getString("NUMERO"));
 				func.setRua(rs.getString("RUA"));
 				func.setComplemento(rs.getString("complemento"));
-				
+
 				funcionarios.add(func);
-				
+
 			}
 			rs.close();
 			stmt.close();
 			return funcionarios;
-		
+
 		} catch (SQLException e) {
 			throw new  RuntimeException(e);
 		}
-		
-		
-	}
-	/*public List<Produto> getProdutoForDesc(String desc){
 
+
+	}
+	
+	/*public List<DadoFunc> ListarFuncionarios(){
 
 		try {
-			List<Produto> produtos = new ArrayList<Produto>();
 
-			PreparedStatement stmt = (PreparedStatement) this.connection.prepareStatement("SELECT * FROM produtos where descricao like ? ");
-			stmt.setString(1, "%"+desc+"%");		
+			List<DadoFunc> funcionarios = new ArrayList<DadoFunc>();
+
+			PreparedStatement stmt = (PreparedStatement) this.connection.prepareStatement("select a.nome, a.sobrenome, a.rg, a.cpf, a.cargo," + 
+					"c.ddd , c.tel1, c.tel2, c.cel," + 
+					"b.CEP,b.ESTADO, b.CIDADE , b.BAIRRO, b.NUMERO, b.RUA, b.complemento " + 
+					"from adega.funcionario a " + 
+					"join endereco_funcionario b " + 
+					"on a.cpf = b.fk_endereco_cpf_funcionario " + 
+					"join adega.telefone_funcionario c " + 
+					"on a.cpf = c.fk_cpf_funcionario;");
 
 			ResultSet rs = stmt.executeQuery();
 
-			while(rs.next()) {
 
-				Produto produto = new Produto();
-				produto.setCd_produto(rs.getInt("cd_produto"));
-				produto.setDescricao(rs.getString("descricao"));
-				produto.setMarca(rs.getString("marca"));
-				produto.setQtdEstoque(rs.getInt("qtd_estoque"));
-				produto.setData_fabricacao(rs.getString("data_fabricacao"));
-				produto.setData_validade(rs.getString("data_validade"));
+			while (rs.next()) {
 
-				produtos.add(produto);
+				DadoFunc func = new DadoFunc();
+
+				func.setNome(rs.getString("nome"));
+				func.setSobrenome(rs.getString("sobrenome"));
+				func.setRg(rs.getString("rg"));
+				func.setCpf(rs.getString("cpf"));
+				func.setCargo(rs.getString("cargo"));
+				func.setDdd(rs.getInt("ddd"));
+				func.setTel1(rs.getString("tel1"));
+				func.setTel2(rs.getString("tel2"));
+				func.setCel(rs.getString("cel"));
+				func.setCep(rs.getString("CEP"));
+				func.setEstado(rs.getString("estado"));
+				func.setCidade(rs.getString("CIDADE"));
+				func.setBairro(rs.getString("BAIRRO"));
+				func.setNo(rs.getString("NUMERO"));
+				func.setRua(rs.getString("RUA"));
+				func.setComplemento(rs.getString("complemento"));
+
+				funcionarios.add(func);
+
 			}
 			rs.close();
 			stmt.close();
-			return produtos;
-
+			return funcionarios;
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new  RuntimeException(e);
 		}
- */
+
+
+	}
+*/
 }
+
+
+
+
+
+
+
+
+
+
+
+

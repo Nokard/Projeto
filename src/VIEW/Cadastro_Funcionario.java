@@ -66,15 +66,19 @@ public class Cadastro_Funcionario extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		//MASCARA PARA OS CAMPOS
 		MaskFormatter JfTelefone1 = null;
 		MaskFormatter JfTelefone2 = null;
 		MaskFormatter JfCel1 = null;
-
+		MaskFormatter jfCpf = null;
+		MaskFormatter jfRg = null;
+		
 		try {
 			JfTelefone1 = new MaskFormatter("####-####");
 			JfTelefone2 = new MaskFormatter("####-####");
 			JfCel1 = new MaskFormatter("#####-####");
-
+			jfCpf = new MaskFormatter("###########");
+			jfRg = new MaskFormatter("#########");
 		} catch (Exception e) {
 			System.out.println("Erro -> "+ e);
 		}
@@ -144,7 +148,7 @@ public class Cadastro_Funcionario extends JFrame {
 		lbIcone.setIcon(new ImageIcon(Cadastro_Funcionario.class.getResource("/imgs/employess.png")));
 		
 		JLabel lblCadastroDeFuncionrio = new JLabel("Cadastro de Funcion\u00E1rio");
-		lblCadastroDeFuncionrio.setBounds(217, 15, 177, 36);
+		lblCadastroDeFuncionrio.setBounds(217, 15, 213, 36);
 		panel.add(lblCadastroDeFuncionrio);
 		lblCadastroDeFuncionrio.setFont(new Font("Arial", Font.PLAIN, 16));
 		
@@ -289,6 +293,7 @@ public class Cadastro_Funcionario extends JFrame {
 				
 				try {
 					
+					Visualizar_Funcionario visuFunc = new Visualizar_Funcionario();
 					DadoFunc func = new DadoFunc();
 					int ddd = Integer.parseInt(txtDdd.getText());
 
@@ -313,6 +318,8 @@ public class Cadastro_Funcionario extends JFrame {
 					ContatoDaoFuncionario daoFunc = new ContatoDaoFuncionario();
 					
 					daoFunc.adicionaFuncionario(func);
+					
+					visuFunc.limparTextField();
 					
 					
 					

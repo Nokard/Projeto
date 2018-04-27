@@ -15,6 +15,7 @@ import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 public class Visualizar_Clientes_Pf extends JFrame {
 
@@ -33,6 +34,7 @@ public class Visualizar_Clientes_Pf extends JFrame {
 	private JTextField txtRua;
 	private JTextField txtNo;
 	private JTextField txtComplemento;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -222,5 +224,8 @@ public class Visualizar_Clientes_Pf extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(12, 264, 905, 235);
 		contentPane.add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
 	}
 }
