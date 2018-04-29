@@ -319,9 +319,7 @@ public class Cadastro_Funcionario extends JFrame {
 					
 					daoFunc.adicionaFuncionario(func);
 					
-					visuFunc.limparTextField();
-					
-					
+					visuFunc.limparTextField();	
 					
 				} catch (Exception e2) {
 					System.out.println("Erro Cadastro_func ->" + e2);

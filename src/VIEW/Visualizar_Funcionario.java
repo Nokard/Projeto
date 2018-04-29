@@ -32,6 +32,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Visualizar_Funcionario extends JFrame {
 
@@ -277,6 +281,18 @@ public class Visualizar_Funcionario extends JFrame {
 		txtComplemento.setColumns(10);
 
 		table = new JTable(modelo);
+		//Metodo para preencher os textField com as
+		//setas do teclado
+		table.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				setTextField();
+			}
+			@Override
+			public void keyReleased(KeyEvent e) {
+				setTextField();
+			}
+		});
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -337,7 +353,7 @@ public class Visualizar_Funcionario extends JFrame {
 
 						//CHAMANDO METODO PARA LIMPAR TEXTFIEDLD
 						limparTextField();
-						
+
 					}
 
 				}else {
@@ -347,6 +363,50 @@ public class Visualizar_Funcionario extends JFrame {
 		});
 		btnExcluir.setBounds(598, 295, 117, 25);
 		contentPane.add(btnExcluir);
+
+		JButton btnAtualizar = new JButton("Atualizar");
+		btnAtualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {	
+
+				if(table.getSelectedRow() != -1) {
+					int yes = JOptionPane.showConfirmDialog(null, "Você realmente deseja ATUALIZAR esse Funcionario ?","ATUALIZAR",JOptionPane.YES_NO_OPTION);	
+					if (yes == 0) {
+						DadoFunc func = new DadoFunc();
+						ContatoDaoFuncionario funcDao = new ContatoDaoFuncionario();
+						int ddd = Integer.parseInt(txtDdd.getText());
+
+						func.setNome(txtNome.getText().toUpperCase());
+						func.setSobrenome(txtSobrenome.getText().toUpperCase());
+						func.setRg(txtRg.getText());
+						func.setCpf(txtCpf.getText());
+						func.setCargo(txtCargo.getText().toUpperCase());
+						func.setDdd(ddd);
+						func.setTel1(txtTel1.getText());
+						func.setTel2(txtTel2.getText());
+						func.setCel(txtCel.getText());
+						func.setCep(txtCep.getText());
+						func.setCidade(txtCidade.getText().toUpperCase());
+						func.setEstado(txtUf.getText().toUpperCase());
+						func.setRua(txtRua.getText().toUpperCase());
+						func.setBairro(txtBairro.getText().toUpperCase());
+						func.setNo(txtNumero.getText());
+						func.setComplemento(txtComplemento.getText().toUpperCase());
+
+						funcDao.UpdateFunc(func);
+
+						//CHAMANDO METODO PARA LIMPAR TEXTFIEDLD
+						limparTextField();
+
+					}
+
+				}else {
+					JOptionPane.showMessageDialog(null, "Selecione um registro para Atualizar");
+				}
+
+			}
+		});
+		btnAtualizar.setBounds(469, 295, 117, 25);
+		contentPane.add(btnAtualizar);
 
 		modelo.addColumn("Nome");
 		modelo.addColumn("Sobrenome");
@@ -374,8 +434,8 @@ public class Visualizar_Funcionario extends JFrame {
 
 		txtNome.setText(table.getValueAt(indice, 0).toString());
 		txtSobrenome.setText( table.getValueAt(indice, 1).toString());
-		txtCpf.setText( table.getValueAt(indice, 3).toString());
 		txtRg.setText( table.getValueAt(indice, 2).toString());
+		txtCpf.setText( table.getValueAt(indice, 3).toString());
 		txtCargo.setText( table.getValueAt(indice, 4).toString());
 		txtDdd.setText(table.getValueAt(indice, 5).toString());
 		txtTel1.setText(table.getValueAt(indice, 6).toString());

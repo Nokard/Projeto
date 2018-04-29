@@ -1,7 +1,7 @@
 package CONTROL;
 
 public class DadoFunc {
-
+	
 	private String nome;
 	private String sobrenome;
 	private String rg;
