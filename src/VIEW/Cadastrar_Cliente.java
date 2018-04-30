@@ -21,7 +21,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.JFormattedTextField;
 
-public class CadastroCliente extends JFrame {
+public class Cadastrar_Cliente extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtNomeCli;
@@ -61,7 +61,7 @@ public class CadastroCliente extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastroCliente frame = new CadastroCliente();
+					Cadastrar_Cliente frame = new Cadastrar_Cliente();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -73,7 +73,7 @@ public class CadastroCliente extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CadastroCliente() {
+	public Cadastrar_Cliente() {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 636, 444);
 		contentPane = new JPanel();
@@ -112,7 +112,7 @@ public class CadastroCliente extends JFrame {
 		lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(21, 3, 76, 48);
 		panel.add(lblNewLabel);
-		lblNewLabel.setIcon(new ImageIcon(CadastroCliente.class.getResource("/imgs/client.png")));
+		lblNewLabel.setIcon(new ImageIcon(Cadastrar_Cliente.class.getResource("/imgs/client.png")));
 
 		lblCadastroClientes = new JLabel("Cadastro Clientes ");
 		lblCadastroClientes.setBounds(245, 3, 146, 36);
@@ -124,11 +124,11 @@ public class CadastroCliente extends JFrame {
 		panel.add(btnVoltar);
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new Cadastro().setVisible(true);
+				new Index().setVisible(true);
 				dispose();
 			}
 		});
-		btnVoltar.setIcon(new ImageIcon(CadastroCliente.class.getResource("/imgs/Back.png")));
+		btnVoltar.setIcon(new ImageIcon(Cadastrar_Cliente.class.getResource("/imgs/Back.png")));
 
 		lblTipo = new JLabel("Tipo");
 		lblTipo.setBounds(9, 95, 46, 14);

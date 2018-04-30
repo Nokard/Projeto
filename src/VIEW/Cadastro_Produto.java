@@ -80,7 +80,7 @@ public class Cadastro_Produto extends JFrame {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				Cadastro cadastro = new Cadastro();
+				Index cadastro = new Index();
 				cadastro.setVisible(true);
 				dispose();
 			}

@@ -327,7 +327,7 @@ public class Visualizar_Funcionario extends JFrame {
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				Cadastro_Funcionario cadastro_func = new Cadastro_Funcionario();
+				Cadastrar_Funcionario cadastro_func = new Cadastrar_Funcionario();
 				cadastro_func.setVisible(true);
 				dispose();
 

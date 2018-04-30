@@ -81,7 +81,7 @@ public class verificaSenha extends JFrame {
 		JButton btnNewButton = new JButton("Voltar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new Cadastro().setVisible(true);
+				new Index().setVisible(true);
 				dispose();
 			}
 		});

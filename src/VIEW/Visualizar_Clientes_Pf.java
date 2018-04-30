@@ -67,7 +67,7 @@ public class Visualizar_Clientes_Pf extends JFrame {
 		JButton button = new JButton("");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new CadastroCliente().setVisible(true);
+				new Cadastrar_Cliente().setVisible(true);
 				dispose();
 			}
 		});

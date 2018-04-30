@@ -16,7 +16,7 @@ import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Fornecedor extends JFrame {
+public class Cadastrar_Fornecedor extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtNomeFantasia;
@@ -41,7 +41,7 @@ public class Fornecedor extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Fornecedor frame = new Fornecedor();
+					Cadastrar_Fornecedor frame = new Cadastrar_Fornecedor();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -53,7 +53,7 @@ public class Fornecedor extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Fornecedor() {
+	public Cadastrar_Fornecedor() {
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 636, 444);
@@ -221,12 +221,12 @@ public class Fornecedor extends JFrame {
 		JButton button = new JButton("");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Cadastro cadastro = new Cadastro();
+				Index cadastro = new Index();
 				cadastro.setVisible(true);
 				dispose();
 			}
 		});
-		button.setIcon(new ImageIcon(Fornecedor.class.getResource("/imgs/Back.png")));
+		button.setIcon(new ImageIcon(Cadastrar_Fornecedor.class.getResource("/imgs/Back.png")));
 		button.setBounds(568, 4, 56, 36);
 		contentPane.add(button);
 		
@@ -236,7 +236,7 @@ public class Fornecedor extends JFrame {
 		contentPane.add(lblCadastroFornecedor);
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(Fornecedor.class.getResource("/imgs/fornecedor.png")));
+		label.setIcon(new ImageIcon(Cadastrar_Fornecedor.class.getResource("/imgs/fornecedor.png")));
 		label.setBounds(21, 4, 56, 51);
 		contentPane.add(label);
 		

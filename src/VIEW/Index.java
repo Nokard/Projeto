@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.ImageIcon;
 
-public class Cadastro extends JFrame {
+public class Index extends JFrame {
 
 	private JPanel contentPane;
 
@@ -25,7 +25,7 @@ public class Cadastro extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Cadastro frame = new Cadastro();
+					Index frame = new Index();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -37,7 +37,7 @@ public class Cadastro extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Cadastro() {
+	public Index() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 363, 452);
 		contentPane = new JPanel();
@@ -51,11 +51,11 @@ public class Cadastro extends JFrame {
 		btnCliente.setFont(new Font("Arial", Font.PLAIN, 12));
 		btnCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new CadastroCliente().setVisible(true);
+				new Cadastrar_Cliente().setVisible(true);
 				dispose();
 			}
 		});
-		btnCliente.setIcon(new ImageIcon(Cadastro.class.getResource("/imgs/cliente.png")));
+		btnCliente.setIcon(new ImageIcon(Index.class.getResource("/imgs/cliente.png")));
 		btnCliente.setForeground(Color.WHITE);
 		btnCliente.setBackground(new Color(128, 0, 0));
 		btnCliente.setBounds(10, 16, 141, 67);
@@ -65,12 +65,12 @@ public class Cadastro extends JFrame {
 		btnFornecedor.setFont(new Font("Arial", Font.PLAIN, 12));
 		btnFornecedor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Fornecedor fornecedor = new Fornecedor();
+				Cadastrar_Fornecedor fornecedor = new Cadastrar_Fornecedor();
 				fornecedor.setVisible(true);
 				dispose();
 			}
 		});
-		btnFornecedor.setIcon(new ImageIcon(Cadastro.class.getResource("/imgs/fornecedor.png")));
+		btnFornecedor.setIcon(new ImageIcon(Index.class.getResource("/imgs/fornecedor.png")));
 		
 		btnFornecedor.setForeground(Color.WHITE);
 		btnFornecedor.setBounds(10, 250, 141, 67);
@@ -85,11 +85,11 @@ public class Cadastro extends JFrame {
 				
 				
 				
-				new CadastrarPedido().setVisible(true);
+				new Cadastrar_Pedido().setVisible(true);
 				dispose();
 			}
 		});
-		btnPedido.setIcon(new ImageIcon(Cadastro.class.getResource("/imgs/pedido1.png")));
+		btnPedido.setIcon(new ImageIcon(Index.class.getResource("/imgs/pedido1.png")));
 		btnPedido.setBackground(new Color(128, 0, 0));
 		btnPedido.setForeground(Color.WHITE);
 		btnPedido.setForeground(new Color(255, 255, 255));
@@ -108,7 +108,7 @@ public class Cadastro extends JFrame {
 			 
 			}
 		});
-		btnFuncionarios.setIcon(new ImageIcon(Cadastro.class.getResource("/imgs/visuEstoque.png")));
+		btnFuncionarios.setIcon(new ImageIcon(Index.class.getResource("/imgs/visuEstoque.png")));
 		btnFuncionarios.setForeground(Color.WHITE);
 		btnFuncionarios.setBackground(new Color(128, 0, 0));
 		btnFuncionarios.setForeground(new Color(255, 255, 255));
@@ -124,7 +124,7 @@ public class Cadastro extends JFrame {
 				dispose();
 			}
 		});
-		btnEstoque.setIcon(new ImageIcon(Cadastro.class.getResource("/imgs/estoque.png")));
+		btnEstoque.setIcon(new ImageIcon(Index.class.getResource("/imgs/estoque.png")));
 		btnEstoque.setBackground(new Color(128, 0, 0));
 		btnEstoque.setForeground(new Color(255, 255, 255));
 		btnEstoque.setBounds(10, 328, 141, 67);
@@ -137,7 +137,7 @@ public class Cadastro extends JFrame {
 		contentPane.add(lblCadastro);
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(Cadastro.class.getResource("/imgs/wine.png")));
+		label.setIcon(new ImageIcon(Index.class.getResource("/imgs/wine.png")));
 		label.setBounds(191, 72, 135, 152);
 		contentPane.add(label);
 		
@@ -145,11 +145,11 @@ public class Cadastro extends JFrame {
 		btnFuncionrios.setFont(new Font("Arial", Font.PLAIN, 12));
 		btnFuncionrios.setForeground(new Color(255, 255, 255));
 		btnFuncionrios.setBackground(new Color(128, 0, 0));
-		btnFuncionrios.setIcon(new ImageIcon(Cadastro.class.getResource("/imgs/func.png")));
+		btnFuncionrios.setIcon(new ImageIcon(Index.class.getResource("/imgs/func.png")));
 		btnFuncionrios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
-				new Cadastro_Funcionario().setVisible(true);
+				new Cadastrar_Funcionario().setVisible(true);
 				dispose();
 			
 			}

@@ -17,7 +17,7 @@ import javax.swing.JScrollPane;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 
-public class CadastrarPedido extends JFrame {
+public class Cadastrar_Pedido extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtCodigo_produto;
@@ -33,7 +33,7 @@ public class CadastrarPedido extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastrarPedido frame = new CadastrarPedido();
+					Cadastrar_Pedido frame = new Cadastrar_Pedido();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -45,7 +45,7 @@ public class CadastrarPedido extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CadastrarPedido() {
+	public Cadastrar_Pedido() {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 610, 435);
 		contentPane = new JPanel();
@@ -71,7 +71,7 @@ public class CadastrarPedido extends JFrame {
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(2, 7, 65, 63);
 		panel.add(lblNewLabel);
-		lblNewLabel.setIcon(new ImageIcon(CadastrarPedido.class.getResource("/imgs/pedido.png")));
+		lblNewLabel.setIcon(new ImageIcon(Cadastrar_Pedido.class.getResource("/imgs/pedido.png")));
 		
 		JLabel lblCadastrarPedido = new JLabel("Cadastrar Pedido");
 		lblCadastrarPedido.setBounds(203, 7, 162, 30);
@@ -83,12 +83,12 @@ public class CadastrarPedido extends JFrame {
 		panel.add(button);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new Cadastro().setVisible(true);
+				new Index().setVisible(true);
 				dispose();
 				
 			}
 		});
-		button.setIcon(new ImageIcon(CadastrarPedido.class.getResource("/imgs/Back.png")));
+		button.setIcon(new ImageIcon(Cadastrar_Pedido.class.getResource("/imgs/Back.png")));
 		
 		JLabel lblQtdeEstoqu = new JLabel("Qtde. Estoque");
 		lblQtdeEstoqu.setBounds(474, 86, 86, 14);

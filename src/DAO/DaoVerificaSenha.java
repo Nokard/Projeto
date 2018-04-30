@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 import CONTROL.senhaGerente;
-import VIEW.CadastrarPedido;
-import VIEW.Cadastro;
+import VIEW.Cadastrar_Pedido;
+import VIEW.Index;
 
 public class DaoVerificaSenha extends ConnectionFac {
 
@@ -35,11 +35,11 @@ public class DaoVerificaSenha extends ConnectionFac {
 			if (rs.next()) {
 				JOptionPane.showMessageDialog(null, "Acesso concedido");
 
-				new CadastrarPedido().setVisible(true);
+				new Cadastrar_Pedido().setVisible(true);
 					
 			}else {
-				JOptionPane.showMessageDialog(null, "Você não tem permissao para acessars");
-				new Cadastro().setVisible(true);
+				JOptionPane.showMessageDialog(null, "Vocï¿½ nï¿½o tem permissao para acessars");
+				new Index().setVisible(true);
 			}
 			
 		} catch (SQLException e) {

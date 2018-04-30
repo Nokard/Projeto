@@ -22,7 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 
-public class Cadastro_Funcionario extends JFrame {
+public class Cadastrar_Funcionario extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtNome;
@@ -45,7 +45,7 @@ public class Cadastro_Funcionario extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Cadastro_Funcionario frame = new Cadastro_Funcionario();
+					Cadastrar_Funcionario frame = new Cadastrar_Funcionario();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,7 +57,7 @@ public class Cadastro_Funcionario extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Cadastro_Funcionario() {
+	public Cadastrar_Funcionario() {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 641, 419);
 		contentPane = new JPanel();
@@ -146,7 +146,7 @@ public class Cadastro_Funcionario extends JFrame {
 		lbIcone.setBounds(8, 5, 48, 48);
 		panel.add(lbIcone);
 		lbIcone.setBackground(Color.WHITE);
-		lbIcone.setIcon(new ImageIcon(Cadastro_Funcionario.class.getResource("/imgs/employess.png")));
+		lbIcone.setIcon(new ImageIcon(Cadastrar_Funcionario.class.getResource("/imgs/employess.png")));
 
 		JLabel lblCadastroDeFuncionrio = new JLabel("Cadastro de Funcion\u00E1rio");
 		lblCadastroDeFuncionrio.setBounds(217, 15, 213, 36);
@@ -158,12 +158,12 @@ public class Cadastro_Funcionario extends JFrame {
 		panel.add(btnVoltar);
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Cadastro cadastro = new Cadastro();
+				Index cadastro = new Index();
 				cadastro.setVisible(true);
 				dispose();
 			}
 		});
-		btnVoltar.setIcon(new ImageIcon(Cadastro_Funcionario.class.getResource("/imgs/Back.png")));
+		btnVoltar.setIcon(new ImageIcon(Cadastrar_Funcionario.class.getResource("/imgs/Back.png")));
 
 		JLabel lblTelefone = new JLabel("TELEFONE1");
 		lblTelefone.setBounds(71, 120, 80, 14);

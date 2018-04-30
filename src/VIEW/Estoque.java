@@ -104,7 +104,7 @@ public class Estoque extends JFrame {
 		JButton btnVoltar = new JButton("");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Cadastro cadastro = new Cadastro();
+				Index cadastro = new Index();
 				cadastro.setVisible(true);
 				dispose();
 			}
