@@ -243,5 +243,9 @@ public class Fornecedor extends JFrame {
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.setBounds(507, 377, 117, 25);
 		contentPane.add(btnCadastrar);
+		
+		JButton btnFornecedores = new JButton("Fornecedores");
+		btnFornecedores.setBounds(347, 377, 132, 25);
+		contentPane.add(btnFornecedores);
 	}
 }

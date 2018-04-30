@@ -442,8 +442,8 @@ public class Visualizar_Funcionario extends JFrame {
 		txtTel2.setText( table.getValueAt(indice, 7).toString());
 		txtCel.setText( table.getValueAt(indice, 8).toString());
 		txtCep.setText(table.getValueAt(indice, 9).toString());
-		txtCidade.setText(table.getValueAt(indice, 10).toString());
-		txtUf.setText(table.getValueAt(indice, 11).toString());
+		txtUf.setText(table.getValueAt(indice, 10).toString());
+		txtCidade.setText(table.getValueAt(indice, 11).toString());
 		txtBairro.setText(table.getValueAt(indice, 12).toString());
 		txtRua.setText(table.getValueAt(indice, 13).toString());
 		txtNumero.setText(table.getValueAt(indice, 14).toString());

@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import CONTROL.DadoFunc;
+import VIEW.Visualizar_Funcionario;
 
 public class ContatoDaoFuncionario extends ConnectionFac{
 
@@ -88,7 +89,9 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 
 					JOptionPane.showMessageDialog(null, "Funcionario "+dadoFunc.getNome().toUpperCase()+" Cadastrado com sucesso");
 
-
+					Visualizar_Funcionario vsu = new Visualizar_Funcionario();
+					
+					vsu.limparTextField();
 
 				} catch (SQLException e) {
 					System.out.println("Erro ao cadastrar Funcionario " + e);
@@ -197,6 +200,9 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 						"where a.cpf = ? ;";
 				
 				PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(update_funcionario);
+				
+				
+				
 				
 				stmt.setString(1, UpdateDadoFunc.getNome());
 				stmt.setString(2, UpdateDadoFunc.getSobrenome());
