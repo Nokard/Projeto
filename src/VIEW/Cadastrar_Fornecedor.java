@@ -7,10 +7,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
+
+import CONTROL.DadoFornec;
+import DAO.ContatoDaoFornecedor;
+
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
@@ -25,12 +31,12 @@ public class Cadastrar_Fornecedor extends JFrame {
 	private JTextField txtCep;
 	private JTextField txtCidade;
 	private JTextField txtUf;
-	private JTextField textField;
+	private JTextField txtDdd;
 	private JTextField txtTel1;
 	private JTextField txtTel2;
 	private JTextField txtCel;
 	private JTextField txtRua;
-	private JTextField txtComplemto;
+	private JTextField txtComplemento;
 	private JTextField txtNumero;
 	private JTextField txtBairro;
 
@@ -122,10 +128,10 @@ public class Cadastrar_Fornecedor extends JFrame {
 		lblCelular.setBounds(318, 109, 70, 15);
 		panel.add(lblCelular);
 		
-		textField = new JTextField();
-		textField.setBounds(12, 136, 44, 19);
-		panel.add(textField);
-		textField.setColumns(10);
+		txtDdd = new JTextField();
+		txtDdd.setBounds(12, 136, 44, 19);
+		panel.add(txtDdd);
+		txtDdd.setColumns(10);
 		
 		txtTel1 = new JTextField();
 		txtTel1.setBounds(68, 136, 114, 19);
@@ -193,10 +199,10 @@ public class Cadastrar_Fornecedor extends JFrame {
 		panel_1.add(txtRua);
 		txtRua.setColumns(10);
 		
-		txtComplemto = new JTextField();
-		txtComplemto.setBounds(331, 71, 206, 19);
-		panel_1.add(txtComplemto);
-		txtComplemto.setColumns(10);
+		txtComplemento = new JTextField();
+		txtComplemento.setBounds(331, 71, 206, 19);
+		panel_1.add(txtComplemento);
+		txtComplemento.setColumns(10);
 		
 		JLabel lblNo = new JLabel("Noº");
 		lblNo.setFont(new Font("Dialog", Font.PLAIN, 12));
@@ -241,10 +247,65 @@ public class Cadastrar_Fornecedor extends JFrame {
 		contentPane.add(label);
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if (txtNomeFantasia.getText().trim().isEmpty()|| txtRazaoSocial.getText().trim().isEmpty()|| 
+						txtBairro.getText().trim().isEmpty()|| txtCel.getText().trim().isEmpty()|| txtCep.getText().trim().isEmpty()||
+						txtCidade.getText().trim().isEmpty()|| txtCnpj.getText().trim().isEmpty()|| txtComplemento.getText().trim().isEmpty()||
+						txtDdd.getText().trim().isEmpty()|| txtNumero.getText().trim().isEmpty()|| txtRua.getText().trim().isEmpty()|| txtTel1.getText().trim().isEmpty()||
+						txtTel2.getText().trim().isEmpty()|| txtUf.getText().trim().isEmpty()) 
+				{
+					JOptionPane.showMessageDialog(null, "Não pode conter nenhum campo vazio !");
+					
+				} else {
+					
+					try {
+						
+						DadoFornec DadoFornec = new DadoFornec();
+						int ddd = Integer.parseInt(txtDdd.getText());
+						
+						
+						DadoFornec.setNomeFantasia(txtNomeFantasia.getText().toUpperCase());
+						DadoFornec.setRazaoSocial(txtRazaoSocial.getText().toUpperCase());
+						DadoFornec.setBairro(txtBairro.getText().toUpperCase());
+						DadoFornec.setCel(txtCel.getText());
+						DadoFornec.setCep(txtCep.getText());
+						DadoFornec.setCidade(txtCidade.getText().toUpperCase());
+						DadoFornec.setCnpj(txtCnpj.getText());
+						DadoFornec.setComplemento(txtComplemento.getText().toUpperCase());
+						DadoFornec.setDdd(ddd);
+						DadoFornec.setNo(txtNumero.getText());
+						DadoFornec.setRua(txtRua.getText().toUpperCase());
+						DadoFornec.setTel1(txtTel1.getText());
+						DadoFornec.setTel2(txtTel2.getText());
+						DadoFornec.setEstado(txtUf.getText().toUpperCase());
+						
+						ContatoDaoFornecedor daoFornec = new ContatoDaoFornecedor();
+						
+						daoFornec.adicionaFornecedor(DadoFornec);
+						
+					} catch (Exception e2) {
+						System.out.println("Erro Cadastrar_fornecedor: " +e2);
+					}
+					
+
+				}
+				
+			}
+		});
 		btnCadastrar.setBounds(507, 377, 117, 25);
 		contentPane.add(btnCadastrar);
 		
 		JButton btnFornecedores = new JButton("Fornecedores");
+		btnFornecedores.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Visualizar_Fornecedor visu_fornec = new Visualizar_Fornecedor();
+				visu_fornec.setVisible(true);
+				dispose();
+			}
+		});
 		btnFornecedores.setBounds(347, 377, 132, 25);
 		contentPane.add(btnFornecedores);
 	}

@@ -61,15 +61,18 @@ public class ContatoDaoFornecedor extends ConnectionFac {
 					stmt2.setInt(1, dadoFornec.getDdd());
 					stmt2.setString(2, dadoFornec.getTel1());
 					stmt2.setString(3, dadoFornec.getTel2());
-					stmt2.setString(4, dadoFornec.getCnpj());
+					stmt2.setString(4, dadoFornec.getCel());
+					stmt2.setString(5, dadoFornec.getCnpj());
 					
 					stmt.execute();
 					stmt1.execute();
 					stmt2.execute();
 					
+					JOptionPane.showMessageDialog(null, "Fornecedor "+dadoFornec.getRazaoSocial()+" Cadastrado com sucesso ");
 					stmt.close();
 					stmt1.close();
 					stmt2.close();
+					
 					
 					
 					
