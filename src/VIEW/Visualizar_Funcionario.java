@@ -94,6 +94,7 @@ public class Visualizar_Funcionario extends JFrame {
 
 	DefaultTableModel modelo = new DefaultTableModel();
 	private JTextField txtPesquisa;
+	private JLabel label_16;
 
 	public Visualizar_Funcionario() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -109,13 +110,13 @@ public class Visualizar_Funcionario extends JFrame {
 		contentPane.add(scrollPane);
 
 		JLabel lblFuncionarios = new JLabel("Funcionarios");
-		lblFuncionarios.setBounds(359, 0, 135, 36);
+		lblFuncionarios.setBounds(421, 0, 135, 36);
 		contentPane.add(lblFuncionarios);
-		lblFuncionarios.setFont(new Font("Arial", Font.BOLD, 16));
+		lblFuncionarios.setFont(new Font("Dialog", Font.PLAIN, 16));
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(Color.GRAY));
-		panel.setBounds(71, 48, 771, 187);
+		panel.setBounds(73, 57, 771, 199);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
@@ -344,6 +345,7 @@ public class Visualizar_Funcionario extends JFrame {
 				if(table.getSelectedRow() != -1) {
 					int yes = JOptionPane.showConfirmDialog(null, "Você realmente deseja DELETAR esse Funcionario ?","DELETE",JOptionPane.YES_NO_OPTION);	
 					if (yes == 0) {
+						
 						DadoFunc func = new DadoFunc();
 						ContatoDaoFuncionario funcDao = new ContatoDaoFuncionario();
 
@@ -407,6 +409,11 @@ public class Visualizar_Funcionario extends JFrame {
 		});
 		btnAtualizar.setBounds(469, 295, 117, 25);
 		contentPane.add(btnAtualizar);
+		
+		label_16 = new JLabel("");
+		label_16.setIcon(new ImageIcon(Visualizar_Funcionario.class.getResource("/imgs/employess.png")));
+		label_16.setBounds(29, 0, 70, 45);
+		contentPane.add(label_16);
 
 		modelo.addColumn("Nome");
 		modelo.addColumn("Sobrenome");

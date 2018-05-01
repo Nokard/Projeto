@@ -202,8 +202,6 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 				PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(update_funcionario);
 				
 				
-				
-				
 				stmt.setString(1, UpdateDadoFunc.getNome());
 				stmt.setString(2, UpdateDadoFunc.getSobrenome());
 				stmt.setString(3, UpdateDadoFunc.getRg());
@@ -225,7 +223,7 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 				
 				stmt.executeUpdate();
 				
-				System.out.println("CPF: " +UpdateDadoFunc.getCpf());
+				JOptionPane.showMessageDialog(null, "Funcionario atualizado com sucesso !");
 				
 				stmt.close();
 
