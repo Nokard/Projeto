@@ -196,7 +196,7 @@ public class ContatoDaoFornecedor extends ConnectionFac {
 
 			stmt.executeUpdate();
 
-			JOptionPane.showMessageDialog(null, "Fornecedor atualizado com sucesso ! ");
+			JOptionPane.showMessageDialog(null, "Fornecedor "+updateFornec.getNomeFantasia().toUpperCase()+" atualizado com sucesso ! ");
 
 
 			stmt.close();

@@ -41,11 +41,11 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 						"(nome,sobrenome,rg,cargo,cpf) Values (?,?,?,?,?);";
 				//table endereco_funcionario
 				String sql_adiciona_end_func= "INSERT INTO endereco_funcionario"+
-						"(cpf_func,cep,rua,cidade,estado,numero,bairro,complemento)"+
+						"(cpf,cep,rua,cidade,estado,numero,bairro,complemento)"+
 						"VALUES(?,?,?,?,?,?,?,?);";
 				//table telefone_funcionario
 				String sql_adiciona_tel_func = "INSERT INTO telefone_funcionario"+
-						"(cpf_func,ddd,tel1,tel2,cel)"+
+						"(cpf,ddd,tel1,tel2,cel)"+
 						"VALUES(?,?,?,?,?);";
 
 				try {
@@ -110,9 +110,16 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 	//DELETANDO FUNCIONARIO COM CASCADE
 	public void DeleteFuncionario(DadoFunc dadoFunc) {
 
-		String delete_sql = "DELETE FROM adega.funcionario where cpf = ?";
-
+		
 		try {
+			
+			String delete_sql = "delete a.*, b.*, c.* from funcionario a " + 
+					"inner join endereco_funcionario b " + 
+					"on a.cpf = b.cpf " + 
+					"inner join telefone_funcionario c " + 
+					"on a.cpf = c.cpf " + 
+					"where a.cpf = ?";
+
 			PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(delete_sql);
 			stmt.setString(1, dadoFunc.getCpf());
 
@@ -134,14 +141,14 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 
 			List<DadoFunc> funcionarios = new ArrayList<DadoFunc>();
 
-			PreparedStatement stmt = (PreparedStatement) this.connection.prepareStatement("select a.nome, a.sobrenome, a.rg, 					a.cpf, a.cargo," + 
+			PreparedStatement stmt = (PreparedStatement) this.connection.prepareStatement("select a.nome, a.sobrenome, a.rg, a.cpf, a.cargo," + 
 					"c.ddd , c.tel1, c.tel2, c.cel," + 
 					"b.CEP,b.ESTADO, b.CIDADE , b.BAIRRO, b.NUMERO, b.RUA, b.complemento " + 
 					"from adega.funcionario a " + 
 					"join endereco_funcionario b " + 
-					"on a.cpf = b.cpf_func " + 
+					"on a.cpf = b.cpf " + 
 					"join adega.telefone_funcionario c " + 
-					"on a.cpf = c.cpf_func " + 
+					"on a.cpf = c.cpf " + 
 					"WHERE a.nome like ?;");
 
 			stmt.setString(1, "%"+desc+"%");
@@ -191,9 +198,9 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 			try {
 				String update_funcionario = "update funcionario a " + 
 						"inner join endereco_funcionario b " + 
-						"on a.cpf = b.cpf_func " + 
+						"on a.cpf = b.cpf " + 
 						"inner join telefone_funcionario c " + 
-						"on a.cpf = c.cpf_func " + 
+						"on a.cpf = c.cpf " + 
 						"set a.nome = ?, a.sobrenome = ?, a.rg = ?,a.cargo = ?," + 
 						"b.CEP = ?, b.rua = ?, b.CIDADE = ?, b.ESTADO = ?, b.numero =?, b.bairro =?, b.complemento =?," + 
 						"c.ddd = ?, c.tel1 =?, c.tel2 =?, c.cel = ? " + 
@@ -223,7 +230,7 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 				
 				stmt.executeUpdate();
 				
-				JOptionPane.showMessageDialog(null, "Funcionario atualizado com sucesso !");
+				JOptionPane.showMessageDialog(null, "Funcionario "+UpdateDadoFunc.getNome().toUpperCase()+" atualizado com sucesso !");
 				
 				stmt.close();
 
