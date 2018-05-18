@@ -11,7 +11,7 @@ public class ConnectionFac {
 		try {
 			
 		Class.forName("com.mysql.jdbc.Driver");
-		return(Connection) DriverManager.getConnection("jdbc:mysql://localhost/adega?useSSL=false", "root", "asd123");
+		return(Connection) DriverManager.getConnection("jdbc:mysql://localhost/adega?useSSL=false", "root", "asdqwe");
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}catch(ClassNotFoundException e) {

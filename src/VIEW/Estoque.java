@@ -64,13 +64,13 @@ public class Estoque extends JFrame {
 		lblPesquisandoNoEstoque.setBounds(271, 25, 96, 23);
 		contentPane.add(lblPesquisandoNoEstoque);
 
-		JLabel lblDescricao = new JLabel("DESCRI\u00C7\u00C3O");
+		JLabel lblDescricao = new JLabel("DIGITE O PRODUTO");
 		lblDescricao.setFont(new Font("Arial", Font.PLAIN, 12));
-		lblDescricao.setBounds(244, 96, 75, 14);
+		lblDescricao.setBounds(427, 87, 140, 14);
 		contentPane.add(lblDescricao);
 
 		txtDescricao = new JTextField();
-		txtDescricao.setBounds(244, 121, 181, 20);
+		txtDescricao.setBounds(427, 121, 181, 20);
 		contentPane.add(txtDescricao);
 		txtDescricao.setColumns(10);
 
@@ -84,7 +84,7 @@ public class Estoque extends JFrame {
 
 			}
 		});
-		btnPequisar.setBounds(580, 120, 111, 23);
+		btnPequisar.setBounds(620, 119, 111, 23);
 		contentPane.add(btnPequisar);
 
 		JButton btnNewButton = new JButton("");
@@ -110,7 +110,7 @@ public class Estoque extends JFrame {
 			}
 		});
 		btnVoltar.setIcon(new ImageIcon(Estoque.class.getResource("/imgs/Back.png")));
-		btnVoltar.setBounds(633, 11, 36, 36);
+		btnVoltar.setBounds(681, 11, 36, 36);
 		contentPane.add(btnVoltar);
 
 		modelo.addColumn("Código Produto");

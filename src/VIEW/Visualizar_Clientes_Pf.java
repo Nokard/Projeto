@@ -10,12 +10,24 @@ import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
+
+import CONTROL.DadoPf;
+import DAO.ContatoDaoCliente;
+
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.List;
+
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Visualizar_Clientes_Pf extends JFrame {
 
@@ -35,6 +47,7 @@ public class Visualizar_Clientes_Pf extends JFrame {
 	private JTextField txtNo;
 	private JTextField txtComplemento;
 	private JTable table;
+	private JTextField txtCliNome;
 
 	/**
 	 * Launch the application.
@@ -55,9 +68,12 @@ public class Visualizar_Clientes_Pf extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
+	DefaultTableModel modelo = new DefaultTableModel();
+
 	public Visualizar_Clientes_Pf() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 929, 541);
+		setBounds(100, 100, 950, 541);
 		contentPane = new JPanel();
 		this.setLocationRelativeTo(null);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -78,7 +94,7 @@ public class Visualizar_Clientes_Pf extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBorder(new LineBorder(Color.GRAY));
-		panel.setBounds(54, 26, 771, 187);
+		panel.setBounds(70, 42, 677, 173);
 		contentPane.add(panel);
 		
 		JLabel lblCpfcnpj = new JLabel("CPF/CNPJ");
@@ -222,10 +238,141 @@ public class Visualizar_Clientes_Pf extends JFrame {
 		panel.add(txtComplemento);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 264, 905, 235);
+		scrollPane.setBounds(12, 290, 905, 209);
 		contentPane.add(scrollPane);
 		
-		table = new JTable();
+		table = new JTable(modelo);
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				setTextField();
+			}
+		});
+		table.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				setTextField();
+			}@Override
+			public void keyReleased(KeyEvent e) {
+				setTextField();
+			}
+		});
 		scrollPane.setViewportView(table);
+		
+		JButton button_1 = new JButton("Atualizar");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		button_1.setBounds(323, 253, 117, 25);
+		contentPane.add(button_1);
+		
+		JButton button_2 = new JButton("Excluir");
+		button_2.setBounds(452, 253, 117, 25);
+		contentPane.add(button_2);
+		
+		JButton button_3 = new JButton("Pesquisar");
+		button_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					CarregaClientes(txtCliNome.getText());
+			
+			}
+		});
+		button_3.setBounds(742, 253, 117, 25);
+		contentPane.add(button_3);
+		
+		txtCliNome = new JTextField();
+		txtCliNome.setBounds(581, 253, 149, 25);
+		contentPane.add(txtCliNome);
+		txtCliNome.setColumns(10);
+		
+		JLabel lblNomeDoCliente = new JLabel("Nome Do Cliente");
+		lblNomeDoCliente.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblNomeDoCliente.setBounds(581, 227, 151, 25);
+		contentPane.add(lblNomeDoCliente);
+		
+		JLabel lblClientePessoaFisica = new JLabel("CLIENTE PESSOA FISICA");
+		lblClientePessoaFisica.setFont(new Font("Dialog", Font.PLAIN, 16));
+		lblClientePessoaFisica.setBounds(381, 12, 201, 15);
+		contentPane.add(lblClientePessoaFisica);
+		
+		
+		modelo.addColumn("CPF");
+		modelo.addColumn("Cliente");
+		modelo.addColumn("Sobrenome");
+		modelo.addColumn("DDD");
+		modelo.addColumn("Tel 1");
+		modelo.addColumn("Tel 2");
+		modelo.addColumn("Cel");
+		modelo.addColumn("CEP");
+		modelo.addColumn("Rua");
+		modelo.addColumn("Cidade");
+		modelo.addColumn("UF");
+		modelo.addColumn("Noº");
+		modelo.addColumn("Bairro");
+		modelo.addColumn("Complemento");
+		
 	}
+	
+	
+	//PRECHER O TEXTFIELD COM O TABLE
+		public void setTextField() {
+			
+			int indice = table.getSelectedRow();
+			
+			txtCpfCpnj.setText(table.getValueAt(indice, 0).toString());
+			txtNome.setText(table.getValueAt(indice, 1).toString());
+			txtSobrenome.setText(table.getValueAt(indice, 2).toString());			
+			txtDdd.setText(table.getValueAt(indice, 3).toString());
+			txtTel1.setText(table.getValueAt(indice, 4).toString());
+			txtTel2.setText(table.getValueAt(indice, 5).toString());
+			txtCel.setText(table.getValueAt(indice, 6).toString());			
+			txtCep.setText(table.getValueAt(indice, 7).toString());
+			txtRua.setText(table.getValueAt(indice, 8).toString());
+			txtCidade.setText(table.getValueAt(indice, 9).toString());
+			txtUf.setText(table.getValueAt(indice, 10).toString());
+			txtBairro.setText(table.getValueAt(indice, 12).toString());
+			txtNo.setText(table.getValueAt(indice, 11).toString());
+			txtComplemento.setText(table.getValueAt(indice, 13).toString());			
+			
+		}
+	
+	public void CarregaClientes(String descPf) {
+		
+		try {
+			
+			ContatoDaoCliente clientePf = new ContatoDaoCliente();
+			java.util.List<DadoPf> pf = clientePf.getPfDesc(descPf);
+			modelo.setNumRows(0);
+			
+
+			for (DadoPf Clipf : pf) {
+				modelo.addRow(
+						new Object[] {
+								Clipf.getCpf(),
+								Clipf.getNome(),
+								Clipf.getSobrenome(),
+								Clipf.getDdd(),
+								Clipf.getTel1(),
+								Clipf.getTel2(),
+								Clipf.getCel(),
+								Clipf.getCep(),
+								Clipf.getRua(),	
+								Clipf.getCidade(),															
+								Clipf.getEstado(),
+								Clipf.getNo(),
+								Clipf.getBairro(),
+								Clipf.getComplemento()
+							
+						});
+			}
+				
+			
+		} catch (Exception e) {
+			System.out.println("Erro ao visualizar Cliente pf: " +e);
+		}
+	}
+	
+	
+	
 }

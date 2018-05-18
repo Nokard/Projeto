@@ -32,7 +32,7 @@ public class Visualizar_Clientes_Pj extends JFrame {
 	 */
 	public Visualizar_Clientes_Pj() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 950, 541);
 		contentPane = new JPanel();
 		this.setLocationRelativeTo(null);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

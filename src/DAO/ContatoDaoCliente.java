@@ -1,12 +1,15 @@
 package DAO;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
 import java.sql.*;
 import java.sql.PreparedStatement;
 
+import CONTROL.DadoFunc;
 import CONTROL.DadoPf;
 import CONTROL.DadoPj;
 
@@ -88,14 +91,16 @@ public class ContatoDaoCliente extends ConnectionFac{
 		}
 
 	}
+
+	//Adiciona Pessoa Juridica
 	public void adicionaPj(DadoPj dadopj) {
-		
+
 		String verificaCNPJ = "SELECT * FROM cliente_pj where cnpj = ? ";
-		
+
 		try {
 			PreparedStatement stmt0 = (PreparedStatement) connection.prepareStatement(verificaCNPJ);
 			stmt0.setString(1, dadopj.getCnpj());
-			
+
 			ResultSet rs = stmt0.executeQuery();
 			if (rs.next()) {
 				JOptionPane.showMessageDialog(null, "Usuario com esse CNPJ ' "+ dadopj.getCnpj()+" ' já existe");
@@ -138,7 +143,7 @@ public class ContatoDaoCliente extends ConnectionFac{
 					stmt2.setString(7, dadopj.getBairro());
 					stmt2.setString(8, dadopj.getComplemento());
 					stmt2.setString(9, dadopj.getCnpj());
-					
+
 					stmt.execute();
 					stmt1.execute();
 					stmt2.execute();
@@ -155,108 +160,213 @@ public class ContatoDaoCliente extends ConnectionFac{
 
 
 			}
-			
-			
+
+
 		} catch (Exception e) {
 			System.out.println("Erro verifica CNPJ "+ e);
 		}
-		
+
 	}
-	
+
 	//UpDATE no cliente pf
 	public void UpdateClientePf(DadoPf updatePf) {
-		
-		String sql_update_pf = "UPDATE cliente_pf set nome_cliente = ?, sobrenome = ? where cpf = ?";
-		
-		String sql_update_tel = "UPDATE telefones_pf set ddd = ?, tel1 = ?, tel2 = ?, cel = ?"
-				+ "where cliente_cpf = ?";
-		
-		String sql_update_end = "UPDATE endereco_pf set cep = ?, rua = ?, cidade = ?, estado = ?,"
-				+ "numero = ?, bairro = ?, complemento = ? where fk_cpf_cliente = ?";
-		
+
+		String sql_update_pf = "update cliente_pf a " + 
+				"inner join endereco_pf b " + 
+				"on a.cpf = b.fk_cpf_cliente " + 
+				"inner join telefones_pf c " + 
+				"on a.cpf = c.cliente_cpf " + 
+				"set a.nome_cliente = ?, a.sobrenome = ?," + 
+				"b.CEP = ?, b.RUA = ?, b.CIDADE =?, b.estado = ?, b.NUMERO = ?, b.bairro = ?, b.complemento = ?," + 
+				"c.ddd = ?, c.tel1 = ?, c.tel2 = ?, c.cel = ?"
+				+ "where a.cpf = ?;";
+
 		try {
 
 			PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(sql_update_pf);
-			PreparedStatement stmt1 = (PreparedStatement) connection.prepareStatement(sql_update_tel);
-			PreparedStatement stmt2 = (PreparedStatement) connection.prepareStatement(sql_update_end);
-			
-			
-			stmt.setString(1,	updatePf.getTipo());	 
-			stmt.setString(2, 	updatePf.getNome());
-			stmt.setString(3, 	updatePf.getSobrenome());
-			stmt.setString(4, 	updatePf.getCpf());
 
-			stmt1.setString(1, updatePf.getDdd());
-			stmt1.setString(2, updatePf.getTel1());
-			stmt1.setString(3, updatePf.getTel2());
-			stmt1.setString(4, updatePf.getCel());
-			stmt1.setString(5,  updatePf.getCpf());
 
-			stmt2.setString(1, updatePf.getCep());
-			stmt2.setString(2, updatePf.getRua());
-			stmt2.setString(3, updatePf.getCidade());
-			stmt2.setString(4, updatePf.getEstado());
-			stmt2.setString(5, updatePf.getNo());
-			stmt2.setString(6, updatePf.getBairro());
-			stmt2.setString(7, updatePf.getComplemento());
-			stmt2.setString(8, updatePf.getCpf());
-			
-			
-			
+			stmt.setString(1, 	updatePf.getNome());
+			stmt.setString(2, 	updatePf.getSobrenome());
+			stmt.setString(3, updatePf.getCep());
+			stmt.setString(4, updatePf.getRua());
+			stmt.setString(5, updatePf.getCidade());
+			stmt.setString(6, updatePf.getEstado());
+			stmt.setString(7, updatePf.getNo());
+			stmt.setString(8, updatePf.getBairro());
+			stmt.setString(9, updatePf.getComplemento());
+			stmt.setString(10, updatePf.getDdd());
+			stmt.setString(11, updatePf.getTel1());
+			stmt.setString(12, updatePf.getTel2());
+			stmt.setString(13, updatePf.getCel());
+			stmt.setString(14, updatePf.getCpf());
+
+
+			stmt.execute();
+
+			JOptionPane.showMessageDialog(null, "Funcionario "+updatePf.getNome().toUpperCase()+" atualizado com sucesso !");
+
+			stmt.close();
+
+
 		} catch (SQLException e) {
 			System.out.println("Erro ao Atualizar cliente pf: " +e);
 		}
-		
+
 	}
-	
+
 	//update Cliente Pj
 	public void UpdateClientePj(DadoPj updatePj) {
-			
 
-		String sql_update_pj = "UPDATE cliente_pf set nome_cliente = ?, sobrenome = ? where cnpj = ?";
-		
-		String sql_update_tel = "UPDATE telefones_pf set ddd = ?, tel1 = ?, tel2 = ?, cel = ?"
-				+ "where cliente_cnpj = ?";
-		
-		String sql_update_end = "UPDATE endereco_pf set cep = ?, rua = ?, cidade = ?, estado = ?,"
-				+ "numero = ?, bairro = ?, complemento = ? where fk_cnpj_cliente = ?";
-		
-		
+		String sql_update_pj = "update cliente_pf a " + 
+				"inner join endereco_pf b " + 
+				"on a.cpf = b.fk_cpf_cliente " + 
+				"inner join telefones_pf c " + 
+				"on a.cpf = c.cliente_cpf " + 
+				"set a.nome_cliente = ?, a.sobrenome = ?," + 
+				"b.CEP = ?, b.RUA = ?, b.CIDADE =?, b.estado = ?, b.NUMERO = ?, b.bairro = ?, b.complemento = ?," + 
+				"c.ddd = ?, c.tel1 = ?, c.tel2 = ?, c.cel = ?"
+				+ "where a.cnpj = ?;";
+
 		try {
-			
+
 			PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(sql_update_pj);
-			PreparedStatement stmt1 = (PreparedStatement) connection.prepareStatement(sql_update_tel);
-			PreparedStatement stmt2 = (PreparedStatement) connection.prepareStatement(sql_update_end);
-
-			
-			stmt.setString(1,	updatePj.getTipo());	
-			stmt.setString(2, 	updatePj.getNome());
-			stmt.setString(3, 	updatePj.getSobrenome());
-			stmt.setString(4, 	updatePj.getCnpj());
 
 
-			stmt1.setString(1, updatePj.getDdd());
-			stmt1.setString(2, 	updatePj.getTel1());
-			stmt1.setString(3,	 updatePj.getTel2());
-			stmt1.setString(4, 	updatePj.getCel());
-			stmt1.setString(5, updatePj.getCnpj());
+			stmt.setString(1, 	updatePj.getNome());
+			stmt.setString(2, 	updatePj.getSobrenome());
+			stmt.setString(3, updatePj.getCep());
+			stmt.setString(4, updatePj.getRua());
+			stmt.setString(5, updatePj.getCidade());
+			stmt.setString(6, updatePj.getEstado());
+			stmt.setString(7, updatePj.getNo());
+			stmt.setString(8, updatePj.getBairro());
+			stmt.setString(9, updatePj.getComplemento());
+			stmt.setString(10, updatePj.getDdd());
+			stmt.setString(11, updatePj.getTel1());
+			stmt.setString(12, updatePj.getTel2());
+			stmt.setString(13, updatePj.getCel());
+			stmt.setString(14, updatePj.getCnpj());
 
-			stmt2.setString(1, updatePj.getCep());
-			stmt2.setString(2, updatePj.getCidade());
-			stmt2.setString(3, updatePj.getEstado());
-			stmt2.setString(4, updatePj.getRua());
-			stmt2.setString(5, updatePj.getBairro());
-			stmt2.setString(6, updatePj.getNo());
-			stmt2.setString(7, updatePj.getBairro());
-			stmt2.setString(8, updatePj.getComplemento());
-			stmt2.setString(9, updatePj.getCnpj());
-			
+			stmt.execute();
+
+			JOptionPane.showMessageDialog(null, "Funcionario "+updatePj.getNome().toUpperCase()+" atualizado com sucesso !");
+
+			stmt.close();
+
+
+
 		} catch (SQLException e) {
 			System.out.println("Erro ao atualizar cliente pj: " +e);
 		}
 
 	}
+
+	//DELETANDO Cliente Pj COM CASCADE
+	public void DeleteClientePj(DadoPj deletePj) {
+
+
+		try {
+
+			String delete_sql = "DELETE a.*, b.*, c.* from cliente_pj a " + 
+					"inner join endereco_pj b " + 
+					"on a.cnpj = b.fk_cnpj_cliente " + 
+					"inner join telefones_pj c " + 
+					"on a.cnpj = c.cliente_cnpj " + 
+					"where a.cnpj = ?;";
+
+			PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(delete_sql);
+			stmt.setString(1, deletePj.getCnpj());
+
+			stmt.executeUpdate();
+
+			JOptionPane.showMessageDialog(null, "Cliente Juridico excluido com sucesso");
+
+
+		} catch (SQLException e) {
+			System.out.println("Erro ao excluir Cliente Juridico " +e);
+		}
+	}
+
+	//DELETANDO CLIENTE PF
+	public void DeleteClientePf(DadoPf deletePf) {
+
+
+		try {
+
+			String delete_sql = "DELETE a.*, b.*, c.* from cliente_pf a " + 
+					"inner join endereco_pf b " + 
+					"on a.cpf = b.cpf " + 
+					"inner join telefones_pf c " + 
+					"on a.cpf = c.cliente_cpf " + 
+					"where a.cnpj = ?;";
+
+			PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(delete_sql);
+			stmt.setString(1, deletePf.getCpf());
+
+			stmt.executeUpdate();
+
+			JOptionPane.showMessageDialog(null, "Cliente excluido com sucesso");
+
+
+		} catch (SQLException e) {
+			System.out.println("Erro ao excluir Cliente " +e);
+		}
+	}
+
+
+//Listando 
+public List<DadoPf> getPfDesc(String descPf){
+
+	try {
+		List<DadoPf> clientePf = new ArrayList<DadoPf>();
+		String sql = "SELECT a.cpf,a.nome_cliente, a.sobrenome, b.CEP, b.RUA, b.cidade, b.estado, b.NUMERO," + 
+				"b.BAIRRO, b.complemento, c.ddd, c.tel1, c.tel2, c.cel " + 
+				"from cliente_pf a " + 
+				"join endereco_pf b " + 
+				"on a.cpf = b.fk_cpf_cliente " + 
+				"join telefones_pf c " + 
+				"on a.cpf = c.cliente_cpf "
+				+ "where a.nome_cliente like ?";
+
+		PreparedStatement stmt = (PreparedStatement) this.connection.prepareStatement(sql);
+		stmt.setString(1, "%"+descPf+"%");
+		ResultSet rs = stmt.executeQuery();
+
+		while(rs.next()) {
+
+			DadoPf pf = new DadoPf();
+
+			pf.setCpf(rs.getString("cpf"));
+			pf.setNome(rs.getString("nome_cliente"));
+			pf.setSobrenome(rs.getString("sobrenome"));
+			pf.setCep(rs.getString("cep"));
+			pf.setRua(rs.getString("rua"));
+			pf.setCidade(rs.getString("cidade"));
+			pf.setEstado(rs.getString("estado"));
+			pf.setNo(rs.getString("numero"));
+			pf.setBairro(rs.getString("bairro"));
+			pf.setComplemento(rs.getString("complemento"));
+			pf.setDdd(rs.getString("ddd"));
+			pf.setTel1(rs.getString("tel1"));
+			pf.setTel2(rs.getString("tel2"));
+			pf.setCel(rs.getString("cel"));
+
+			clientePf.add(pf);				
+		}
+		rs.close();
+		stmt.close();
+		return clientePf;		
+
+	} catch (SQLException e) {
+		throw new RuntimeException();
+	}
+
 }
+}
+
+
+
 
 
 

@@ -14,6 +14,7 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
@@ -53,6 +54,7 @@ public class Cadastrar_Cliente extends JFrame {
 	private JTextField txtCidade;
 	private JTextField txtUf;
 	private JButton btnListarClientes;
+	private JTextField txtBairro;
 
 	/**
 	 * Launch the application.
@@ -239,6 +241,7 @@ public class Cadastrar_Cliente extends JFrame {
 							pf.setCep(txtCep.getText().toUpperCase());
 							pf.setRua(txtRua.getText().toUpperCase());
 							pf.setCidade(txtCidade.getText().toUpperCase());
+							pf.setBairro(txtBairro.getText().toUpperCase());
 							pf.setEstado(txtUf.getText().toUpperCase());
 							pf.setNo(txtNumero.getText());
 							pf.setComplemento(txtComplemento.getText().toUpperCase());
@@ -358,22 +361,56 @@ public class Cadastrar_Cliente extends JFrame {
 		panel_1.add(txtUf);
 		txtUf.setColumns(10);
 		
+		JLabel lblBairro = new JLabel("BAIRRO");
+		lblBairro.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblBairro.setBounds(317, 29, 70, 15);
+		panel_1.add(lblBairro);
+		
+		txtBairro = new JTextField();
+		txtBairro.setBounds(300, 54, 114, 19);
+		panel_1.add(txtBairro);
+		txtBairro.setColumns(10);
+		
 		btnListarClientes = new JButton("Listar Clientes");
 		btnListarClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			
-				if(comboBox.getSelectedItem().toString().equals("Fisica")) {
 				
+				Object[] selectionValues = {"Pessoa Fisisca","Pessoa Juridica"};
+				String initialSelection = "Pessoa Fisica";
+				 Object selection = JOptionPane.showInputDialog(null, "Selecione o Cliente ",
+					        "Clientes", JOptionPane.QUESTION_MESSAGE, null, selectionValues, initialSelection);
+			if (selection == "Pessoa Fisisca") {
 				Visualizar_Clientes_Pf visu_clientes = new Visualizar_Clientes_Pf();
 				visu_clientes.setVisible(true);
 				dispose();
+				System.out.println("fisica");
 				
-				}else {
-					Visualizar_Clientes_Pj visu_clientes = new Visualizar_Clientes_Pj();
-					visu_clientes.setVisible(true);
-					dispose();
-					
-				}
+			}else if (selection == "Pessoa Juridica" ) {
+				Visualizar_Clientes_Pj visu_clientes = new Visualizar_Clientes_Pj();
+				visu_clientes.setVisible(true);
+				dispose();
+
+			}else {
+				Cadastrar_Cliente cc = new Cadastrar_Cliente();
+				cc.setVisible(true);
+				dispose();
+			}
+				
+				
+				
+				
+//				if(comboBox.getSelectedItem().toString().equals("Fisica")) {
+//				
+//				Visualizar_Clientes_Pf visu_clientes = new Visualizar_Clientes_Pf();
+//				visu_clientes.setVisible(true);
+//				dispose();
+//				
+//				}else {
+//					Visualizar_Clientes_Pj visu_clientes = new Visualizar_Clientes_Pj();
+//					visu_clientes.setVisible(true);
+//					dispose();
+//					
+//				}
 			}
 		});
 		btnListarClientes.setBounds(322, 371, 154, 23);
