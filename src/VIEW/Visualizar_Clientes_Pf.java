@@ -364,7 +364,7 @@ public class Visualizar_Clientes_Pf extends JFrame {
 		modelo.addColumn("Rua");
 		modelo.addColumn("Cidade");
 		modelo.addColumn("UF");
-		modelo.addColumn("NoÂº");
+		modelo.addColumn("Noº");
 		modelo.addColumn("Bairro");
 		modelo.addColumn("Complemento");
 		
