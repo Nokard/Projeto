@@ -9,16 +9,19 @@ import javax.swing.border.EmptyBorder;
 import CONTROL.senhaGerente;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 public class verificaSenha extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtSenha;
+	private JTextField txtUser;
 
 	/**
 	 * Launch the application.
@@ -41,51 +44,79 @@ public class verificaSenha extends JFrame {
 	 */
 	public verificaSenha() {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		setBounds(50, 50, 244, 177);
+		setBounds(50, 50, 430, 272);
 		this.setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JLabel lblIdentificacao = new JLabel("Digite a Senha");
+
+		JLabel lblIdentificacao = new JLabel("SENHA");
 		lblIdentificacao.setFont(new Font("Arial", Font.PLAIN, 13));
-		lblIdentificacao.setBounds(56, 21, 103, 14);
+		lblIdentificacao.setBounds(218, 136, 68, 14);
 		contentPane.add(lblIdentificacao);
-		
+
 		txtSenha = new JTextField();
-		txtSenha.setBounds(56, 46, 113, 23);
+		txtSenha.setBounds(295, 132, 113, 23);
 		contentPane.add(txtSenha);
 		txtSenha.setColumns(10);
-		
+
 		JButton btnEnviar = new JButton("Enviar");
 		btnEnviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				try {
 
-					senhaGerente senhaGerente = new senhaGerente();
-					int senha = Integer.parseInt(txtSenha.getText());
-					senhaGerente.setSenha(senha);
+				if (txtUser.getText().equals("gerente") && txtSenha.getText().equals("12345")) {
 					
-					DAO.DaoVerificaSenha verifica = new DAO.DaoVerificaSenha();
-					verifica.verificaSenha(senhaGerente);
-					dispose();
-				} catch (Exception e2) {
-					System.out.println("Erro VerificaSenha "+ e2);
-				}			}
-		});
-		btnEnviar.setBounds(129, 104, 89, 23);
-		contentPane.add(btnEnviar);
-		
-		JButton btnNewButton = new JButton("Voltar");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new Index().setVisible(true);
-				dispose();
+				}else {
+					JOptionPane.showMessageDialog(null, "Senha ou usuario incorretos");
+				}
+				
+				
+//				try {
+//
+//					senhaGerente senhaGerente = new senhaGerente();
+//
+//					int senha = Integer.parseInt(txtSenha.getText());
+//					senhaGerente.setSenha(senha);
+//
+//					DAO.DaoVerificaSenha verifica = new DAO.DaoVerificaSenha();
+//					verifica.verificaSenha(senhaGerente);
+//					dispose();
+//				} catch (Exception e2) {
+//					System.out.println("Erro VerificaSenha "+ e2);
+//				}			
 			}
 		});
-		btnNewButton.setBounds(30, 104, 89, 23);
+		btnEnviar.setBounds(319, 186, 89, 23);
+		contentPane.add(btnEnviar);
+
+		JButton btnNewButton = new JButton("SAIR");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		btnNewButton.setBounds(218, 186, 89, 23);
 		contentPane.add(btnNewButton);
+
+		JLabel lblUsuario = new JLabel("USUARIO");
+		lblUsuario.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblUsuario.setBounds(216, 101, 70, 15);
+		contentPane.add(lblUsuario);
+
+		txtUser = new JTextField();
+		txtUser.setBounds(295, 97, 114, 23);
+		contentPane.add(txtUser);
+		txtUser.setColumns(10);
+
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(verificaSenha.class.getResource("/imgs/wine.png")));
+		label.setBounds(50, 65, 113, 144);
+		contentPane.add(label);
+
+		JLabel lblLogin = new JLabel("LOGIN");
+		lblLogin.setFont(new Font("Dialog", Font.BOLD, 16));
+		lblLogin.setBounds(176, 12, 70, 35);
+		contentPane.add(lblLogin);
 	}
 }
