@@ -38,7 +38,7 @@ public class DaoVerificaSenha extends ConnectionFac {
 				new Cadastrar_Pedido().setVisible(true);
 					
 			}else {
-				JOptionPane.showMessageDialog(null, "Voc� n�o tem permissao para acessars");
+				JOptionPane.showMessageDialog(null, "Você não tem permissao para acessars");
 				new Index().setVisible(true);
 			}
 			

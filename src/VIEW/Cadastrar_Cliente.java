@@ -218,7 +218,7 @@ public class Cadastrar_Cliente extends JFrame {
 				
 				if(comboBox.getSelectedItem().toString().equals("Fisica")) {
 					
-					//Verificando se os campos est�p preenchidos
+					//Verificando se os campos estãp preenchidos
 					if(txtNomeCli.getText().equals("") || txtSobrenome.getText().equals("") || txtCpfCnpj.getText().equals("") 
 							|| txtTelefone1.getText().equals("")) {
 						JOptionPane.showMessageDialog(null, "Nao pode conter Campos Vazios !");

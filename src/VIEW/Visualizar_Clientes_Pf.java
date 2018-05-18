@@ -262,12 +262,68 @@ public class Visualizar_Clientes_Pf extends JFrame {
 		JButton button_1 = new JButton("Atualizar");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				if(table.getSelectedRow() != -1) {
+					int yes = JOptionPane.showConfirmDialog(null, "Você realmente deseja ATUALIZAR esse Cliente ?","ATUALIZAR",JOptionPane.YES_NO_OPTION);	
+					 if(yes == 0) {
+						 
+						 DadoPf dadoPf = new DadoPf();
+						 ContatoDaoCliente daoPf = new ContatoDaoCliente();
+						 
+						 dadoPf.setCpf(txtCpfCpnj.getText().toUpperCase());
+						 dadoPf.setNome(txtNome.getText().toUpperCase());
+						 dadoPf.setSobrenome(txtSobrenome.getText().toUpperCase());
+						 dadoPf.setDdd(txtDdd.getText().toUpperCase());
+						 dadoPf.setTel1(txtTel1.getText().toUpperCase());
+						 dadoPf.setTel2(txtTel2.getText().toUpperCase());
+						 dadoPf.setCel(txtCel.getText().toUpperCase());
+						 dadoPf.setCep(txtCep.getText().toUpperCase());
+						 dadoPf.setRua(txtRua.getText().toUpperCase());
+						 dadoPf.setCidade(txtCidade.getText().toUpperCase());
+						 dadoPf.setEstado(txtUf.getText().toUpperCase());
+						 dadoPf.setBairro(txtBairro.getText().toUpperCase());
+						 dadoPf.setNo(txtNo.getText().toUpperCase());
+						 dadoPf.setComplemento(txtComplemento.getText().toUpperCase());
+						 
+						 daoPf.UpdateClientePf(dadoPf);
+						 setTextField();
+						 
+						 
+					 }
+				}
+				
 			}
 		});
 		button_1.setBounds(323, 253, 117, 25);
 		contentPane.add(button_1);
 		
 		JButton button_2 = new JButton("Excluir");
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if(table.getSelectedRow() != -1) {
+					int yes = JOptionPane.showConfirmDialog(null, "Você realmente deseja DELETAR esse Cliente ?","DELETE",JOptionPane.YES_NO_OPTION);
+						if (yes == 0) {
+							try {
+								DadoPf dadoPf = new DadoPf();
+								ContatoDaoCliente daoPf = new ContatoDaoCliente();
+								
+								//seta o valor do cpf da tabela
+								dadoPf.setCpf((String) table.getValueAt(table.getSelectedRow(), 0));
+								
+								daoPf.DeleteClientePf(dadoPf);
+								
+							} catch (Exception e2) {
+								System.out.println("Erro ao deletar Cliente: " +e2);
+							}
+						}
+				
+
+				}
+				
+				
+			}
+		});
 		button_2.setBounds(452, 253, 117, 25);
 		contentPane.add(button_2);
 		

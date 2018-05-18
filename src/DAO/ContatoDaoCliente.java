@@ -78,7 +78,7 @@ public class ContatoDaoCliente extends ConnectionFac{
 					stmt1.close();
 					stmt2.close();
 
-					JOptionPane.showMessageDialog(null, "Usuario "+dadopf.getCpf().toUpperCase()+" cadastrado com sucesso");
+					JOptionPane.showMessageDialog(null, "Usuario "+dadopf.getNome().toUpperCase()+" cadastrado com sucesso");
 
 				} catch (SQLException e) {
 					System.out.println("Eroor ContatoDao PF "+ e);
@@ -296,10 +296,10 @@ public class ContatoDaoCliente extends ConnectionFac{
 
 			String delete_sql = "DELETE a.*, b.*, c.* from cliente_pf a " + 
 					"inner join endereco_pf b " + 
-					"on a.cpf = b.cpf " + 
+					"on a.cpf = b.fk_cpf_cliente " + 
 					"inner join telefones_pf c " + 
 					"on a.cpf = c.cliente_cpf " + 
-					"where a.cnpj = ?;";
+					"where a.cpf = ?;";
 
 			PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(delete_sql);
 			stmt.setString(1, deletePf.getCpf());

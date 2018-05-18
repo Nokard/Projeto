@@ -109,7 +109,6 @@ public class ContatoDaoFuncionario extends ConnectionFac{
 
 	//DELETANDO FUNCIONARIO COM CASCADE
 	public void DeleteFuncionario(DadoFunc dadoFunc) {
-
 		
 		try {
 			

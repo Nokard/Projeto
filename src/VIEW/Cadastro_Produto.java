@@ -201,8 +201,19 @@ public class Cadastro_Produto extends JFrame {
 				}
 			}
 		});
-		btnSalvar.setBounds(488, 295, 89, 23);
+		btnSalvar.setBounds(482, 296, 89, 23);
 		contentPane.add(btnSalvar);
+		
+		JButton btnEstoque = new JButton("ESTOQUE");
+		btnEstoque.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Estoque estoque = new Estoque();
+				estoque.setVisible(true);
+				dispose();
+			}
+		});
+		btnEstoque.setBounds(359, 296, 117, 23);
+		contentPane.add(btnEstoque);
 
 	}
 	public void limparTextField() {
