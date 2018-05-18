@@ -375,17 +375,16 @@ public class Cadastrar_Cliente extends JFrame {
 		btnListarClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				Object[] selectionValues = {"Pessoa Fisisca","Pessoa Juridica"};
+				Object[] selectionValues = {"Pessoa Física","Pessoa Jurídica"};
 				String initialSelection = "Pessoa Fisica";
 				 Object selection = JOptionPane.showInputDialog(null, "Selecione o Cliente ",
 					        "Clientes", JOptionPane.QUESTION_MESSAGE, null, selectionValues, initialSelection);
-			if (selection == "Pessoa Fisisca") {
+			if (selection == "Pessoa Física") {
 				Visualizar_Clientes_Pf visu_clientes = new Visualizar_Clientes_Pf();
 				visu_clientes.setVisible(true);
 				dispose();
-				System.out.println("fisica");
 				
-			}else if (selection == "Pessoa Juridica" ) {
+			}else if (selection == "Pessoa Jurídica" ) {
 				Visualizar_Clientes_Pj visu_clientes = new Visualizar_Clientes_Pj();
 				visu_clientes.setVisible(true);
 				dispose();

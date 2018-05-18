@@ -73,7 +73,7 @@ public class Visualizar_Clientes_Pf extends JFrame {
 
 	public Visualizar_Clientes_Pf() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 950, 541);
+		setBounds(100, 100, 950, 607);
 		contentPane = new JPanel();
 		this.setLocationRelativeTo(null);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -94,7 +94,7 @@ public class Visualizar_Clientes_Pf extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBorder(new LineBorder(Color.GRAY));
-		panel.setBounds(70, 42, 677, 173);
+		panel.setBounds(71, 102, 747, 173);
 		contentPane.add(panel);
 		
 		JLabel lblCpfcnpj = new JLabel("CPF/CNPJ");
@@ -238,7 +238,7 @@ public class Visualizar_Clientes_Pf extends JFrame {
 		panel.add(txtComplemento);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 290, 905, 209);
+		scrollPane.setBounds(10, 348, 905, 209);
 		contentPane.add(scrollPane);
 		
 		table = new JTable(modelo);
@@ -294,7 +294,7 @@ public class Visualizar_Clientes_Pf extends JFrame {
 				
 			}
 		});
-		button_1.setBounds(323, 253, 117, 25);
+		button_1.setBounds(323, 312, 117, 25);
 		contentPane.add(button_1);
 		
 		JButton button_2 = new JButton("Excluir");
@@ -324,7 +324,7 @@ public class Visualizar_Clientes_Pf extends JFrame {
 				
 			}
 		});
-		button_2.setBounds(452, 253, 117, 25);
+		button_2.setBounds(452, 312, 117, 25);
 		contentPane.add(button_2);
 		
 		JButton button_3 = new JButton("Pesquisar");
@@ -334,23 +334,28 @@ public class Visualizar_Clientes_Pf extends JFrame {
 			
 			}
 		});
-		button_3.setBounds(742, 253, 117, 25);
+		button_3.setBounds(742, 312, 117, 25);
 		contentPane.add(button_3);
 		
 		txtCliNome = new JTextField();
-		txtCliNome.setBounds(581, 253, 149, 25);
+		txtCliNome.setBounds(581, 312, 149, 25);
 		contentPane.add(txtCliNome);
 		txtCliNome.setColumns(10);
 		
 		JLabel lblNomeDoCliente = new JLabel("Nome Do Cliente");
 		lblNomeDoCliente.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblNomeDoCliente.setBounds(581, 227, 151, 25);
+		lblNomeDoCliente.setBounds(581, 286, 151, 25);
 		contentPane.add(lblNomeDoCliente);
 		
 		JLabel lblClientePessoaFisica = new JLabel("CLIENTE PESSOA FISICA");
 		lblClientePessoaFisica.setFont(new Font("Dialog", Font.PLAIN, 16));
-		lblClientePessoaFisica.setBounds(381, 12, 201, 15);
+		lblClientePessoaFisica.setBounds(368, 30, 201, 15);
 		contentPane.add(lblClientePessoaFisica);
+		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(Visualizar_Clientes_Pf.class.getResource("/imgs/client.png")));
+		label.setBounds(22, 12, 80, 48);
+		contentPane.add(label);
 		
 		
 		modelo.addColumn("CPF");
@@ -428,7 +433,4 @@ public class Visualizar_Clientes_Pf extends JFrame {
 			System.out.println("Erro ao visualizar Cliente pf: " +e);
 		}
 	}
-	
-	
-	
 }

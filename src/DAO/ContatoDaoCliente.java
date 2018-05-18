@@ -81,6 +81,8 @@ public class ContatoDaoCliente extends ConnectionFac{
 					JOptionPane.showMessageDialog(null, "Usuario "+dadopf.getNome().toUpperCase()+" cadastrado com sucesso");
 
 				} catch (SQLException e) {
+					JOptionPane.showMessageDialog(null, "Erro ao cadastrar Cliente\n Entrar em contato com o suporte. ");
+
 					System.out.println("Eroor ContatoDao PF "+ e);
 				}
 
@@ -91,6 +93,125 @@ public class ContatoDaoCliente extends ConnectionFac{
 		}
 
 	}
+	//UpDATE no cliente pf
+		public void UpdateClientePf(DadoPf updatePf) {
+
+			String sql_update_pf = "update cliente_pf a " + 
+					"inner join endereco_pf b " + 
+					"on a.cpf = b.fk_cpf_cliente " + 
+					"inner join telefones_pf c " + 
+					"on a.cpf = c.cliente_cpf " + 
+					"set a.nome_cliente = ?, a.sobrenome = ?," + 
+					"b.CEP = ?, b.RUA = ?, b.CIDADE =?, b.estado = ?, b.NUMERO = ?, b.bairro = ?, b.complemento = ?," + 
+					"c.ddd = ?, c.tel1 = ?, c.tel2 = ?, c.cel = ?"
+					+ "where a.cpf = ?;";
+
+			try {
+
+				PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(sql_update_pf);
+
+
+				stmt.setString(1, 	updatePf.getNome());
+				stmt.setString(2, 	updatePf.getSobrenome());
+				stmt.setString(3, updatePf.getCep());
+				stmt.setString(4, updatePf.getRua());
+				stmt.setString(5, updatePf.getCidade());
+				stmt.setString(6, updatePf.getEstado());
+				stmt.setString(7, updatePf.getNo());
+				stmt.setString(8, updatePf.getBairro());
+				stmt.setString(9, updatePf.getComplemento());
+				stmt.setString(10, updatePf.getDdd());
+				stmt.setString(11, updatePf.getTel1());
+				stmt.setString(12, updatePf.getTel2());
+				stmt.setString(13, updatePf.getCel());
+				stmt.setString(14, updatePf.getCpf());
+
+
+				stmt.execute();
+
+				JOptionPane.showMessageDialog(null, "Funcionario "+updatePf.getNome().toUpperCase()+" atualizado com sucesso !");
+
+				stmt.close();
+
+
+			} catch (SQLException e) {
+				System.out.println("Erro ao Atualizar cliente pf: " +e);
+			}
+
+		}
+		//DELETA CLIENTE PF
+		public void DeleteClientePf(DadoPf deletePf) {
+
+
+			try {
+
+				String delete_sql = "DELETE a.*, b.*, c.* from cliente_pf a " + 
+						"inner join endereco_pf b " + 
+						"on a.cpf = b.fk_cpf_cliente " + 
+						"inner join telefones_pf c " + 
+						"on a.cpf = c.cliente_cpf " + 
+						"where a.cpf = ?;";
+
+				PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(delete_sql);
+				stmt.setString(1, deletePf.getCpf());
+
+				stmt.executeUpdate();
+
+				JOptionPane.showMessageDialog(null, "Cliente excluido com sucesso");
+
+
+			} catch (SQLException e) {
+				System.out.println("Erro ao excluir Cliente " +e);
+			}
+		}
+		
+		public List<DadoPf> getPfDesc(String descPf){
+
+			try {
+				List<DadoPf> clientePf = new ArrayList<DadoPf>();
+				String sql = "SELECT a.cpf,a.nome_cliente, a.sobrenome, b.CEP, b.RUA, b.cidade, b.estado, b.NUMERO," + 
+						"b.BAIRRO, b.complemento, c.ddd, c.tel1, c.tel2, c.cel " + 
+						"from cliente_pf a " + 
+						"join endereco_pf b " + 
+						"on a.cpf = b.fk_cpf_cliente " + 
+						"join telefones_pf c " + 
+						"on a.cpf = c.cliente_cpf "
+						+ "where a.nome_cliente like ?";
+
+				PreparedStatement stmt = (PreparedStatement) this.connection.prepareStatement(sql);
+				stmt.setString(1, "%"+descPf+"%");
+				ResultSet rs = stmt.executeQuery();
+
+				while(rs.next()) {
+
+					DadoPf pf = new DadoPf();
+
+					pf.setCpf(rs.getString("cpf"));
+					pf.setNome(rs.getString("nome_cliente"));
+					pf.setSobrenome(rs.getString("sobrenome"));
+					pf.setCep(rs.getString("cep"));
+					pf.setRua(rs.getString("rua"));
+					pf.setCidade(rs.getString("cidade"));
+					pf.setEstado(rs.getString("estado"));
+					pf.setNo(rs.getString("numero"));
+					pf.setBairro(rs.getString("bairro"));
+					pf.setComplemento(rs.getString("complemento"));
+					pf.setDdd(rs.getString("ddd"));
+					pf.setTel1(rs.getString("tel1"));
+					pf.setTel2(rs.getString("tel2"));
+					pf.setCel(rs.getString("cel"));
+
+					clientePf.add(pf);				
+				}
+				rs.close();
+				stmt.close();
+				return clientePf;		
+
+			} catch (SQLException e) {
+				throw new RuntimeException();
+			}
+
+		}
 
 	//Adiciona Pessoa Juridica
 	public void adicionaPj(DadoPj dadopj) {
@@ -103,12 +224,12 @@ public class ContatoDaoCliente extends ConnectionFac{
 
 			ResultSet rs = stmt0.executeQuery();
 			if (rs.next()) {
-				JOptionPane.showMessageDialog(null, "Usuario com esse CNPJ ' "+ dadopj.getCnpj()+" ' j√° existe");
+				JOptionPane.showMessageDialog(null, "Usuario com esse CNPJ ' "+ dadopj.getCnpj()+" ' j· existe");
 
 			}else {
 				String sql_cliente_pj = "INSERT INTO cliente_pj"
-						+ "(tipo,nome_cliente, sobrenome, cnpj)"
-						+ "VALUES(?,?,?,?)";
+						+ "(nome_cliente, sobrenome, cnpj)"
+						+ "VALUES(?,?,?)";
 				String sql_tele_pj = "INSERT INTO telefones_pj"+
 						"(ddd,tel1,tel2,cel,cliente_cnpj)"
 						+ "VALUES (?,?,?,?,?)";
@@ -122,10 +243,10 @@ public class ContatoDaoCliente extends ConnectionFac{
 					PreparedStatement stmt1 = (PreparedStatement) connection.prepareStatement(sql_tele_pj);
 					PreparedStatement stmt2 = (PreparedStatement) connection.prepareStatement(sql_end_pj);
 
-					stmt.setString(1,	dadopj.getTipo());	
-					stmt.setString(2, 	dadopj.getNome());
-					stmt.setString(3, 	dadopj.getSobrenome());
-					stmt.setString(4, 	dadopj.getCnpj());
+		
+					stmt.setString(1, 	dadopj.getNome());
+					stmt.setString(2, 	dadopj.getSobrenome());
+					stmt.setString(3, 	dadopj.getCnpj());
 
 
 					stmt1.setString(1, dadopj.getDdd());
@@ -135,14 +256,13 @@ public class ContatoDaoCliente extends ConnectionFac{
 					stmt1.setString(5, dadopj.getCnpj());
 
 					stmt2.setString(1, dadopj.getCep());
-					stmt2.setString(2, dadopj.getCidade());
-					stmt2.setString(3, dadopj.getEstado());
-					stmt2.setString(4, dadopj.getRua());
-					stmt2.setString(5, dadopj.getBairro());
-					stmt2.setString(6, dadopj.getNo());
-					stmt2.setString(7, dadopj.getBairro());
-					stmt2.setString(8, dadopj.getComplemento());
-					stmt2.setString(9, dadopj.getCnpj());
+					stmt2.setString(2, dadopj.getRua());
+					stmt2.setString(3, dadopj.getCidade());
+					stmt2.setString(4, dadopj.getEstado());
+					stmt2.setString(5, dadopj.getNo());
+					stmt2.setString(6, dadopj.getBairro());
+					stmt2.setString(7, dadopj.getComplemento());
+					stmt2.setString(8, dadopj.getCnpj());
 
 					stmt.execute();
 					stmt1.execute();
@@ -152,9 +272,10 @@ public class ContatoDaoCliente extends ConnectionFac{
 					stmt2.close();
 
 
-					JOptionPane.showMessageDialog(null, "Usuario "+dadopj.getCnpj().toUpperCase()+" cadastrado com sucesso");
+					JOptionPane.showMessageDialog(null, "Usuario "+dadopj.getCnpj().toUpperCase()+" \ncadastrado com sucesso");
 
 				} catch (SQLException e) {
+					JOptionPane.showMessageDialog(null, "Erro ao cadastrar Cliente\n Entrar em contato com o suporte. ");
 					System.out.println("Eroor ContatoDao Pj "+ e);
 				}
 
@@ -168,52 +289,7 @@ public class ContatoDaoCliente extends ConnectionFac{
 
 	}
 
-	//UpDATE no cliente pf
-	public void UpdateClientePf(DadoPf updatePf) {
-
-		String sql_update_pf = "update cliente_pf a " + 
-				"inner join endereco_pf b " + 
-				"on a.cpf = b.fk_cpf_cliente " + 
-				"inner join telefones_pf c " + 
-				"on a.cpf = c.cliente_cpf " + 
-				"set a.nome_cliente = ?, a.sobrenome = ?," + 
-				"b.CEP = ?, b.RUA = ?, b.CIDADE =?, b.estado = ?, b.NUMERO = ?, b.bairro = ?, b.complemento = ?," + 
-				"c.ddd = ?, c.tel1 = ?, c.tel2 = ?, c.cel = ?"
-				+ "where a.cpf = ?;";
-
-		try {
-
-			PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(sql_update_pf);
-
-
-			stmt.setString(1, 	updatePf.getNome());
-			stmt.setString(2, 	updatePf.getSobrenome());
-			stmt.setString(3, updatePf.getCep());
-			stmt.setString(4, updatePf.getRua());
-			stmt.setString(5, updatePf.getCidade());
-			stmt.setString(6, updatePf.getEstado());
-			stmt.setString(7, updatePf.getNo());
-			stmt.setString(8, updatePf.getBairro());
-			stmt.setString(9, updatePf.getComplemento());
-			stmt.setString(10, updatePf.getDdd());
-			stmt.setString(11, updatePf.getTel1());
-			stmt.setString(12, updatePf.getTel2());
-			stmt.setString(13, updatePf.getCel());
-			stmt.setString(14, updatePf.getCpf());
-
-
-			stmt.execute();
-
-			JOptionPane.showMessageDialog(null, "Funcionario "+updatePf.getNome().toUpperCase()+" atualizado com sucesso !");
-
-			stmt.close();
-
-
-		} catch (SQLException e) {
-			System.out.println("Erro ao Atualizar cliente pf: " +e);
-		}
-
-	}
+	
 
 	//update Cliente Pj
 	public void UpdateClientePj(DadoPj updatePj) {
@@ -289,80 +365,13 @@ public class ContatoDaoCliente extends ConnectionFac{
 	}
 
 	//DELETANDO CLIENTE PF
-	public void DeleteClientePf(DadoPf deletePf) {
+	
 
 
-		try {
+//Listando PJ 
+	
+	
 
-			String delete_sql = "DELETE a.*, b.*, c.* from cliente_pf a " + 
-					"inner join endereco_pf b " + 
-					"on a.cpf = b.fk_cpf_cliente " + 
-					"inner join telefones_pf c " + 
-					"on a.cpf = c.cliente_cpf " + 
-					"where a.cpf = ?;";
-
-			PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(delete_sql);
-			stmt.setString(1, deletePf.getCpf());
-
-			stmt.executeUpdate();
-
-			JOptionPane.showMessageDialog(null, "Cliente excluido com sucesso");
-
-
-		} catch (SQLException e) {
-			System.out.println("Erro ao excluir Cliente " +e);
-		}
-	}
-
-
-//Listando 
-public List<DadoPf> getPfDesc(String descPf){
-
-	try {
-		List<DadoPf> clientePf = new ArrayList<DadoPf>();
-		String sql = "SELECT a.cpf,a.nome_cliente, a.sobrenome, b.CEP, b.RUA, b.cidade, b.estado, b.NUMERO," + 
-				"b.BAIRRO, b.complemento, c.ddd, c.tel1, c.tel2, c.cel " + 
-				"from cliente_pf a " + 
-				"join endereco_pf b " + 
-				"on a.cpf = b.fk_cpf_cliente " + 
-				"join telefones_pf c " + 
-				"on a.cpf = c.cliente_cpf "
-				+ "where a.nome_cliente like ?";
-
-		PreparedStatement stmt = (PreparedStatement) this.connection.prepareStatement(sql);
-		stmt.setString(1, "%"+descPf+"%");
-		ResultSet rs = stmt.executeQuery();
-
-		while(rs.next()) {
-
-			DadoPf pf = new DadoPf();
-
-			pf.setCpf(rs.getString("cpf"));
-			pf.setNome(rs.getString("nome_cliente"));
-			pf.setSobrenome(rs.getString("sobrenome"));
-			pf.setCep(rs.getString("cep"));
-			pf.setRua(rs.getString("rua"));
-			pf.setCidade(rs.getString("cidade"));
-			pf.setEstado(rs.getString("estado"));
-			pf.setNo(rs.getString("numero"));
-			pf.setBairro(rs.getString("bairro"));
-			pf.setComplemento(rs.getString("complemento"));
-			pf.setDdd(rs.getString("ddd"));
-			pf.setTel1(rs.getString("tel1"));
-			pf.setTel2(rs.getString("tel2"));
-			pf.setCel(rs.getString("cel"));
-
-			clientePf.add(pf);				
-		}
-		rs.close();
-		stmt.close();
-		return clientePf;		
-
-	} catch (SQLException e) {
-		throw new RuntimeException();
-	}
-
-}
 }
 
 
