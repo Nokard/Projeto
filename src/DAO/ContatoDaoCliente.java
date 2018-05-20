@@ -224,7 +224,7 @@ public class ContatoDaoCliente extends ConnectionFac{
 
 			ResultSet rs = stmt0.executeQuery();
 			if (rs.next()) {
-				JOptionPane.showMessageDialog(null, "Usuario com esse CNPJ ' "+ dadopj.getCnpj()+" ' já existe");
+				JOptionPane.showMessageDialog(null, "Cliente com esse CNPJ ' "+ dadopj.getCnpj()+" ' já existe");
 
 			}else {
 				String sql_cliente_pj = "INSERT INTO cliente_pj"
@@ -267,12 +267,13 @@ public class ContatoDaoCliente extends ConnectionFac{
 					stmt.execute();
 					stmt1.execute();
 					stmt2.execute();
+					
 					stmt.close();
 					stmt1.close();
 					stmt2.close();
 
 
-					JOptionPane.showMessageDialog(null, "Usuario "+dadopj.getCnpj().toUpperCase()+" \ncadastrado com sucesso");
+					JOptionPane.showMessageDialog(null, "Cliente "+dadopj.getNome().toUpperCase()+" \ncadastrado com sucesso");
 
 				} catch (SQLException e) {
 					JOptionPane.showMessageDialog(null, "Erro ao cadastrar Cliente\n Entrar em contato com o suporte. ");
@@ -290,15 +291,14 @@ public class ContatoDaoCliente extends ConnectionFac{
 	}
 
 	
-
 	//update Cliente Pj
 	public void UpdateClientePj(DadoPj updatePj) {
 
-		String sql_update_pj = "update cliente_pf a " + 
-				"inner join endereco_pf b " + 
-				"on a.cpf = b.fk_cpf_cliente " + 
-				"inner join telefones_pf c " + 
-				"on a.cpf = c.cliente_cpf " + 
+		String sql_update_pj = "update cliente_pJ a " + 
+				"inner join endereco_pj b " + 
+				"on a.cnpj = b.fk_cnpj_cliente " + 
+				"inner join telefones_pj c " + 
+				"on a.cnpj = c.cliente_cnpj " + 
 				"set a.nome_cliente = ?, a.sobrenome = ?," + 
 				"b.CEP = ?, b.RUA = ?, b.CIDADE =?, b.estado = ?, b.NUMERO = ?, b.bairro = ?, b.complemento = ?," + 
 				"c.ddd = ?, c.tel1 = ?, c.tel2 = ?, c.cel = ?"
@@ -364,13 +364,54 @@ public class ContatoDaoCliente extends ConnectionFac{
 		}
 	}
 
-	//DELETANDO CLIENTE PF
 	
+//Listando PJ 	
+	public List<DadoPj> getClientePj(String descClientePj) {
+		
+		try {
+			List<DadoPj> clientePj = new ArrayList<DadoPj>();
+			String sql = "select a.cnpj,a.nome_cliente,a.sobrenome, b.ddd, b.tel1, b.tel2, b.cel, c.cep, c.rua, c.cidade,c.estado," + 
+					"c.numero, c.bairro,c.complemento from cliente_pj a " + 
+					"join telefones_pj b " + 
+					"on a.cnpj = b.cliente_cnpj " + 
+					"join endereco_pj c " + 
+					"on a.cnpj = c.fk_cnpj_cliente " + 
+					"where a.cnpj like ?;";
 
+			PreparedStatement stmt = (PreparedStatement) this.connection.prepareStatement(sql);
+			stmt.setString(1, "%"+descClientePj+"%");
+			ResultSet rs = stmt.executeQuery();
 
-//Listando PJ 
-	
-	
+			while(rs.next()) {
+
+				DadoPj pj = new DadoPj();
+
+				pj.setCnpj(rs.getString("cnpj"));
+				pj.setNome(rs.getString("nome_cliente"));
+				pj.setSobrenome(rs.getString("sobrenome"));
+				pj.setCep(rs.getString("cep"));
+				pj.setRua(rs.getString("rua"));
+				pj.setCidade(rs.getString("cidade"));
+				pj.setEstado(rs.getString("estado"));
+				pj.setNo(rs.getString("numero"));
+				pj.setBairro(rs.getString("bairro"));
+				pj.setComplemento(rs.getString("complemento"));
+				pj.setDdd(rs.getString("ddd"));
+				pj.setTel1(rs.getString("tel1"));
+				pj.setTel2(rs.getString("tel2"));
+				pj.setCel(rs.getString("cel"));
+
+				clientePj.add(pj);				
+			}
+			rs.close();
+			stmt.close();
+			return clientePj;		
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+	}
 
 }
 

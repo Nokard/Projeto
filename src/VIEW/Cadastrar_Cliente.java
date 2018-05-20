@@ -269,10 +269,20 @@ public class Cadastrar_Cliente extends JFrame {
 							pj.setNome(txtNomeCli.getText().toUpperCase());
 							pj.setSobrenome(txtSobrenome.getText().toUpperCase());
 							pj.setCnpj(txtCpfCnpj.getText());
+							
 							pj.setDdd(jfDdd.getText());
 							pj.setTel1(txtTelefone1.getText().toUpperCase());
 							pj.setTel2(txtTelefone2.getText().toUpperCase());
 							pj.setCel(txtCel.getText().toUpperCase());
+							
+							pj.setCep(txtCep.getText().toUpperCase());
+							pj.setRua(txtRua.getText().toUpperCase());
+							pj.setCidade(txtCidade.getText().toUpperCase());
+							pj.setBairro(txtBairro.getText().toUpperCase());
+							pj.setEstado(txtUf.getText().toUpperCase());
+							pj.setNo(txtNumero.getText());
+							pj.setComplemento(txtComplemento.getText().toUpperCase());
+							
 						
 							ContatoDaoCliente dao = new ContatoDaoCliente();
 							

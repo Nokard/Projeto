@@ -73,7 +73,7 @@ public class Visualizar_Clientes_Pf extends JFrame {
 
 	public Visualizar_Clientes_Pf() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 950, 607);
+		setBounds(100, 100, 968, 607);
 		contentPane = new JPanel();
 		this.setLocationRelativeTo(null);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -212,10 +212,10 @@ public class Visualizar_Clientes_Pf extends JFrame {
 		label_13.setBounds(288, 119, 46, 14);
 		panel.add(label_13);
 		
-		JLabel label_14 = new JLabel("NOº");
-		label_14.setFont(new Font("Dialog", Font.PLAIN, 12));
-		label_14.setBounds(391, 118, 46, 14);
-		panel.add(label_14);
+		JLabel lblNo = new JLabel("No\u00BA");
+		lblNo.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblNo.setBounds(391, 118, 46, 14);
+		panel.add(lblNo);
 		
 		JLabel label_15 = new JLabel("COMPLEMENTO");
 		label_15.setFont(new Font("Dialog", Font.PLAIN, 12));
@@ -238,7 +238,7 @@ public class Visualizar_Clientes_Pf extends JFrame {
 		panel.add(txtComplemento);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 348, 905, 209);
+		scrollPane.setBounds(42, 348, 905, 209);
 		contentPane.add(scrollPane);
 		
 		table = new JTable(modelo);
@@ -300,7 +300,6 @@ public class Visualizar_Clientes_Pf extends JFrame {
 		JButton button_2 = new JButton("Excluir");
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				if(table.getSelectedRow() != -1) {
 					int yes = JOptionPane.showConfirmDialog(null, "Você realmente deseja DELETAR esse Cliente ?","DELETE",JOptionPane.YES_NO_OPTION);
 						if (yes == 0) {
@@ -327,15 +326,15 @@ public class Visualizar_Clientes_Pf extends JFrame {
 		button_2.setBounds(452, 312, 117, 25);
 		contentPane.add(button_2);
 		
-		JButton button_3 = new JButton("Pesquisar");
-		button_3.addActionListener(new ActionListener() {
+		JButton btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					CarregaClientes(txtCliNome.getText());
 			
 			}
 		});
-		button_3.setBounds(742, 312, 117, 25);
-		contentPane.add(button_3);
+		btnPesquisar.setBounds(742, 312, 117, 25);
+		contentPane.add(btnPesquisar);
 		
 		txtCliNome = new JTextField();
 		txtCliNome.setBounds(581, 312, 149, 25);

@@ -9,8 +9,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import CONTROL.DadoPf;
+import CONTROL.DadoPj;
+import DAO.ContatoDaoCliente;
+
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -18,7 +24,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Visualizar_Clientes_Pj extends JFrame {
 
@@ -31,12 +42,12 @@ public class Visualizar_Clientes_Pj extends JFrame {
 	private JTextField txtCel;
 	private JTextField txtCep;
 	private JTextField txtCidade;
-	private JTextField textField_9;
-	private JTextField textField_10;
-	private JTextField textField_11;
-	private JTextField textField_12;
-	private JTextField textField_13;
-	private JTextField textField_14;
+	private JTextField txtUf;
+	private JTextField txtBairro;
+	private JTextField txtRua;
+	private JTextField txtNo;
+	private JTextField txtComplemento;
+	private JTextField txtPesquisar;
 	private JTable table;
 
 	/**
@@ -176,45 +187,45 @@ public class Visualizar_Clientes_Pj extends JFrame {
 		txtCidade.setBounds(107, 138, 86, 20);
 		panel.add(txtCidade);
 		
-		textField_9 = new JTextField();
-		textField_9.setColumns(10);
-		textField_9.setBounds(203, 138, 34, 20);
-		panel.add(textField_9);
+		txtUf = new JTextField();
+		txtUf.setColumns(10);
+		txtUf.setBounds(203, 138, 34, 20);
+		panel.add(txtUf);
 		
-		textField_10 = new JTextField();
-		textField_10.setColumns(10);
-		textField_10.setBounds(248, 138, 86, 20);
-		panel.add(textField_10);
+		txtBairro = new JTextField();
+		txtBairro.setColumns(10);
+		txtBairro.setBounds(248, 138, 86, 20);
+		panel.add(txtBairro);
 		
 		JLabel label_11 = new JLabel("RUA");
 		label_11.setFont(new Font("Dialog", Font.PLAIN, 12));
 		label_11.setBounds(353, 118, 46, 14);
 		panel.add(label_11);
 		
-		JLabel label_12 = new JLabel("NO\u00C2\u00BA");
-		label_12.setFont(new Font("Dialog", Font.PLAIN, 12));
-		label_12.setBounds(465, 118, 46, 14);
-		panel.add(label_12);
+		JLabel lblNo = new JLabel("No\u00BA");
+		lblNo.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblNo.setBounds(465, 118, 46, 14);
+		panel.add(lblNo);
 		
 		JLabel label_13 = new JLabel("COMPLEMENTO");
 		label_13.setFont(new Font("Dialog", Font.PLAIN, 12));
 		label_13.setBounds(556, 118, 96, 14);
 		panel.add(label_13);
 		
-		textField_11 = new JTextField();
-		textField_11.setColumns(10);
-		textField_11.setBounds(353, 138, 86, 20);
-		panel.add(textField_11);
+		txtRua = new JTextField();
+		txtRua.setColumns(10);
+		txtRua.setBounds(353, 138, 86, 20);
+		panel.add(txtRua);
 		
-		textField_12 = new JTextField();
-		textField_12.setColumns(10);
-		textField_12.setBounds(465, 138, 56, 20);
-		panel.add(textField_12);
+		txtNo = new JTextField();
+		txtNo.setColumns(10);
+		txtNo.setBounds(465, 138, 56, 20);
+		panel.add(txtNo);
 		
-		textField_13 = new JTextField();
-		textField_13.setColumns(10);
-		textField_13.setBounds(555, 138, 159, 20);
-		panel.add(textField_13);
+		txtComplemento = new JTextField();
+		txtComplemento.setColumns(10);
+		txtComplemento.setBounds(555, 138, 159, 20);
+		panel.add(txtComplemento);
 		
 		JLabel label_14 = new JLabel("Nome Do Cliente");
 		label_14.setBounds(564, 267, 151, 25);
@@ -222,27 +233,110 @@ public class Visualizar_Clientes_Pj extends JFrame {
 		contentPane.add(label_14);
 		
 		JButton button = new JButton("Atualizar");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if(table.getSelectedRow() != -1) {
+					int yes = JOptionPane.showConfirmDialog(null, "Você realmente deseja ATUALIZAR esse Cliente ?","ATUALIZAR",JOptionPane.YES_NO_OPTION);	
+					 if(yes == 0) {
+						 
+						 DadoPj dadoPj = new DadoPj();
+						 ContatoDaoCliente daoPj = new ContatoDaoCliente();
+						 
+						 dadoPj.setCnpj(txtCnpj.getText().toUpperCase());
+						 dadoPj.setNome(txtNome.getText().toUpperCase());
+						 dadoPj.setSobrenome(txtSobrenome.getText().toUpperCase());
+						 dadoPj.setDdd(txtDdd.getText().toUpperCase());
+						 dadoPj.setTel1(txtTel1.getText().toUpperCase());
+						 dadoPj.setTel2(txtTel2.getText().toUpperCase());
+						 dadoPj.setCel(txtCel.getText().toUpperCase());
+						 dadoPj.setCep(txtCep.getText().toUpperCase());
+						 dadoPj.setRua(txtRua.getText().toUpperCase());
+						 dadoPj.setCidade(txtCidade.getText().toUpperCase());
+						 dadoPj.setEstado(txtUf.getText().toUpperCase());
+						 dadoPj.setBairro(txtBairro.getText().toUpperCase());
+						 dadoPj.setNo(txtNo.getText().toUpperCase());
+						 dadoPj.setComplemento(txtComplemento.getText().toUpperCase());
+						 
+						 daoPj.UpdateClientePj(dadoPj);
+						 setTextField();
+						 
+						 
+					 }
+				}
+			}
+		});
 		button.setBounds(306, 293, 117, 25);
 		contentPane.add(button);
 		
 		JButton button_1 = new JButton("Excluir");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+				if(table.getSelectedRow() != -1) {
+					int yes = JOptionPane.showConfirmDialog(null, "Você realmente deseja DELETAR esse Cliente ?","DELETE",JOptionPane.YES_NO_OPTION);
+						if (yes == 0) {
+							
+							try {
+								DadoPj dadoPj = new DadoPj();
+								ContatoDaoCliente daoPj = new ContatoDaoCliente();
+								
+								//seta o valor do cpf da tabela
+								dadoPj.setCnpj((String) table.getValueAt(table.getSelectedRow(), 0));
+								
+								daoPj.DeleteClientePj(dadoPj);
+								
+							} catch (Exception e2) {
+								System.out.println("Erro ao deletar Cliente: " +e2);
+							}
+							
+						}
+				}
+				
+				
+				
+			}
+		});
 		button_1.setBounds(435, 293, 117, 25);
 		contentPane.add(button_1);
 		
-		textField_14 = new JTextField();
-		textField_14.setBounds(564, 293, 149, 25);
-		textField_14.setColumns(10);
-		contentPane.add(textField_14);
+		txtPesquisar = new JTextField();
+		txtPesquisar.setBounds(564, 293, 149, 25);
+		txtPesquisar.setColumns(10);
+		contentPane.add(txtPesquisar);
 		
-		JButton button_2 = new JButton("Pesquisar");
-		button_2.setBounds(725, 293, 117, 25);
-		contentPane.add(button_2);
+		JButton btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				CarregaClientes(txtPesquisar.getText());
+				
+			}
+		});
+		btnPesquisar.setBounds(725, 293, 117, 25);
+		contentPane.add(btnPesquisar);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 329, 905, 209);
 		contentPane.add(scrollPane);
 		
-		table = new JTable();
+		table = new JTable(modelo);
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				setTextField();
+			}
+		});
+		table.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				setTextField();
+			}@Override
+			public void keyReleased(KeyEvent e) {
+				setTextField();
+			}
+		});
 		scrollPane.setViewportView(table);
 		
 		JLabel lblClientePessoaJuridica = new JLabel("CLIENTE PESSOA JURIDICA");
@@ -282,8 +376,66 @@ public class Visualizar_Clientes_Pj extends JFrame {
 		modelo.addColumn("Noº");
 		modelo.addColumn("Bairro");
 		modelo.addColumn("Complemento");
-		
-
 	
 	}
+	
+	public void setTextField() {
+		
+		int indice = table.getSelectedRow();
+		
+		txtCnpj.setText(table.getValueAt(indice, 0).toString());
+		txtNome.setText(table.getValueAt(indice, 1).toString());
+		//txtSobrenome.setText(table.getValueAt(indice, 2).toString());			
+		txtDdd.setText(table.getValueAt(indice, 3).toString());
+		txtTel1.setText(table.getValueAt(indice, 4).toString());
+		txtTel2.setText(table.getValueAt(indice, 5).toString());
+		txtCel.setText(table.getValueAt(indice, 6).toString());			
+		txtCep.setText(table.getValueAt(indice, 7).toString());
+		txtRua.setText(table.getValueAt(indice, 8).toString());
+		txtCidade.setText(table.getValueAt(indice, 9).toString());
+		txtUf.setText(table.getValueAt(indice, 10).toString());
+		txtBairro.setText(table.getValueAt(indice, 12).toString());
+		txtNo.setText(table.getValueAt(indice, 11).toString());
+		txtComplemento.setText(table.getValueAt(indice, 13).toString());			
+		
+	}
+	
+public void CarregaClientes(String descClientePj) {
+		
+		try {
+			
+			ContatoDaoCliente clientePj = new ContatoDaoCliente();
+			java.util.List<DadoPj> pj = clientePj.getClientePj(descClientePj);
+			modelo.setNumRows(0);
+			
+
+			for (DadoPj Clipj : pj) {
+				modelo.addRow(
+						new Object[] {
+								Clipj.getCnpj(),
+								Clipj.getNome(),
+								Clipj.getSobrenome(),
+								Clipj.getDdd(),
+								Clipj.getTel1(),
+								Clipj.getTel2(),
+								Clipj.getCel(),
+								Clipj.getCep(),
+								Clipj.getRua(),	
+								Clipj.getCidade(),															
+								Clipj.getEstado(),
+								Clipj.getNo(),
+								Clipj.getBairro(),
+								Clipj.getComplemento()
+							
+						});
+			}
+				
+			
+		} catch (Exception e) {
+			System.out.println("Erro ao visualizar Cliente pj: " +e);
+		}
+	}
+
+//PRECHER O TEXTFIELD COM O TABLE
+	
 }
