@@ -10,7 +10,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import CONTROL.DadoFornec;
-import DAO.ContatoDaoFornecedor;
+import MODEL.ContatoDaoFornecedor;
 
 import java.awt.Color;
 import javax.swing.JLabel;

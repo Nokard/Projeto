@@ -8,7 +8,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import CONTROL.DadoFunc;
-import DAO.ContatoDaoFuncionario;
+import MODEL.ContatoDaoFuncionario;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;

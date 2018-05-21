@@ -8,7 +8,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 import CONTROL.DadoPf;
 import CONTROL.DadoPj;
-import DAO.ContatoDaoCliente;
+import MODEL.ContatoDaoCliente;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;

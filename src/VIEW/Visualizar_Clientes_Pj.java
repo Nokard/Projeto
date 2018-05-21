@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 
 import CONTROL.DadoPf;
 import CONTROL.DadoPj;
-import DAO.ContatoDaoCliente;
+import MODEL.ContatoDaoCliente;
 
 import java.awt.Color;
 import javax.swing.JLabel;

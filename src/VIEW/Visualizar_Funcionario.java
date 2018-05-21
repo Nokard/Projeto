@@ -15,7 +15,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import CONTROL.DadoFunc;
-import DAO.ContatoDaoFuncionario;
+import MODEL.ContatoDaoFuncionario;
 
 import java.awt.Color;
 import javax.swing.JLabel;

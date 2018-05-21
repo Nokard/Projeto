@@ -1,4 +1,4 @@
-package DAO;
+package MODEL;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

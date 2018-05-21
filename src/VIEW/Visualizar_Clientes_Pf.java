@@ -15,7 +15,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import CONTROL.DadoPf;
-import DAO.ContatoDaoCliente;
+import MODEL.ContatoDaoCliente;
 
 import java.awt.Color;
 import java.awt.Font;

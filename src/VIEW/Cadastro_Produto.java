@@ -10,7 +10,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import CONTROL.Produto;
-import DAO.ContatoDaoProduto;
+import MODEL.ContatoDaoProduto;
 
 import javax.swing.JButton;
 import javax.swing.ImageIcon;

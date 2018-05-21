@@ -15,7 +15,7 @@ import java.awt.Color;
 import javax.swing.border.LineBorder;
 
 import CONTROL.DadoFornec;
-import DAO.ContatoDaoFornecedor;
+import MODEL.ContatoDaoFornecedor;
 
 import javax.swing.JButton;
 import javax.swing.ImageIcon;

@@ -8,7 +8,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import CONTROL.Produto;
-import DAO.ContatoDaoProduto;
+import MODEL.ContatoDaoProduto;
 
 import javax.swing.JLabel;
 import java.awt.Font;
