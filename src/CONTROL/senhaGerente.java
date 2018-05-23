@@ -3,7 +3,7 @@ package CONTROL;
 public class senhaGerente {
 
 	private String nome;
-	private int senha;
+	private String senha;
 	
 	
 	public String getNome() {
@@ -12,10 +12,10 @@ public class senhaGerente {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public int getSenha() {
+	public String getSenha() {
 		return senha;
 	}
-	public void setSenha(int senha) {
+	public void setSenha(String senha) {
 		this.senha = senha;
 	}
 	

@@ -10,6 +10,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import CONTROL.DadoFornec;
+import MODEL.ConnectionFac;
 import MODEL.ContatoDaoFornecedor;
 
 import java.awt.Color;
@@ -28,6 +29,10 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 import javax.swing.ImageIcon;
 
 public class Visualizar_Fornecedor extends JFrame {
@@ -69,9 +74,9 @@ public class Visualizar_Fornecedor extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	
+
 	DefaultTableModel modelo = new DefaultTableModel();
-	
+
 	public Visualizar_Fornecedor() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 950, 571);
@@ -235,7 +240,7 @@ public class Visualizar_Fornecedor extends JFrame {
 		JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				CarregaFornecedor(txtPesquisaFornecedor.getText());
 			}
 		});
@@ -245,29 +250,49 @@ public class Visualizar_Fornecedor extends JFrame {
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				Connection con = ConnectionFac.getConnection();
+				PreparedStatement stmt = null;
+				ResultSet rs = null;
+
+				try {
+					String dados = JOptionPane.showInputDialog("Digite a senha do Gerente");
+
+					stmt = con.prepareStatement("SELECT * FROM login where senha = ?");
+					stmt.setString(1, dados);
+					rs = stmt.executeQuery();
+
+					if (rs.next()) {
 				if(table.getSelectedRow() != -1) {
 					int yes = JOptionPane.showConfirmDialog(null, "VocÃª realmente deseja DELETAR esse Funcionario ?","DELETE",JOptionPane.YES_NO_OPTION);	
-						if (yes == 0) {
-							try {
+					if (yes == 0) {
+						try {
 
-								DadoFornec dadoFornec = new DadoFornec();
-								ContatoDaoFornecedor daoFornec = new ContatoDaoFornecedor();
-								
-								//seta o valor do cnpj da tabela no dadoFornec
-								dadoFornec.setCnpj((String) table.getValueAt(table.getSelectedRow(), 0));
+							DadoFornec dadoFornec = new DadoFornec();
+							ContatoDaoFornecedor daoFornec = new ContatoDaoFornecedor();
 
-								daoFornec.DeleteFornecedor(dadoFornec);
+							//seta o valor do cnpj da tabela no dadoFornec
+							dadoFornec.setCnpj((String) table.getValueAt(table.getSelectedRow(), 0));
 
-							} catch (Exception e2) {
-								System.out.println("Erro no deletar: " +e2);
-							}							
-							
-						}
-					
+							daoFornec.DeleteFornecedor(dadoFornec);
+
+						} catch (Exception e2) {
+							System.out.println("Erro no deletar: " +e2);
+						}							
+
+					}
+
 				}else {
 					JOptionPane.showMessageDialog(null, "Selecione um registro para excluir !");
 				}
+					}
+
+				else {
+					JOptionPane.showMessageDialog(null, "Você não tem acesso\n Senha incorreta");;
+
+				}
+			}catch (Exception e1) {
+				System.out.println("Erroo " + e1);
+			}
 			}
 		});
 		btnExcluir.setBounds(516, 309, 117, 25);
@@ -276,42 +301,61 @@ public class Visualizar_Fornecedor extends JFrame {
 		JButton btnAtualizar = new JButton("Atualizar");
 		btnAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
-				if (table.getSelectedRow() != -1) {
-					int yes = JOptionPane.showConfirmDialog(null, "VocÃª realmente deseja ATUALIZAR esse Funcionario ?","ATUALIZAR",JOptionPane.YES_NO_OPTION);	
-					if (yes == 0) {
-						
-						DadoFornec fornec = new DadoFornec();
-						ContatoDaoFornecedor daoFornec = new ContatoDaoFornecedor();
-						
-						int ddd = Integer.parseInt(txtDdd.getText());
-						
-						fornec.setBairro(txtBairro.getText().toUpperCase());
-						fornec.setCel(txtCel.getText());
-						fornec.setCep(txtCep.getText());
-						fornec.setCidade(txtCidade.getText().toUpperCase());
-						fornec.setCnpj(txtCnpj.getText());
-						fornec.setComplemento(txtComplemento.getText().toUpperCase());
-						fornec.setDdd(ddd);
-						fornec.setNo(txtNo.getText());
-						fornec.setNomeFantasia(txtNomeFantasia.getText().toUpperCase());
-						fornec.setRazaoSocial(txtRazaoSocial.getText().toUpperCase());
-						fornec.setRua(txtRua.getText().toUpperCase());
-						fornec.setTel1(txtTel1.getText());
-						fornec.setTel2(txtTel2.getText());
-						fornec.setEstado(txtUf.getText().toUpperCase());
-						
-						daoFornec.UpdateFornec(fornec);
-						
-						limparTextField();
-						
+
+				Connection con = ConnectionFac.getConnection();
+				PreparedStatement stmt = null;
+				ResultSet rs = null;
+
+				try {
+					String dados = JOptionPane.showInputDialog("Digite a senha do Gerente");
+
+					stmt = con.prepareStatement("SELECT * FROM login where senha = ?");
+					stmt.setString(1, dados);
+					rs = stmt.executeQuery();
+
+					if (rs.next()) {
+						if (table.getSelectedRow() != -1) {
+							int yes = JOptionPane.showConfirmDialog(null, "VocÃª realmente deseja ATUALIZAR esse Funcionario ?","ATUALIZAR",JOptionPane.YES_NO_OPTION);	
+							if (yes == 0) {
+
+								DadoFornec fornec = new DadoFornec();
+								ContatoDaoFornecedor daoFornec = new ContatoDaoFornecedor();
+
+								int ddd = Integer.parseInt(txtDdd.getText());
+
+								fornec.setBairro(txtBairro.getText().toUpperCase());
+								fornec.setCel(txtCel.getText());
+								fornec.setCep(txtCep.getText());
+								fornec.setCidade(txtCidade.getText().toUpperCase());
+								fornec.setCnpj(txtCnpj.getText());
+								fornec.setComplemento(txtComplemento.getText().toUpperCase());
+								fornec.setDdd(ddd);
+								fornec.setNo(txtNo.getText());
+								fornec.setNomeFantasia(txtNomeFantasia.getText().toUpperCase());
+								fornec.setRazaoSocial(txtRazaoSocial.getText().toUpperCase());
+								fornec.setRua(txtRua.getText().toUpperCase());
+								fornec.setTel1(txtTel1.getText());
+								fornec.setTel2(txtTel2.getText());
+								fornec.setEstado(txtUf.getText().toUpperCase());
+
+								daoFornec.UpdateFornec(fornec);
+
+								limparTextField();
+
+							}
+
+						}else {
+							JOptionPane.showMessageDialog(null, "Selecione um registro para Atualizar");
+						}
 					}
-				
-				}else {
-					JOptionPane.showMessageDialog(null, "Selecione um registro para Atualizar");
+					else {
+						JOptionPane.showMessageDialog(null, "Você não tem acesso\n Senha incorreta");;
+
+					}
+				}catch (Exception e1) {
+					System.out.println("Erroo " + e1);
 				}
-			
-				
+
 			}
 		});
 		btnAtualizar.setBounds(387, 309, 117, 25);
@@ -339,11 +383,11 @@ public class Visualizar_Fornecedor extends JFrame {
 			}
 		});
 		scrollPane.setViewportView(table);
-		
+
 		JButton button = new JButton("");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				Cadastrar_Fornecedor cadFornec = new Cadastrar_Fornecedor();
 				cadFornec.setVisible(true);
 				dispose();
@@ -352,19 +396,19 @@ public class Visualizar_Fornecedor extends JFrame {
 		button.setIcon(new ImageIcon(Visualizar_Fornecedor.class.getResource("/imgs/Back.png")));
 		button.setBounds(871, 12, 51, 33);
 		contentPane.add(button);
-		
+
 		JLabel label_8 = new JLabel("");
 		label_8.setIcon(new ImageIcon(Visualizar_Fornecedor.class.getResource("/imgs/fornecedor.png")));
 		label_8.setBounds(42, 0, 51, 45);
 		contentPane.add(label_8);
-		
+
 		JLabel lblVisualizarFornecedores = new JLabel("Visualizar Fornecedores");
 		lblVisualizarFornecedores.setFont(new Font("Dialog", Font.PLAIN, 16));
 		lblVisualizarFornecedores.setBounds(360, 12, 195, 25);
 		contentPane.add(lblVisualizarFornecedores);
-		
-		
-		
+
+
+
 		modelo.addColumn("CNPJ");
 		modelo.addColumn("Nome Fantasia");
 		modelo.addColumn("RazÃ£o Social");
@@ -379,15 +423,15 @@ public class Visualizar_Fornecedor extends JFrame {
 		modelo.addColumn("NoÂº");
 		modelo.addColumn("Bairro");
 		modelo.addColumn("Complemento");
-		
-		
+
+
 	}
 
 	//PRECHER O TEXTFIELD COM O TABLE
 	public void setTextField() {
-		
+
 		int indice = table.getSelectedRow();
-		
+
 		txtNomeFantasia.setText(table.getValueAt(indice, 1).toString());
 		txtRazaoSocial.setText(table.getValueAt(indice, 2).toString());
 		txtCnpj.setText(table.getValueAt(indice, 0).toString());
@@ -402,10 +446,10 @@ public class Visualizar_Fornecedor extends JFrame {
 		txtNo.setText(table.getValueAt(indice, 11).toString());
 		txtBairro.setText(table.getValueAt(indice, 12).toString());		
 		txtComplemento.setText(table.getValueAt(indice, 13).toString());		
-		
-		
+
+
 	}
-	
+
 
 	public void CarregaFornecedor(String descFornec) {
 
@@ -414,34 +458,34 @@ public class Visualizar_Fornecedor extends JFrame {
 			ContatoDaoFornecedor daoFornec = new ContatoDaoFornecedor();
 			List<DadoFornec> dadoFornec = daoFornec.getFornecedoresDesc(descFornec);
 			modelo.setNumRows(0);
-			
+
 			for (DadoFornec fornecedor : dadoFornec) {
 				modelo.addRow(
-					new Object[] {
-							fornecedor.getCnpj(),
-							fornecedor.getNomeFantasia(),
-							fornecedor.getRazaoSocial(),
-							fornecedor.getDdd(),
-							fornecedor.getTel1(),
-							fornecedor.getTel2(),
-							fornecedor.getCel(),
-							fornecedor.getCep(),
-							fornecedor.getRua(),
-							fornecedor.getCidade(),
-							fornecedor.getEstado(),
-							fornecedor.getNo(),
-							fornecedor.getBairro(),
-							fornecedor.getComplemento()
-					});
+						new Object[] {
+								fornecedor.getCnpj(),
+								fornecedor.getNomeFantasia(),
+								fornecedor.getRazaoSocial(),
+								fornecedor.getDdd(),
+								fornecedor.getTel1(),
+								fornecedor.getTel2(),
+								fornecedor.getCel(),
+								fornecedor.getCep(),
+								fornecedor.getRua(),
+								fornecedor.getCidade(),
+								fornecedor.getEstado(),
+								fornecedor.getNo(),
+								fornecedor.getBairro(),
+								fornecedor.getComplemento()
+						});
 			}
 
 		} catch (Exception e) {
 			System.out.println("Erro ao visualizar o Fornecedor: " +e);
 		}
 	}
-	
+
 	public void limparTextField() {
-		
+
 		txtNomeFantasia.setText("");
 		txtRazaoSocial.setText("");
 		txtCnpj.setText("");
@@ -456,8 +500,8 @@ public class Visualizar_Fornecedor extends JFrame {
 		txtNo.setText("");
 		txtBairro.setText("");
 		txtComplemento.setText("");
-		
-		
-		
+
+
+
 	}
 }

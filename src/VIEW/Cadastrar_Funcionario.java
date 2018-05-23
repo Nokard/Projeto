@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import CONTROL.DadoFunc;
+import MODEL.ConnectionFac;
 import MODEL.ContatoDaoFuncionario;
 
 import javax.swing.JLabel;
@@ -19,6 +20,9 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 
@@ -292,52 +296,71 @@ public class Cadastrar_Funcionario extends JFrame {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (txtNome.getText().trim().isEmpty()|| txtSobrenome.getText().trim().isEmpty()|| txtRg.getText().trim().isEmpty()||
-						txtCpf.getText().trim().isEmpty()|| txtCargo.getText().trim().isEmpty()|| txtDdd.getText().trim().isEmpty()||
-						jfTelefone1.getText().trim().isEmpty()|| jfTelefone1.getText().trim().isEmpty()|| jfTelefone2.getText().trim().isEmpty()||
-						jfCel.getText().toString().equals("") && txtCep.getText().toString().equals("") && txtCidade.getText().toString().equals("") &&
-						txtUf.getText().trim().isEmpty()|| txtRua.getText().trim().isEmpty()|| txtBairro.getText().trim().isEmpty()||
-						txtNumero.getText().trim().isEmpty()|| txtComplemento.getText().trim().isEmpty() ) 
-				{
+				Connection con = ConnectionFac.getConnection();
+				PreparedStatement stmt = null;
+				ResultSet rs = null;
 
-					JOptionPane.showMessageDialog(null, "NÃ£o pode conter nenhum campo vazio !");
+				try {
+					String dados = JOptionPane.showInputDialog("Digite a senha do Gerente");
 
-				}else {
-					try {
+					stmt = con.prepareStatement("SELECT * FROM login where senha = ?");
+					stmt.setString(1, dados);
+					rs = stmt.executeQuery();
 
+					if (rs.next()) {
 
-						DadoFunc func = new DadoFunc();
-						int ddd = Integer.parseInt(txtDdd.getText());
+						if (txtNome.getText().trim().isEmpty()|| txtSobrenome.getText().trim().isEmpty()|| txtRg.getText().trim().isEmpty()||
+								txtCpf.getText().trim().isEmpty()|| txtCargo.getText().trim().isEmpty()|| txtDdd.getText().trim().isEmpty()||
+								jfTelefone1.getText().trim().isEmpty()|| jfTelefone1.getText().trim().isEmpty()|| jfTelefone2.getText().trim().isEmpty()||
+								jfCel.getText().toString().equals("") && txtCep.getText().toString().equals("") && txtCidade.getText().toString().equals("") &&
+								txtUf.getText().trim().isEmpty()|| txtRua.getText().trim().isEmpty()|| txtBairro.getText().trim().isEmpty()||
+								txtNumero.getText().trim().isEmpty()|| txtComplemento.getText().trim().isEmpty() ) 
+						{
 
+							JOptionPane.showMessageDialog(null, "Não pode conter nenhum campo vazio !");
 
-						func.setNome(txtNome.getText().toUpperCase());
-						func.setSobrenome(txtSobrenome.getText().toUpperCase());
-						func.setRg(txtRg.getText());
-						func.setCpf(txtCpf.getText());
-						func.setCargo(txtCargo.getText().toUpperCase());
-						func.setDdd(ddd);
-						func.setTel1(jfTelefone1.getText());
-						func.setTel2(jfTelefone2.getText());
-						func.setCel(jfCel.getText());
-						func.setCep(txtCep.getText());
-						func.setCidade(txtCidade.getText().toUpperCase());
-						func.setEstado(txtUf.getText().toUpperCase());
-						func.setRua(txtRua.getText().toUpperCase());
-						func.setBairro(txtBairro.getText().toUpperCase());
-						func.setNo(txtNumero.getText());
-						func.setComplemento(txtComplemento.getText().toUpperCase());
-
-						ContatoDaoFuncionario daoFunc = new ContatoDaoFuncionario();
-
-						daoFunc.adicionaFuncionario(func);
+						}else {
+							try {
 
 
+								DadoFunc func = new DadoFunc();
+								int ddd = Integer.parseInt(txtDdd.getText());
 
-					} catch (Exception e2) {
-						System.out.println("Erro Cadastro_func ->" + e2);
+
+								func.setNome(txtNome.getText().toUpperCase());
+								func.setSobrenome(txtSobrenome.getText().toUpperCase());
+								func.setRg(txtRg.getText());
+								func.setCpf(txtCpf.getText());
+								func.setCargo(txtCargo.getText().toUpperCase());
+								func.setDdd(ddd);
+								func.setTel1(jfTelefone1.getText());
+								func.setTel2(jfTelefone2.getText());
+								func.setCel(jfCel.getText());
+								func.setCep(txtCep.getText());
+								func.setCidade(txtCidade.getText().toUpperCase());
+								func.setEstado(txtUf.getText().toUpperCase());
+								func.setRua(txtRua.getText().toUpperCase());
+								func.setBairro(txtBairro.getText().toUpperCase());
+								func.setNo(txtNumero.getText());
+								func.setComplemento(txtComplemento.getText().toUpperCase());
+
+								ContatoDaoFuncionario daoFunc = new ContatoDaoFuncionario();
+
+								daoFunc.adicionaFuncionario(func);
+
+
+
+							} catch (Exception e2) {
+								System.out.println("Erro Cadastro_func ->" + e2);
+							}
+						}
+					}else {
+						JOptionPane.showMessageDialog(null, "Você não tem acesso\n Senha incorreta");;
+
+					}}catch (Exception e1) {
+						System.out.println("Erroo " + e1);
 					}
-				}
-			}
+			}	
 		});
 		btnSalvar.setBounds(416, 347, 199, 23);
 		contentPane.add(btnSalvar);

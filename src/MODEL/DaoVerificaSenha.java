@@ -7,47 +7,22 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
+import com.mysql.jdbc.Statement;
+
 import CONTROL.senhaGerente;
 import VIEW.Cadastrar_Pedido;
 import VIEW.Index;
 
 public class DaoVerificaSenha extends ConnectionFac {
 
-	private Connection connection;
+	ConnectionFac con = new ConnectionFac();
 	
 	public DaoVerificaSenha() {
-		// TODO Auto-generated constructor stub
-	this.connection = new ConnectionFac().getConnection();
-	
+			con.getConnection();
 	}
 	
+
 	
 	
-	public void verificaSenha(senhaGerente senGerente) {
-		
-		try {
-			
-			PreparedStatement stmt = (PreparedStatement) this.connection.prepareStatement("SELECT * FROM senhagerente where senha = ? ");
-			stmt.setInt(1, senGerente.getSenha());
-			
-			ResultSet rs = stmt.executeQuery();
-			
-			if (rs.next()) {
-				JOptionPane.showMessageDialog(null, "Acesso concedido");
-
-				new Cadastrar_Pedido().setVisible(true);
-					
-			}else {
-				JOptionPane.showMessageDialog(null, "Você não tem permissao para acessars");
-				new Index().setVisible(true);
-			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-
-		
-	}
+	
 }

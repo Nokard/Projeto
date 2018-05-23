@@ -7,7 +7,7 @@ import com.mysql.jdbc.Connection;
 
 public class ConnectionFac {
 
-	public Connection getConnection(){
+	public static Connection getConnection(){
 		try {
 			
 		Class.forName("com.mysql.jdbc.Driver");

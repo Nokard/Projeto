@@ -15,11 +15,15 @@ import java.awt.Color;
 import javax.swing.border.LineBorder;
 
 import CONTROL.DadoFornec;
+import MODEL.ConnectionFac;
 import MODEL.ContatoDaoFornecedor;
 
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
 
 public class Cadastrar_Fornecedor extends JFrame {
@@ -250,47 +254,70 @@ public class Cadastrar_Fornecedor extends JFrame {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if (txtNomeFantasia.getText().trim().isEmpty()|| txtRazaoSocial.getText().trim().isEmpty()|| 
-						txtBairro.getText().trim().isEmpty()|| txtCel.getText().trim().isEmpty()|| txtCep.getText().trim().isEmpty()||
-						txtCidade.getText().trim().isEmpty()|| txtCnpj.getText().trim().isEmpty()|| txtComplemento.getText().trim().isEmpty()||
-						txtDdd.getText().trim().isEmpty()|| txtNumero.getText().trim().isEmpty()|| txtRua.getText().trim().isEmpty()|| txtTel1.getText().trim().isEmpty()||
-						txtTel2.getText().trim().isEmpty()|| txtUf.getText().trim().isEmpty()) 
-				{
-					JOptionPane.showMessageDialog(null, "NÃ£o pode conter nenhum campo vazio !");
-					
-				} else {
-					
-					try {
-						
-						DadoFornec DadoFornec = new DadoFornec();
-						int ddd = Integer.parseInt(txtDdd.getText());
-						
-						
-						DadoFornec.setNomeFantasia(txtNomeFantasia.getText().toUpperCase());
-						DadoFornec.setRazaoSocial(txtRazaoSocial.getText().toUpperCase());
-						DadoFornec.setBairro(txtBairro.getText().toUpperCase());
-						DadoFornec.setCel(txtCel.getText());
-						DadoFornec.setCep(txtCep.getText());
-						DadoFornec.setCidade(txtCidade.getText().toUpperCase());
-						DadoFornec.setCnpj(txtCnpj.getText());
-						DadoFornec.setComplemento(txtComplemento.getText().toUpperCase());
-						DadoFornec.setDdd(ddd);
-						DadoFornec.setNo(txtNumero.getText());
-						DadoFornec.setRua(txtRua.getText().toUpperCase());
-						DadoFornec.setTel1(txtTel1.getText());
-						DadoFornec.setTel2(txtTel2.getText());
-						DadoFornec.setEstado(txtUf.getText().toUpperCase());
-						
-						ContatoDaoFornecedor daoFornec = new ContatoDaoFornecedor();
-						
-						daoFornec.adicionaFornecedor(DadoFornec);
-						
-					} catch (Exception e2) {
-						System.out.println("Erro Cadastrar_fornecedor: " +e2);
-					}
-					
+				Connection con = ConnectionFac.getConnection();
+				PreparedStatement stmt = null;
+				ResultSet rs = null;
 
+				try {
+				String dados = JOptionPane.showInputDialog("Digite a senha do Gerente");
+				
+				
+
+					stmt = con.prepareStatement("SELECT * FROM login where senha = ?");
+					stmt.setString(1, dados);
+					rs = stmt.executeQuery();
+
+					if (rs.next()) {
+						if (txtNomeFantasia.getText().trim().isEmpty()|| txtRazaoSocial.getText().trim().isEmpty()|| 
+								txtBairro.getText().trim().isEmpty()|| txtCel.getText().trim().isEmpty()|| txtCep.getText().trim().isEmpty()||
+								txtCidade.getText().trim().isEmpty()|| txtCnpj.getText().trim().isEmpty()|| txtComplemento.getText().trim().isEmpty()||
+								txtDdd.getText().trim().isEmpty()|| txtNumero.getText().trim().isEmpty()|| txtRua.getText().trim().isEmpty()|| txtTel1.getText().trim().isEmpty()||
+								txtTel2.getText().trim().isEmpty()|| txtUf.getText().trim().isEmpty()) 
+						{
+							JOptionPane.showMessageDialog(null, "Não pode conter nenhum campo vazio !");
+							
+						} else {
+							
+							try {
+								
+								DadoFornec DadoFornec = new DadoFornec();
+								int ddd = Integer.parseInt(txtDdd.getText());
+								
+								
+								DadoFornec.setNomeFantasia(txtNomeFantasia.getText().toUpperCase());
+								DadoFornec.setRazaoSocial(txtRazaoSocial.getText().toUpperCase());
+								DadoFornec.setBairro(txtBairro.getText().toUpperCase());
+								DadoFornec.setCel(txtCel.getText());
+								DadoFornec.setCep(txtCep.getText());
+								DadoFornec.setCidade(txtCidade.getText().toUpperCase());
+								DadoFornec.setCnpj(txtCnpj.getText());
+								DadoFornec.setComplemento(txtComplemento.getText().toUpperCase());
+								DadoFornec.setDdd(ddd);
+								DadoFornec.setNo(txtNumero.getText());
+								DadoFornec.setRua(txtRua.getText().toUpperCase());
+								DadoFornec.setTel1(txtTel1.getText());
+								DadoFornec.setTel2(txtTel2.getText());
+								DadoFornec.setEstado(txtUf.getText().toUpperCase());
+								
+								ContatoDaoFornecedor daoFornec = new ContatoDaoFornecedor();
+								
+								daoFornec.adicionaFornecedor(DadoFornec);
+								
+							} catch (Exception e2) {
+								System.out.println("Erro Cadastrar_fornecedor: " +e2);
+							}
+							
+
+						}
+
+					}else {
+						JOptionPane.showMessageDialog(null, "Você não tem acesso\n Senha incorreta");;
+					}
+				} catch (Exception e1) {
+					System.out.println("Erroo " + e1);
 				}
+				
+				
 				
 			}
 		});

@@ -113,11 +113,11 @@ public class Estoque extends JFrame {
 		btnVoltar.setBounds(681, 11, 36, 36);
 		contentPane.add(btnVoltar);
 
-		modelo.addColumn("CÃ³digo Produto");
-		modelo.addColumn("DescriÃ§Ã£o");
+		modelo.addColumn("Código Produto");
+		modelo.addColumn("Descrição");
 		modelo.addColumn("Marca");
 		modelo.addColumn("Estoque");
-		modelo.addColumn("Data FabricacÃ£o");
+		modelo.addColumn("Data Fabricação");
 		modelo.addColumn("Data Validade");
 
 	}

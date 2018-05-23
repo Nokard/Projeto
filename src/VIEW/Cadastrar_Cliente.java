@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 import CONTROL.DadoPf;
 import CONTROL.DadoPj;
+import MODEL.ConnectionFac;
 import MODEL.ContatoDaoCliente;
 
 import javax.swing.JLabel;
@@ -19,6 +20,9 @@ import javax.swing.JDialog;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.JFormattedTextField;
@@ -90,10 +94,10 @@ public class Cadastrar_Cliente extends JFrame {
 		MaskFormatter JfTelefone1 = null;
 		MaskFormatter JfTelefone2 = null;
 		MaskFormatter JfCel1 = null;
-		
+
 
 		try {
-		
+
 			JfTelefone1 = new MaskFormatter("####-####");
 			JfTelefone2 = new MaskFormatter("####-####");
 			JfCel1 = new MaskFormatter("#####-####");
@@ -105,7 +109,7 @@ public class Cadastrar_Cliente extends JFrame {
 		;
 
 
-		
+
 
 		panel = new JPanel();
 		panel.setBounds(7, 10, 610, 206);
@@ -201,104 +205,121 @@ public class Cadastrar_Cliente extends JFrame {
 		lblCelular.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblCelular.setBounds(322, 151, 69, 14);
 		panel.add(lblCelular);
-		
+
 		JLabel lblId = new JLabel("DDD");
 		lblId.setFont(new Font("Arial", Font.PLAIN, 12));
 		lblId.setBounds(21, 151, 34, 14);
 		panel.add(lblId);
-		
+
 		JFormattedTextField jfDdd = new JFormattedTextField(jfid);
 		jfDdd.setBounds(19, 177, 36, 20);
 		panel.add(jfDdd);
-		
+
 		btnSalvarCliente = new JButton("Cadastrar");
 		btnSalvarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
-				
-				if(comboBox.getSelectedItem().toString().equals("Fisica")) {
-					
-					//Verificando se os campos estÃ£p preenchidos
-					if(txtNomeCli.getText().equals("") || txtSobrenome.getText().equals("") || txtCpfCnpj.getText().equals("") 
-							|| txtTelefone1.getText().equals("")) {
-						JOptionPane.showMessageDialog(null, "Nao pode conter Campos Vazios !");
-					}else {
-					
-						try {
-							
-							DadoPf pf = new DadoPf();
-						
-							pf.setNome(txtNomeCli.getText().toUpperCase());
-							pf.setSobrenome(txtSobrenome.getText().toUpperCase());
-							pf.setCpf(txtCpfCnpj.getText().toUpperCase());
-							
-							pf.setDdd(jfDdd.getText());
-							pf.setTel1(txtTelefone1.getText());
-							pf.setTel2(txtTelefone2.getText());
-							pf.setCel(txtCel.getText());
-							
-                                                     
-							pf.setCep(txtCep.getText().toUpperCase());
-							pf.setRua(txtRua.getText().toUpperCase());
-							pf.setCidade(txtCidade.getText().toUpperCase());
-							pf.setBairro(txtBairro.getText().toUpperCase());
-							pf.setEstado(txtUf.getText().toUpperCase());
-							pf.setNo(txtNumero.getText());
-							pf.setComplemento(txtComplemento.getText().toUpperCase());
 
-							ContatoDaoCliente dao = new ContatoDaoCliente();
+				Connection con = ConnectionFac.getConnection();
+				PreparedStatement stmt = null;
+				ResultSet rs = null;
 
-                                                 
-							
-							dao.adicionaPF(pf);
-                                                 
-						} catch (Exception ex ) {
-							System.err.println("Errr -> " + ex);
-						}
+				try {
+					String dados = JOptionPane.showInputDialog("Digite a senha do Gerente");
 
+					stmt = con.prepareStatement("SELECT * FROM login where senha = ?");
+					stmt.setString(1, dados);
+					rs = stmt.executeQuery();
+
+					if (rs.next()) {
+						if(comboBox.getSelectedItem().toString().equals("Fisica")) {
+
+							//Verificando se os campos estÃ£p preenchidos
+							if(txtNomeCli.getText().equals("") || txtSobrenome.getText().equals("") || txtCpfCnpj.getText().equals("") 
+									|| txtTelefone1.getText().equals("")) {
+								JOptionPane.showMessageDialog(null, "Nao pode conter Campos Vazios !");
+							}else {
+
+								try {
+
+									DadoPf pf = new DadoPf();
+
+									pf.setNome(txtNomeCli.getText().toUpperCase());
+									pf.setSobrenome(txtSobrenome.getText().toUpperCase());
+									pf.setCpf(txtCpfCnpj.getText().toUpperCase());
+
+									pf.setDdd(jfDdd.getText());
+									pf.setTel1(txtTelefone1.getText());
+									pf.setTel2(txtTelefone2.getText());
+									pf.setCel(txtCel.getText());
+
+
+									pf.setCep(txtCep.getText().toUpperCase());
+									pf.setRua(txtRua.getText().toUpperCase());
+									pf.setCidade(txtCidade.getText().toUpperCase());
+									pf.setBairro(txtBairro.getText().toUpperCase());
+									pf.setEstado(txtUf.getText().toUpperCase());
+									pf.setNo(txtNumero.getText());
+									pf.setComplemento(txtComplemento.getText().toUpperCase());
+
+									ContatoDaoCliente dao = new ContatoDaoCliente();
+
+
+
+									dao.adicionaPF(pf);
+
+								} catch (Exception ex ) {
+									System.err.println("Errr -> " + ex);
+								}
+
+							}
+						}else {
+							if(txtNomeCli.getText().equals("") || txtSobrenome.getText().equals("") || txtCpfCnpj.getText().equals("") 
+									|| txtTelefone1.getText().equals("")) {
+								JOptionPane.showMessageDialog(null, "Nao pode conter Campos Vazios !");
+							}else {
+								try {
+
+									DadoPj pj = new DadoPj();
+									pj.setTipo(comboBox.getActionCommand().toUpperCase());
+									pj.setNome(txtNomeCli.getText().toUpperCase());
+									pj.setSobrenome(txtSobrenome.getText().toUpperCase());
+									pj.setCnpj(txtCpfCnpj.getText());
+
+									pj.setDdd(jfDdd.getText());
+									pj.setTel1(txtTelefone1.getText().toUpperCase());
+									pj.setTel2(txtTelefone2.getText().toUpperCase());
+									pj.setCel(txtCel.getText().toUpperCase());
+
+									pj.setCep(txtCep.getText().toUpperCase());
+									pj.setRua(txtRua.getText().toUpperCase());
+									pj.setCidade(txtCidade.getText().toUpperCase());
+									pj.setBairro(txtBairro.getText().toUpperCase());
+									pj.setEstado(txtUf.getText().toUpperCase());
+									pj.setNo(txtNumero.getText());
+									pj.setComplemento(txtComplemento.getText().toUpperCase());
+
+
+									ContatoDaoCliente dao = new ContatoDaoCliente();
+
+
+									dao.adicionaPj(pj);
+
+
+								} catch (Exception e2) {
+									System.out.println("Errr ->" +e2);
+								}		
+
+							}
+						}	
 					}
-				}else {
-					if(txtNomeCli.getText().equals("") || txtSobrenome.getText().equals("") || txtCpfCnpj.getText().equals("") 
-							|| txtTelefone1.getText().equals("")) {
-						JOptionPane.showMessageDialog(null, "Nao pode conter Campos Vazios !");
-					}else {
-						try {
+					else {
+						JOptionPane.showMessageDialog(null, "Você não tem acesso\n Senha incorreta");;
 
-							DadoPj pj = new DadoPj();
-							pj.setTipo(comboBox.getActionCommand().toUpperCase());
-							pj.setNome(txtNomeCli.getText().toUpperCase());
-							pj.setSobrenome(txtSobrenome.getText().toUpperCase());
-							pj.setCnpj(txtCpfCnpj.getText());
-							
-							pj.setDdd(jfDdd.getText());
-							pj.setTel1(txtTelefone1.getText().toUpperCase());
-							pj.setTel2(txtTelefone2.getText().toUpperCase());
-							pj.setCel(txtCel.getText().toUpperCase());
-							
-							pj.setCep(txtCep.getText().toUpperCase());
-							pj.setRua(txtRua.getText().toUpperCase());
-							pj.setCidade(txtCidade.getText().toUpperCase());
-							pj.setBairro(txtBairro.getText().toUpperCase());
-							pj.setEstado(txtUf.getText().toUpperCase());
-							pj.setNo(txtNumero.getText());
-							pj.setComplemento(txtComplemento.getText().toUpperCase());
-							
-						
-							ContatoDaoCliente dao = new ContatoDaoCliente();
-							
-							
-							dao.adicionaPj(pj);
-							
-						
-						} catch (Exception e2) {
-							System.out.println("Errr ->" +e2);
-						}		
-
+					}}catch (Exception e1) {
+						System.out.println("Erroo " + e1);
 					}
-				}	
 			}
-		});
+				});
 		btnSalvarCliente.setBounds(488, 371, 114, 23);
 		contentPane.add(btnSalvarCliente);
 
@@ -351,76 +372,61 @@ public class Cadastrar_Cliente extends JFrame {
 		txtComplemento.setBounds(392, 110, 179, 20);
 		panel_1.add(txtComplemento);
 		txtComplemento.setColumns(10);
-		
+
 		JLabel lblCidade = new JLabel("CIDADE");
 		lblCidade.setFont(new Font("Arial", Font.PLAIN, 12));
 		lblCidade.setBounds(101, 30, 57, 14);
 		panel_1.add(lblCidade);
-		
+
 		txtCidade = new JTextField();
 		txtCidade.setBounds(101, 54, 149, 20);
 		panel_1.add(txtCidade);
 		txtCidade.setColumns(10);
-		
+
 		JLabel lblUf = new JLabel("UF");
 		lblUf.setFont(new Font("Arial", Font.PLAIN, 12));
 		lblUf.setBounds(261, 30, 46, 14);
 		panel_1.add(lblUf);
-		
+
 		txtUf = new JTextField();
 		txtUf.setBounds(255, 54, 33, 20);
 		panel_1.add(txtUf);
 		txtUf.setColumns(10);
-		
+
 		JLabel lblBairro = new JLabel("BAIRRO");
 		lblBairro.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblBairro.setBounds(317, 29, 70, 15);
 		panel_1.add(lblBairro);
-		
+
 		txtBairro = new JTextField();
 		txtBairro.setBounds(300, 54, 114, 19);
 		panel_1.add(txtBairro);
 		txtBairro.setColumns(10);
-		
+
 		btnListarClientes = new JButton("Listar Clientes");
 		btnListarClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				Object[] selectionValues = {"Pessoa Física","Pessoa Jurídica"};
 				String initialSelection = "Pessoa Fisica";
-				 Object selection = JOptionPane.showInputDialog(null, "Selecione o Cliente ",
-					        "Clientes", JOptionPane.QUESTION_MESSAGE, null, selectionValues, initialSelection);
-			if (selection == "Pessoa Física") {
-				Visualizar_Clientes_Pf visu_clientes = new Visualizar_Clientes_Pf();
-				visu_clientes.setVisible(true);
-				dispose();
-				
-			}else if (selection == "Pessoa Jurídica" ) {
-				Visualizar_Clientes_Pj visu_clientes = new Visualizar_Clientes_Pj();
-				visu_clientes.setVisible(true);
-				dispose();
+				Object selection = JOptionPane.showInputDialog(null, "Selecione o Cliente ",
+						"Clientes", JOptionPane.QUESTION_MESSAGE, null, selectionValues, initialSelection);
+				if (selection == "Pessoa Física") {
+					Visualizar_Clientes_Pf visu_clientes = new Visualizar_Clientes_Pf();
+					visu_clientes.setVisible(true);
+					dispose();
 
-			}else {
-				Cadastrar_Cliente cc = new Cadastrar_Cliente();
-				cc.setVisible(true);
-				dispose();
-			}
-				
-				
-				
-				
-//				if(comboBox.getSelectedItem().toString().equals("Fisica")) {
-//				
-//				Visualizar_Clientes_Pf visu_clientes = new Visualizar_Clientes_Pf();
-//				visu_clientes.setVisible(true);
-//				dispose();
-//				
-//				}else {
-//					Visualizar_Clientes_Pj visu_clientes = new Visualizar_Clientes_Pj();
-//					visu_clientes.setVisible(true);
-//					dispose();
-//					
-//				}
+				}else if (selection == "Pessoa Jurídica" ) {
+					Visualizar_Clientes_Pj visu_clientes = new Visualizar_Clientes_Pj();
+					visu_clientes.setVisible(true);
+					dispose();
+
+				}else {
+					Cadastrar_Cliente cc = new Cadastrar_Cliente();
+					cc.setVisible(true);
+					dispose();
+				}
+
 			}
 		});
 		btnListarClientes.setBounds(322, 371, 154, 23);
@@ -433,5 +439,5 @@ public class Cadastrar_Cliente extends JFrame {
 
 
 
-	}
-}
+			}
+		}
